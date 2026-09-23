@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class ShootBullet : MonoBehaviour
+public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
     public float projectileSpeed = 5f; 
-    //public float projectileRange = 20f; // how far the bullet can go before getting destroyed 
+    public float projectileRange = 20f; 
 
 
     public GameObject projectile;
@@ -14,7 +14,7 @@ public class ShootBullet : MonoBehaviour
     {
         if (!projectile)
         {
-            projectile = GameObject.FindGameObjectWithTag("projectile");
+            projectile = GameObject.FindGameObjectWithTag("Projectile");
         }
     }
 
