@@ -1,20 +1,24 @@
 using UnityEngine;
 
+/// <summary>
+/// This class deals with the behavior of shooting a projectile.
+/// </summary>
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    public float projectileSpeed = 5f; 
-    public float projectileRange = 20f; 
+    [SerializeField] private float projectileSpeed = 5f; 
+    
+    // TODO: Add projectileRange logic
+    [SerializeField] private float projectileRange = 20f; 
 
-
-    public GameObject projectile;
+    [SerializeField] private GameObject projectile;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (!projectile)
         {
-            projectile = GameObject.FindGameObjectWithTag("Projectile");
+            Debug.LogWarning("No Projectile Prefab Assigned.");
         }
     }
 
@@ -28,7 +32,10 @@ public class ShootProjectile : MonoBehaviour
 
     }
 
-    void Shoot()
+    /// <summary>
+    /// This is the primary shoot method that deals with the math of shooting a projectile.
+    /// </summary>
+    private void Shoot()
     {
         if(projectile)
         {

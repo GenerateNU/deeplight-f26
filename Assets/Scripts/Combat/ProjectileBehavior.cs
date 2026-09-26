@@ -1,19 +1,15 @@
 using UnityEngine;
 
+/// <summary>
+/// This class represents the behavior of a projectile. It deals with collision detection and destruction of projectiles.
+/// </summary>
 public class ProjectileBehavior : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// This method destroys a projectile during a collision.
+    /// </summary>
+    /// <param name="other"></param> Represents a collider object.
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Target"))
         {
@@ -21,7 +17,10 @@ public class ProjectileBehavior : MonoBehaviour
         }
     }
 
-    void DestroyProjectile()
+    /// <summary>
+    ///  This method calls the Destroy utility method to remove the object from memory.
+    /// </summary>
+    private void DestroyProjectile()
     {
         Destroy(gameObject);
     }

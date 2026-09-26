@@ -1,19 +1,15 @@
 using UnityEngine;
 
+/// <summary>
+/// This script holds the standard logic for destroying gameObjects.
+/// </summary>
 public class DestroyObject : MonoBehaviour
 {
+    [SerializeField] private float duration = 3f;
 
-    // Fields 
-    public float duration = 3f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Destroy(gameObject, duration); // destroy object after duration
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(gameObject, duration);
     }
 }
