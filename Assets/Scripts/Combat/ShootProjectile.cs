@@ -29,7 +29,6 @@ public class ShootProjectile : MonoBehaviour
         {
             Shoot();
         }
-
     }
 
     /// <summary>
