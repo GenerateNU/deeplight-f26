@@ -5,6 +5,7 @@ using UnityEngine;
 /// </summary>
 public abstract class EnemyBase : MonoBehaviour
 {
+    // Basic Enemy state machine, open to additions!
     public enum EnemyState
     {
         Idle,
@@ -12,27 +13,27 @@ public abstract class EnemyBase : MonoBehaviour
         Dead
     }
 
-    public int speed;
-    public int attackDamage;
+    [SerializeField] protected float speed = 10f;
+    [SerializeField] protected float attackDamage = 10f;
 
-    public EnemyState currentState = EnemyState.Idle;
+    [SerializeField] protected EnemyState currentState = EnemyState.Idle;
 
     /// <summary>
-    /// Update currentState
+    /// Update enemy state machine
     /// </summary>
-    void setState(EnemyState newState)
+    protected void SetState(EnemyState newState)
     {
         currentState = newState;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
 
     }
