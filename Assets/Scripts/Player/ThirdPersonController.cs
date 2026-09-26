@@ -3,16 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// This class acts as the primary controller for third person POV. 
+/// Here we set fields like movement speed, look sensitivity, and check for ground collisions.
+/// </summary>
 public class ThirdPersonController : MonoBehaviour
 {   
     [Header ("Stats")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float jumpCooldown = 1f;
+    [SerializeField] private float sprintMultiplier = 5f;
 
     [Header ("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
-    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
     [Header ("Cinemachine")]
@@ -155,7 +160,7 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        float targetSpeed = (isRunning ? moveSpeed * 5f : moveSpeed) * move.magnitude;
+        float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
 
         Vector3 forward = cameraTarget.forward;
