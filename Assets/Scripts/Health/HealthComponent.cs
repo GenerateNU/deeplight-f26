@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 /// <summary>
@@ -6,15 +5,12 @@ using UnityEngine;
 /// </summary>
 public class HealthComponent : MonoBehaviour
 {
-
-    public int maxHealth;
-    public int currentHealth;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int currentHealth = 100;
 
     private void Start()
     {
-        maxHealth = 100;
-        currentHealth = 0;
-        onDeath();
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     /// <summary>
@@ -24,7 +20,7 @@ public class HealthComponent : MonoBehaviour
     /// <param name="damageVal">
     /// Damage value based on game object
     /// </param>
-    void takeDamage(int damageVal)
+    public void TakeDamage(int damageVal)
     {
         int newHealth = currentHealth - damageVal;
 
@@ -34,20 +30,15 @@ public class HealthComponent : MonoBehaviour
         else
         {
             currentHealth = 0;
-            onDeath();
+            OnDeath();
         }
-
     }
-
 
     /// <summary>
-    /// States player is dead 
+    /// This method represents the behavior when player is dead 
     /// </summary>
-    void onDeath() 
+    private void OnDeath() 
     {
-        Debug.Log("Player is now dead :)");
+        Debug.Log("Health is Zero!");
     }
-
-
-
 }
