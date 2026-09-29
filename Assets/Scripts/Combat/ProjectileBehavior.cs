@@ -1,10 +1,46 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 /// <summary>
-/// This class represents the behavior of a projectile. It deals with collision detection and destruction of projectiles.
+/// This class represents the behavior of a projectile. It deals with collision detection and 
+/// returning projectiles to the pool.
 /// </summary>
 public class ProjectileBehavior : MonoBehaviour
 {
+    [Header("Projectile Settings")] 
+    [SerializeField] private float duration = 3f;
+
+    private float timer;
+    private ObjectPool<GameObject> pool;
+
+    /// <summary>
+    /// A method that runs when this GameObject is enabled 
+    /// </summary>
+    private void OnEnable()
+    {
+        timer = duration;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f)
+        {
+            DisableProjectile();
+        }
+    }
+
+
+    /// <summary>
+    /// A method that stores the Pool this projectile belongs to. 
+    /// </summary>
+    public void SetPool(ObjectPool<GameObject> pool)
+    {
+        this.pool = pool; 
+    }
+
     /// <summary>
     /// This method destroys a projectile during a collision.
     /// </summary>
@@ -22,8 +58,9 @@ public class ProjectileBehavior : MonoBehaviour
     /// </summary>
     private void DisableProjectile()
     {
-        gameObject.SetActive(false);
+        if (gameObject.activeSelf)
+        {
+            pool.Release(gameObject);
+        }
     }
-
-
 }
