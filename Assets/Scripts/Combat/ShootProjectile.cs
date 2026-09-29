@@ -7,10 +7,7 @@ public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
     [SerializeField] private float projectileSpeed = 5f; 
-    
-    // TODO: Add projectileRange logic
     [SerializeField] private float projectileRange = 20f; 
-
     [SerializeField] private GameObject projectile;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +38,6 @@ public class ShootProjectile : MonoBehaviour
         if(projectile)
         {
             projectile.transform.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
-            //GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
             projectile.SetActive(true);
