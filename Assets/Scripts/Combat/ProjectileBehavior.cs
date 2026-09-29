@@ -13,14 +13,6 @@ public class ProjectileBehavior : MonoBehaviour
     private float timer;
     private ObjectPool<GameObject> pool;
 
-    /// <summary>
-    /// A method that runs when this GameObject is enabled 
-    /// </summary>
-    private void OnEnable()
-    {
-        timer = duration;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -39,6 +31,14 @@ public class ProjectileBehavior : MonoBehaviour
     public void SetPool(ObjectPool<GameObject> pool)
     {
         this.pool = pool; 
+    }
+
+    /// <summary>
+    /// A method that runs when this GameObject is enabled 
+    /// </summary>
+    private void OnEnable()
+    {
+        timer = duration;
     }
 
     /// <summary>
