@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Health component for game object
@@ -8,6 +10,9 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth = 100;
 
+    /// <summary>
+    /// Runs on start
+    /// </summary>
     private void Start()
     {
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
