@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8346853040862398552}
   - component: {fileID: 8266368198253405787}
   - component: {fileID: 3781178802149812844}
-  - component: {fileID: 7080996265564696673}
+  - component: {fileID: 8799764574133935741}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Projectile
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6991b279e11e74fbb85cc0a9b1326737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
---- !u!114 &7080996265564696673
+--- !u!114 &8799764574133935741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2279860737726650598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79863430fd94d4aba892fd268ab51a34, type: 3}
+  m_Script: {fileID: 11500000, guid: 88b5b467bfea643ae87cc79d109bba41, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestroyObject
-  duration: 3
+  m_EditorClassIdentifier: '::'

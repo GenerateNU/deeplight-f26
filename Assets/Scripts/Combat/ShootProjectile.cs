@@ -36,13 +36,20 @@ public class ShootProjectile : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
+        GameObject projectile = ObjectPool.instance.GetPooledObject();
+
         if(projectile)
         {
-            GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-            Rigidbody rb = projectileObject.GetComponent<Rigidbody>();
+            projectile.transform.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
+            //GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
+            projectile.SetActive(true);
 
             if(rb)
             {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
             }
         }

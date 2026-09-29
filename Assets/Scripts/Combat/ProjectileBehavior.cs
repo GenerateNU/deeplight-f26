@@ -13,16 +13,16 @@ public class ProjectileBehavior : MonoBehaviour
     {
         if(other.CompareTag("Target"))
         {
-            DestroyProjectile();
+            DisableProjectile();
         }
     }
 
     /// <summary>
-    ///  This method calls the Destroy utility method to remove the object from memory.
+    ///  This method calls the SetActive() method to disable the object from the scene.
     /// </summary>
-    private void DestroyProjectile()
+    private void DisableProjectile()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
 
