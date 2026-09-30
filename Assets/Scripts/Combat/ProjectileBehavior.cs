@@ -7,24 +7,12 @@ using System.Collections.Generic;
 /// </summary>
 public class ProjectileBehavior : MonoBehaviour
 {
-    [Header ("Projectile Information")]
+    [Header ("Projectile Settings")]
     
     [SerializeField] private string projectileType;
 
     [SerializeField] private int projectileDamage;
-    [SerializeField] private float projectileSpeed;
-    [SerializeField] private float projectileLifespan;
-
-    // -------------------- UNITY DEFAULTS ----------------------//
-
-    /// <summary>
-    /// Runs on start
-    /// </summary>
-    private void Start()
-    {
-        if(projectileLifespan != null)
-            StartCoroutine(DestroyAfterLifespan());
-    }
+    //[SerializeField] private float projectileSpeed;
 
     // -------------------- PROJECTILE ESSENTIALS --------------------- //
 
@@ -46,15 +34,6 @@ public class ProjectileBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Destroys the projectile after its lifespand has elapsed
-    /// </summary>
-    private IEnumerator DestroyAfterLifespan()
-    {
-        yield return new WaitForSeconds(projectileLifespan);
-        Destroy(gameObject);
-    }
-
-    /// <summary>
     ///  This method calls the Destroy utility method to remove the object from memory.
     /// </summary>
     private void DestroyProjectile()
@@ -72,33 +51,4 @@ public class ProjectileBehavior : MonoBehaviour
     {
         projectileType = type;
     }
-
-    /// <summary>
-    /// Sets the projectile damage to the value input into the function
-    /// </summary>
-    /// <param name="damage"></param> the int dictating the damage of the projectile
-    public void SetDamage(int damage)
-    {
-        projectileDamage = damage;
-    }
-
-    /// <summary>
-    /// Sets the projectile speed to the value input into the function
-    /// </summary>
-    /// <param name="speed"></param> the float dictating the speed of the projectile
-    public void SetSpeed(float speed)
-    {
-        projectileSpeed = speed;
-    }
-
-    /// <summary>
-    /// Sets the projectile lifespan to the value input into the function
-    /// </summary>
-    /// <param name="lifespan"></param> the float dictating the lifespan of the projectile
-    public void SetLifespan(float lifespan)
-    {
-        projectileLifespan = lifespan;
-    }
-
-
 }

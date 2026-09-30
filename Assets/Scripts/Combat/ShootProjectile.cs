@@ -8,9 +8,7 @@ using System.Collections.Generic;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float projectileSpeed = 10f;
-    [SerializeField] private float projectileLifespan = 5f;
-    [SerializeField] private int projectileDamage = 5;
+    [SerializeField] private float projectileSpeed = 5f;
 
     [SerializeField] private GameObject projectile;
 
@@ -44,7 +42,7 @@ public class ShootProjectile : MonoBehaviour
             // they're aiming), should be fixed at a later date when weapons are implemented (weapon will face direction of the camera independent of the
             // direction the player is facing within reason)
             GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-            
+
             Rigidbody rb = projectileObject.GetComponent<Rigidbody>();
 
             if(rb)
@@ -61,12 +59,6 @@ public class ShootProjectile : MonoBehaviour
 
                 if(this.gameObject.CompareTag("Enemy"))
                     projectileObject.GetComponent<ProjectileBehavior>().SetType("enemyProjectile");
-
-                projectileObject.GetComponent<ProjectileBehavior>().SetDamage(projectileDamage);
-
-                projectileObject.GetComponent<ProjectileBehavior>().SetSpeed(projectileSpeed);
-
-                projectileObject.GetComponent<ProjectileBehavior>().SetLifespan(projectileLifespan);
             }
         }
 
