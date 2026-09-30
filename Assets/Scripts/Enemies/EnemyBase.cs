@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Basic class for enemy prefab with state machine, holding minimal basic fields
@@ -24,7 +25,10 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected Transform playerLocation;
     [SerializeField] protected float distanceFromPlayer;
 
-    // ** TODO ** Navmesh setup
+    [SerializeField] protected float attackWindupTime = 0.5f;
+    [SerializeField] protected float attackCooldownTime = 1f;
+
+    protected NavMeshAgent agent;
 
     /// <summary>
     /// Update enemy state machine
@@ -46,7 +50,9 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Start()
     {
         playerLocation = GameObject.FindGameObjectWithTag("Player")?.transform;
-        // ** TODO ** Navmesh setup
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
+
     }
 
     // Update is called once per frame
@@ -80,6 +86,7 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleIdle()
     {
+        agent.isStopped = true;
         if (distanceFromPlayer <= detectionRange)
         {
             SetState(EnemyState.Chase);
@@ -91,32 +98,72 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleChase()
     {
-        // ** TODO ** Navmesh for: enemy advancing towards player
+        agent.isStopped = false;
+        agent.SetDestination(playerLocation.position); 
+        Debug.Log("In chase mode, distance from player: " + distanceFromPlayer);
+
+        //player is too far away, go back to idle
         if (distanceFromPlayer > detectionRange)
         {
+            Debug.Log("entering idle mode");
             SetState(EnemyState.Idle);
         }
+        //player is close enough to attack, go to attack state
         else if (distanceFromPlayer <= attackRange)
         {
+            Debug.Log("entering attacks mode");
             SetState(EnemyState.Attack);
         }
     }
+
+    protected float attackTimer = 0f;
+    protected bool hasHitThisAttack = false;
 
     /// <summary>
     /// Makes enemy attack player
     /// </summary>
     protected virtual void HandleAttack()
     {
+        agent.isStopped = true;
+        attackTimer += Time.deltaTime;
+        Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);
+        
+        // still winding up, do nothing yet (or flash a warning color here)
+        if (attackTimer < attackWindupTime)
+        {
+            Debug.Log("Winding up attack, attackTimer: " + attackTimer);
+            return;
+        }
+
+        // just crossed into "hit" territory, and haven't hit yet this cycle
+        if (!hasHitThisAttack)
+        {
+            Debug.Log("Hitting player with attack, attackTimer: " + attackTimer);
+            hasHitThisAttack = true; 
+        }
+
+        // fully done with windup + cooldown, reset for next time
+        if (attackTimer >= attackWindupTime + attackCooldownTime)
+        {
+            Debug.Log("Resetting attack cycle, attackTimer: " + attackTimer);
+            attackTimer = 0f; 
+            hasHitThisAttack = false; 
+        }
+
         if (distanceFromPlayer > attackRange)
         {
             SetState(EnemyState.Chase);
         }
     }
+
+
     /// <summary>
     /// Handles enemy Dead state
     /// </summary>
     protected virtual void HandleDead()
     {
-
+        Debug.Log("Enemy is dead, stopping all actions");
+        agent.isStopped = true;
+        //TODO: add death animation, remove from scene, etc.
     }
 }
