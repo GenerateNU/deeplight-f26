@@ -52,13 +52,16 @@ public class ShootProjectile : MonoBehaviour
             
             // setting the base attributes of the projectile on the object itself so that information can be used and tampered with
             // after the projectile is spawned, if necessary
-            if(projectileObject.GetComponent<ProjectileBehavior>())
+            if(projectileObject.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
             {
                 if(this.gameObject.CompareTag("Player"))
-                    projectileObject.GetComponent<ProjectileBehavior>().SetType("playerProjectile");
-
-                if(this.gameObject.CompareTag("Enemy"))
-                    projectileObject.GetComponent<ProjectileBehavior>().SetType("enemyProjectile");
+                {
+                    pb.SetType("playerProjectile");
+                }
+                else if(this.gameObject.CompareTag("Enemy"))
+                {
+                    pb.SetType("enemyProjectile");
+                }
             }
         }
 
