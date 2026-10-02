@@ -240,6 +240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1074137007}
+  - component: {fileID: 1074137008}
   m_Layer: 0
   m_Name: Object Pool
   m_TagString: Untagged
@@ -262,6 +263,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1074137008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074137006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86991e522695c4e05a8f9fee22edbdee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  projectilePrefab: {fileID: 0}
+  amountToPool: 0
 --- !u!1 &1266201512
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   projectileSpeed: 20
   projectilePrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
+  projectileRange: 20
   startingCapacity: 50
   maxSize: 500
   projectileParent: {fileID: 1074137007}

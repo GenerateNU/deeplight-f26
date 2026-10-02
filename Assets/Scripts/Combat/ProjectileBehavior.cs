@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 /// <summary>
 /// This class represents the behavior of a projectile. It deals with collision detection and 
@@ -11,7 +10,6 @@ public class ProjectileBehavior : MonoBehaviour
     [SerializeField] private float duration = 3f;
 
     private float timer;
-    private ObjectPool<GameObject> pool;
 
     // Update is called once per frame
     void Update()
@@ -20,17 +18,8 @@ public class ProjectileBehavior : MonoBehaviour
 
         if (timer <= 0f)
         {
-            DisableProjectile();
+            DisableProjectile();  
         }
-    }
-
-
-    /// <summary>
-    /// A method that stores the Pool this projectile belongs to. 
-    /// </summary>
-    public void SetPool(ObjectPool<GameObject> pool)
-    {
-        this.pool = pool; 
     }
 
     /// <summary>
@@ -49,7 +38,7 @@ public class ProjectileBehavior : MonoBehaviour
     {
         if(other.CompareTag("Target"))
         {
-            DisableProjectile();
+            DisableProjectile();  
         }
     }
 
@@ -60,7 +49,7 @@ public class ProjectileBehavior : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            pool.Release(gameObject);
+            ObjectPool.instance.ReturnPooledObject(gameObject);
         }
     }
 }
