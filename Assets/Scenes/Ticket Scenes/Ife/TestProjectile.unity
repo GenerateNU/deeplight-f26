@@ -272,11 +272,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1074137006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86991e522695c4e05a8f9fee22edbdee, type: 3}
+  m_Script: {fileID: 11500000, guid: e747caaf87145496f9eabf3003d8269e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  projectilePrefab: {fileID: 0}
-  amountToPool: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
+  startingCapacity: 50
+  maxSize: 500
+  objectPrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
 --- !u!1 &1266201512
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,11 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   projectileSpeed: 20
-  projectilePrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
   projectileRange: 20
-  startingCapacity: 50
-  maxSize: 500
-  projectileParent: {fileID: 1074137007}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
