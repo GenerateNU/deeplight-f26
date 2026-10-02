@@ -134,6 +134,12 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleAttack()
     {
+        if (distanceFromPlayer > attackRange)
+        {
+            SetState(EnemyState.Chase);
+        }
+
+        
         agent.isStopped = true;
         attackTimer += Time.deltaTime;
         Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);
@@ -160,11 +166,15 @@ public abstract class EnemyBase : MonoBehaviour
             hasHitThisAttack = false;
         }
 
+<<<<<<< HEAD
         if (distanceFromPlayer > attackRange * exitAttackRangeMultiplier)
         {
             pathUpdateTimer = pathUpdateInterval;
             SetState(EnemyState.Chase);
         }
+=======
+        
+>>>>>>> 6bcd9e65328baf7fc06569824b8a2d4b77e6c7d8
     }
 
 
