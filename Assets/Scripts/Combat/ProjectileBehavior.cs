@@ -12,7 +12,7 @@ public class ProjectileBehavior : MonoBehaviour
     
     [SerializeField] private string projectileType;
 
-    [SerializeField] private int projectileDamage;
+    [SerializeField] private int projectileDamage = 1;
     //[SerializeField] private float projectileSpeed;
 
     [SerializeField] private float duration = 3f;
