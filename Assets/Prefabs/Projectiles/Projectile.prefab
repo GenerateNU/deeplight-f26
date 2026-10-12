@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   projectileType: 
-  projectileDamage: 1
+  projectileDamage: 10
   duration: 3
 --- !u!114 &7080996265564696673
 MonoBehaviour:
