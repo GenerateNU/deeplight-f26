@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This class deals with the behavior of shooting a projectile.
@@ -25,7 +27,8 @@ public class ShootProjectile : MonoBehaviour
     }
 
     /// <summary>
-    /// This is the primary shoot method that deals with the math of shooting a projectile.
+    /// This is the primary shoot method that deals with the math of shooting a projectile. It also initializes all necessary information for the
+    /// projectile onto the object itself.
     /// </summary>
     private void Shoot()
     {
@@ -43,6 +46,20 @@ public class ShootProjectile : MonoBehaviour
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
+            }
+            
+            // setting the base attributes of the projectile on the object itself so that information can be used and tampered with
+            // after the projectile is spawned, if necessary
+            if(projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
+            {
+                if(this.gameObject.CompareTag("Player"))
+                {
+                    pb.SetType("playerProjectile");
+                }
+                else if(this.gameObject.CompareTag("Enemy"))
+                {
+                    pb.SetType("enemyProjectile");
+                }
             }
         }
 

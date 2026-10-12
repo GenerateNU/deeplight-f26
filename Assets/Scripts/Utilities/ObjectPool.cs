@@ -23,9 +23,9 @@ public class ObjectPool : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
-            instance = this; 
+            instance = this;
         }
     }
 
@@ -41,21 +41,26 @@ public class ObjectPool : MonoBehaviour
     /// <returns>The next available Pooled Object.</returns>
     public GameObject GetPooledObject()
     {
-        for (int i = 0; i < pooledObjects.Count; i++)
+        for (int i = pooledObjects.Count - 1; i >= 0; i--)
         {
+            if (pooledObjects[i] == null)
+            {
+                pooledObjects.RemoveAt(i);
+                continue;
+            }
+
             if (!pooledObjects[i].activeSelf)
             {
                 pooledObjects[i].SetActive(true);
-
                 return pooledObjects[i];
             }
         }
 
-        // if there are no more objects left in the pool, create more
         GameObject obj = Instantiate(objectPrefab, transform);
         pooledObjects.Add(obj);
-        return obj; 
+        return obj;
     }
+
 
     /// <summary>
     /// A method that returns a pooled object to the ObjectPool.
@@ -63,18 +68,8 @@ public class ObjectPool : MonoBehaviour
     /// <param name="pooledObject"></param>
     public void ReturnPooledObject(GameObject pooledObject)
     {
-        // if it's already inactive 
-        if (!pooledObject.activeSelf)
-        {
-            return;
-        }
-
-        if (InactiveCount() >= maxSize)
-        {
-            pooledObjects.Remove(pooledObject);
-            Destroy(pooledObject);
-            return;
-        }
+        if (pooledObject == null) return;
+        if (!pooledObject.activeSelf) return;
 
         pooledObject.SetActive(false);
     }
