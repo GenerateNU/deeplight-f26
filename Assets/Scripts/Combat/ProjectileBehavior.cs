@@ -61,7 +61,7 @@ public class ProjectileBehavior : MonoBehaviour
 
         if((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
             || otherCollider.CompareTag("Environment"))
-            DestroyProjectile();
+            DisableProjectile();
     }
 
     /// <summary>
