@@ -15,8 +15,6 @@ public class ProjectileBehavior : MonoBehaviour
     [SerializeField] private int projectileDamage;
     //[SerializeField] private float projectileSpeed;
 
-    // -------------------- PROJECTILE ESSENTIALS --------------------- //
-    [Header("Projectile Settings")] 
     [SerializeField] private float duration = 3f;
 
     private float timer;
