@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// This class represents the behavior of a projectile. It deals with collision detection and destruction of projectiles.
+/// This class represents the behavior of a projectile. It deals with collision detection and 
+/// returning projectiles to the pool.
 /// </summary>
 public class ProjectileBehavior : MonoBehaviour
 {
@@ -15,6 +16,29 @@ public class ProjectileBehavior : MonoBehaviour
     //[SerializeField] private float projectileSpeed;
 
     // -------------------- PROJECTILE ESSENTIALS --------------------- //
+    [Header("Projectile Settings")] 
+    [SerializeField] private float duration = 3f;
+
+    private float timer;
+
+    // Update is called once per frame
+    void Update()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f)
+        {
+            DisableProjectile();  
+        }
+    }
+
+    /// <summary>
+    /// A method that runs when this GameObject is enabled 
+    /// </summary>
+    private void OnEnable()
+    {
+        timer = duration;
+    }
 
     /// <summary>
     /// This method destroys a projectile during a collision with the player. If colliding with the player, will call TakeDamage on the player's 
@@ -34,6 +58,7 @@ public class ProjectileBehavior : MonoBehaviour
         if(otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
             hc.TakeDamage(projectileDamage);
+            DisableProjectile();  
         }
 
         if((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
@@ -42,11 +67,14 @@ public class ProjectileBehavior : MonoBehaviour
     }
 
     /// <summary>
-    ///  This method calls the Destroy utility method to remove the object from memory.
+    ///  This method calls the SetActive() method to disable the object from the scene.
     /// </summary>
-    private void DestroyProjectile()
+    private void DisableProjectile()
     {
-        Destroy(gameObject);
+        if (gameObject.activeSelf)
+        {
+            ObjectPool.instance.ReturnPooledObject(gameObject);
+        }
     }
 
     // ---------------------- SETTERS ----------------------- //

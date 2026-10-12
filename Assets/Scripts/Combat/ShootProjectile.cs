@@ -8,18 +8,8 @@ using System.Collections.Generic;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float projectileSpeed = 5f;
-
-    [SerializeField] private GameObject projectile;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (!projectile)
-        {
-            Debug.LogWarning("No Projectile Prefab Assigned.");
-        }
-    }
+    [SerializeField] private float projectileSpeed = 5f; 
+    [SerializeField] private float projectileRange = 20f; 
 
     // Update is called once per frame
     void Update()
@@ -28,6 +18,12 @@ public class ShootProjectile : MonoBehaviour
         {
             Shoot();
         }
+
+        // Switch to this if statment for testing: 
+        // if (Input.GetButton("Fire1"))
+        // {
+        //     Shoot();
+        // }
     }
 
     /// <summary>
@@ -36,17 +32,19 @@ public class ShootProjectile : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
+        GameObject projectile = ObjectPool.instance.GetPooledObject();
+
         if(projectile)
         {
-            // currently bugged with the third person controller (projectiles shoot in the direction the player is facing, not the direction
-            // they're aiming), should be fixed at a later date when weapons are implemented (weapon will face direction of the camera independent of the
-            // direction the player is facing within reason)
-            GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+            projectile.transform.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-            Rigidbody rb = projectileObject.GetComponent<Rigidbody>();
+            //projectile.SetActive(true); pool does this now 
 
             if(rb)
             {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
             }
             
