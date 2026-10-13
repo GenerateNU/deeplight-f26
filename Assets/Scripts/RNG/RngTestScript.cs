@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class RngTestScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private RngStreamsConfig rngConfig;
+
     void Start()
     {
-        
-    }
+        Debug.Log("Random number: " + rngConfig.Combat.Range(0, 100));
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < 1000; i++) rngConfig.Combat.Value();
+        Debug.Log("Loot value: " + rngConfig.Loot.Value());
     }
 }
