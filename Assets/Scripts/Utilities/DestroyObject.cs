@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// This script holds the standard logic for destroying gameObjects.
+/// This script holds the standard logic for destroying gameObjects after a time limit.
 /// </summary>
 public class DestroyObject : MonoBehaviour
 {
