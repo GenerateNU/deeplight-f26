@@ -19,6 +19,9 @@ public class ProjectileBehavior : MonoBehaviour
 
     private float timer;
 
+    //SFX and particles
+    public AudioSource projectileExplodeSFX;
+
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +29,8 @@ public class ProjectileBehavior : MonoBehaviour
 
         if (timer <= 0f)
         {
+            //plays collision/fizz out sound effect 
+            projectileExplodeSFX.Play();
             DisableProjectile();  
         }
     }
@@ -56,11 +61,15 @@ public class ProjectileBehavior : MonoBehaviour
         if(otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
             hc.TakeDamage(projectileDamage);
+            //plays collision/fizz out sound effect 
+            projectileExplodeSFX.Play();
             DisableProjectile();  
         }
 
         if((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
             || otherCollider.CompareTag("Environment"))
+            //plays collision/fizz out sound effect 
+            projectileExplodeSFX.Play();
             DisableProjectile();
     }
 
