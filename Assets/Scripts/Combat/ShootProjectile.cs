@@ -8,8 +8,8 @@ using System.Collections.Generic;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float projectileSpeed = 5f; 
-    [SerializeField] private float projectileRange = 20f; 
+    [SerializeField] public float projectileSpeed = 5f; 
+    [SerializeField] public float projectileRange = 20f; 
 
     // Update is called once per frame
     void Update()

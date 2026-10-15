@@ -63,5 +63,7 @@ public class HealthComponent : MonoBehaviour
     private void OnDeath() 
     {
         Debug.Log("Health is Zero!");
+        //Just for allhands
+        Destroy(gameObject);
     }
 }

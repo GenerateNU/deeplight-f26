@@ -30,6 +30,7 @@ public class ThirdPersonController : MonoBehaviour
 
     [Header ("Other")]
     [SerializeField] private Rigidbody rb;
+    public Animator playerAnimator;
 
     // Movement and Look Vectors //
     private Vector2 move;
@@ -119,6 +120,9 @@ public class ThirdPersonController : MonoBehaviour
     private void GroundedCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+
+        //PLACEHOLDER - USED FOR ANIMATOR, edge cases with falling so doing it the dumb dumb way
+        //playerAnimator.SetBool("isJumping", false);
     }
 
     /// <summary>
@@ -132,6 +136,10 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+
+        //PLACEHOLDER - USED FOR ANIMATOR
+        //playerAnimator.SetBool("isJumping", true);
+
         canJump = false;
         StartCoroutine(JumpCooldown());
     }
@@ -161,7 +169,21 @@ public class ThirdPersonController : MonoBehaviour
     private void Move()
     {
         float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
-        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+
+        // Snap to zero when there's no input, otherwise ease toward the target speed. NECESSARY FOR ANIMATOR TO WORK
+        if (move.sqrMagnitude < 0.01f)
+        {
+            currentSpeed = 0f;
+        }
+        else
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+        }
+
+        //ORIGINALcurrentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+
+        // Rotate the player body to match the camera's horizontal rotation (mouse X)
+        rb.MoveRotation(Quaternion.Euler(0f, yaw, 0f));
 
         Vector3 forward = cameraTarget.forward;
         Vector3 right = cameraTarget.right;
@@ -172,20 +194,20 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
+        Vector3 currentVelocity = rb.linearVelocity;
 
         if (moveDirection.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 20f);
-
-            Vector3 currentVelocity = rb.linearVelocity;
             rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, currentVelocity.y, moveDirection.z * currentSpeed);
         }
         else
         {
-            Vector3 currentVelocity = rb.linearVelocity;
-            rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
+            rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
         }
+
+        //USED FOR ANIMATOR, takes flat velocity ignoring acceleration, used for anim triggers
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        playerAnimator.SetFloat("playerSpeed", flatVelocity.magnitude);
     }
 
     /// <summary>
