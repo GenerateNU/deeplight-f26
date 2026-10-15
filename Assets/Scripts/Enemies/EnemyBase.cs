@@ -110,18 +110,18 @@ public abstract class EnemyBase : MonoBehaviour
             agent.SetDestination(playerLocation.position);
             pathUpdateTimer = 0f;
         }
-        Debug.Log("In chase mode, distance from player: " + distanceFromPlayer);
+        //Debug.Log("In chase mode, distance from player: " + distanceFromPlayer);
 
         //player is too far away, go back to idle
         if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
         {
-            Debug.Log("entering idle mode");
+            //Debug.Log("entering idle mode");
             SetState(EnemyState.Idle);
         }
         //player is close enough to attack, go to attack state
         else if (distanceFromPlayer <= attackRange)
         {
-            Debug.Log("entering attacks mode");
+            //Debug.Log("entering attacks mode");
             SetState(EnemyState.Attack);
         }
     }
@@ -142,26 +142,26 @@ public abstract class EnemyBase : MonoBehaviour
         
         agent.isStopped = true;
         attackTimer += Time.deltaTime;
-        Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);
+        //Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);
 
         // still winding up, do nothing yet (or flash a warning color here)
         if (attackTimer < attackWindupTime)
         {
-            Debug.Log("Winding up attack, attackTimer: " + attackTimer);
+            //Debug.Log("Winding up attack, attackTimer: " + attackTimer);
             return;
         }
 
         // just crossed into "hit" territory, and haven't hit yet this cycle
         if (!hasHitThisAttack)
         {
-            Debug.Log("Hitting player with attack, attackTimer: " + attackTimer);
+            //Debug.Log("Hitting player with attack, attackTimer: " + attackTimer);
             hasHitThisAttack = true;
         }
 
         // fully done with windup + cooldown, reset for next time
         if (attackTimer >= attackWindupTime + attackCooldownTime)
         {
-            Debug.Log("Resetting attack cycle, attackTimer: " + attackTimer);
+            //Debug.Log("Resetting attack cycle, attackTimer: " + attackTimer);
             attackTimer = 0f;
             hasHitThisAttack = false;
         }
@@ -179,7 +179,7 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void HandleDead()
     {
-        Debug.Log("Enemy is dead, stopping all actions");
+        //Debug.Log("Enemy is dead, stopping all actions");
         agent.isStopped = true;
         //TODO: add death animation, remove from scene, etc.
     }
