@@ -22,39 +22,6 @@ public class ProjectileBehavior : MonoBehaviour
     //SFX and particles
     public AudioSource projectileExplodeSFX;
 
-    void Start()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x);
-
-        GameObject closestEnemy = null;
-        float shortestDistToProjectile = 100f;
-
-        foreach (Collider collider in colliders)
-        {
-            float collDistToProjectile = Vector3.Distance(transform.position, collider.gameObject.transform.position);
-            Debug.Log("Collided with: " + collider.name);
-
-            if (collider.gameObject.CompareTag("Enemy"))
-            {
-                if (closestEnemy == null)
-                {
-                    closestEnemy = collider.gameObject;
-                    shortestDistToProjectile = Vector3.Distance(transform.position, closestEnemy.transform.position);
-                }
-                else if (collDistToProjectile < shortestDistToProjectile)
-                {
-                    closestEnemy = collider.gameObject;
-                    shortestDistToProjectile = collDistToProjectile;
-                }
-            }
-        }
-
-        if(closestEnemy.TryGetComponent<HealthComponent>(out HealthComponent hc))
-        {
-            hc.TakeDamage(projectileDamage);
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
