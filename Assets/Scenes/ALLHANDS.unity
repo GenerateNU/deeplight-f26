@@ -6076,7 +6076,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 2055630122}
   topClampAngle: 60
   bottomClampAngle: -30
-  lookSensitivity: 25
+  lookSensitivity: 100
   wallCheckDistance: 0.1
   maxWalkableNormalY: 0.7
   rb: {fileID: 501705140}
