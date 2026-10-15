@@ -16,7 +16,7 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     [SerializeField] protected float speed = 10f;
-    [SerializeField] protected float attackDamage = 10f;
+    [SerializeField] protected int attackDamage = 10;
 
     [SerializeField] protected EnemyState currentState = EnemyState.Idle;
     [SerializeField] protected float detectionRange = 10f;
@@ -182,5 +182,10 @@ public abstract class EnemyBase : MonoBehaviour
         //Debug.Log("Enemy is dead, stopping all actions");
         agent.isStopped = true;
         //TODO: add death animation, remove from scene, etc.
+    }
+
+    public int GetAttackDamage()
+    {
+        return attackDamage;
     }
 }

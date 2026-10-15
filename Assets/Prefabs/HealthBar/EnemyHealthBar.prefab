@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1757859409899816399}
   - component: {fileID: 7615127290532442466}
   - component: {fileID: 4475233200762864787}
+  - component: {fileID: 6375702382147429735}
   m_Layer: 5
   m_Name: EnemyHealthBar
   m_TagString: Untagged
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &4475233200762864787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +104,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6375702382147429735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937669615090664486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e104f58af72416d48ba3bc69289fc66b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &3184125844877833418
 GameObject:
   m_ObjectHideFlags: 0

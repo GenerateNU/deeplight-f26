@@ -28,6 +28,10 @@ public class ThirdPersonController : MonoBehaviour
     [Header ("Sensitivity")]
     [SerializeField] private float lookSensitivity = 10f;
 
+    [Header ("Wall Handling")]
+    [SerializeField] private float wallCheckDistance = 0.1f;
+    [SerializeField] private float maxWalkableNormalY = 0.7f; // surfaces steeper than this count as walls
+
     [Header ("Other")]
     [SerializeField] private Rigidbody rb;
     public Animator playerAnimator;
@@ -170,6 +174,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
 
+        playerAnimator.speed = (isRunning ? 2.0f : 1.0f);
+
         // Snap to zero when there's no input, otherwise ease toward the target speed. NECESSARY FOR ANIMATOR TO WORK
         if (move.sqrMagnitude < 0.01f)
         {
@@ -198,7 +204,20 @@ public class ThirdPersonController : MonoBehaviour
 
         if (moveDirection.sqrMagnitude > 0.01f)
         {
-            rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, currentVelocity.y, moveDirection.z * currentSpeed);
+            Vector3 horizontalVelocity = moveDirection * currentSpeed;
+        
+            // Look ahead for a wall so we don't keep pushing into it
+            float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
+        
+            if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
+                && hit.normal.y < maxWalkableNormalY)
+            {
+                // Remove the part of our movement that goes into the wall, keep the part along it
+                Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
+                horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
+            }
+        
+            rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
         }
         else
         {

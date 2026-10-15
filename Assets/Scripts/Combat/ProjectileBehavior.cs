@@ -58,18 +58,15 @@ public class ProjectileBehavior : MonoBehaviour
         */
         // TODO 
         // Implement a check to see if the player projectile is hitting an enemy, or an enemy projectile is hitting the player.
-        if(otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
-        {
-            hc.TakeDamage(projectileDamage);
-            //plays collision/fizz out sound effect 
-            projectileExplodeSFX.Play();
-            DisableProjectile();  
-        }
 
         if((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
             || otherCollider.CompareTag("Environment"))
             //plays collision/fizz out sound effect 
             projectileExplodeSFX.Play();
+            if(otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
+            {
+                hc.TakeDamage(projectileDamage);  
+            }
             DisableProjectile();
     }
 

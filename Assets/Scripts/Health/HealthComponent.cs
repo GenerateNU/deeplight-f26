@@ -30,6 +30,21 @@ public class HealthComponent : MonoBehaviour
 
     }
 
+    //maybe temporary, since enemies dont shoot projectiles yet, deals damage when they run into player
+    void OnCollisionEnter(Collision objectHit)
+    {
+        Debug.Log("collision detected");
+        Debug.Log(objectHit.gameObject.tag);
+        if(gameObject.CompareTag("Player") && objectHit.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("EnemyHitPlayer");
+            if(objectHit.gameObject.TryGetComponent<TestEnemy>(out TestEnemy enemyScript))
+            {
+                TakeDamage(enemyScript.GetAttackDamage());
+            }
+        }
+    }
+
     /// <summary>
     /// Subtracts damage value from the current health.
     /// Changes state to dead if health goes below 0.
