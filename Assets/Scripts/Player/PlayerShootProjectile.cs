@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+/// <summary>
+/// This class deals with the behavior of shooting a projectile, for specifically a player.
+/// TODO: Potentially an abstract shoot projectile class and make children for enemy and player, etc.
+/// </summary>
 public class PlayerShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
@@ -59,24 +63,14 @@ public class PlayerShootProjectile : MonoBehaviour
 
             AudioSource.PlayClipAtPoint(shootSFX, transform.position);
 
-            if (CompareTag("Player"))
-            {
-                // Center-of-screen ray: no raycast, no target snapping
-                Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-                direction = ray.direction;
-                spawnPos = ray.origin + ray.direction * spawnDistance;
-            }
-            else
-            {
-                // Enemies fire straight out of themselves
-                direction = transform.forward;
-                spawnPos = transform.position + transform.forward;
-            }
+            // Center-of-screen ray: no raycast, no target snapping
+            Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            direction = ray.direction;
+            spawnPos = ray.origin + ray.direction * spawnDistance;
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
-            //projectile.SetActive(true); pool does this now 
 
             if (rb)
             {
@@ -89,14 +83,7 @@ public class PlayerShootProjectile : MonoBehaviour
             // after the projectile is spawned, if necessary
             if (projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
             {
-                if (CompareTag("Player"))
-                {
-                    pb.SetType("playerProjectile");
-                }
-                else if (CompareTag("Enemy"))
-                {
-                    pb.SetType("enemyProjectile");
-                }
+                pb.SetType("playerProjectile");
             }
         }
     }
