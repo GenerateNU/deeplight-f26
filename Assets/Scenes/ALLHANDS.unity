@@ -2053,7 +2053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -2065,7 +2065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3812,7 +3812,7 @@ Transform:
   m_GameObject: {fileID: 298661454}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.3490898, z: -0, w: 0.9370893}
-  m_LocalPosition: {x: 4.720765, y: 1.65, z: 2.63949}
+  m_LocalPosition: {x: 3.7990012, y: 1.65, z: 3.7049816}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3836,13 +3836,13 @@ MonoBehaviour:
   CameraSide: 1
   CameraDistance: 2
   AvoidObstacles:
-    Enabled: 0
+    Enabled: 1
     CollisionFilter:
       serializedVersion: 2
-      m_Bits: 1
-    IgnoreTag: 
-    CameraRadius: 0.2
-    DampingIntoCollision: 0
+      m_Bits: 4294967295
+    IgnoreTag: Player
+    CameraRadius: 0.001
+    DampingIntoCollision: 1
     DampingFromCollision: 0.5
 --- !u!1001 &313923124
 PrefabInstance:
@@ -5935,7 +5935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -5947,7 +5947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6076,7 +6076,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 2055630122}
   topClampAngle: 60
   bottomClampAngle: -30
-  lookSensitivity: 10
+  lookSensitivity: 25
   wallCheckDistance: 0.1
   maxWalkableNormalY: 0.7
   rb: {fileID: 501705140}
@@ -14925,7 +14925,7 @@ Transform:
   m_GameObject: {fileID: 780596565}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.3490898, z: 0, w: 0.9370893}
-  m_LocalPosition: {x: 4.720765, y: 1.65, z: 2.63949}
+  m_LocalPosition: {x: 3.7990012, y: 1.65, z: 3.7049816}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15446,7 +15446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -15458,7 +15458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17530,7 +17530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -19153,7 +19153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -19165,7 +19165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28374,7 +28374,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -29046,7 +29046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -29058,7 +29058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -38839,7 +38839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: attackRange
@@ -38851,7 +38851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5501849406400342411, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: detectionRange
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6327340801677687574, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
       propertyPath: m_LocalPosition.x
