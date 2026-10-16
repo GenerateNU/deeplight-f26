@@ -1,43 +1,43 @@
 using UnityEngine;
 
 /// <summary>
-/// A class that manages and delegates state behavior to Runstate and updates MetaProgression fields.
+/// A class that manages and delegates state behavior to StateManeger and updates MetaProgression fields.
 /// </summary>
 public class GameManager : MonoBehaviour 
 {
-    public RunState runState; // Reference to the RunState component
+    public StateManeger state; // Reference to the StateManeger component
 
     /// <summary>
     /// Start is called before the first frame update, sets the run state to start.
     /// </summary>
     void Start()
     {
-        runState.setCurrentState(RunState.currentState.start);
+        StateManeger.setCurrentState(StateManeger.currentState.start);
     }
 
     /// <summary>
     /// Update is called once per frame, checks the current state and calls the appropriate method in RunState.
     /// </summary>
     update() {
-        switch (runState.getCurrentState()) {
-            case RunState.currentState.start:
-                runState.startState();
+        switch (state.getCurrentState()) {
+            case StateManeger.currentState.start:
+                state.startState();
                 break;
-            case RunState.currentState.inPlay:
-                runState.inPlayState();
+            case StateManeger.currentState.inPlay:
+                state.inPlayState();
                 break;
-            case RunState.currentState.roomTransition:
-                RunState.roomTransitionState();
+            case StateManeger.currentState.roomTransition:
+                state.roomTransitionState();
                 break;
-            case RunState.currentState.death:
-                runState.deathState();
+            case StateManeger.currentState.death:
+                state.deathState();
                 // add method in meta progression to update run count and other relevant stats
                 break;
-            case RunState.currentState.restart:
-                runState.restartState();
+            case StateManeger.currentState.restart:
+                state.restartState();
                 break;
             default:
-                Debug.LogWarning("Unhandled game state: " + runState.getCurrentState());
+                Debug.LogWarning("Unhandled game state: " + state.getCurrentState());
                 break;
         }
     }

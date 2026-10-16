@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A class that manages the current state of the game, including transitions between different states such as start, in play, room transition, death, and restart.
 /// </summary>
-public class Runstate : MonoBehaviour 
+public class StateManager : MonoBehaviour 
 {
 
     // todo: make seperate enum class???
