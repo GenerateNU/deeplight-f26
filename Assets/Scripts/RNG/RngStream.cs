@@ -9,7 +9,7 @@ public class RngStream
     private System.Random _rng;
 
     /// <summary>
-    /// Initializes a rng stream using a given seed. Every stream with the same seed produces  
+    /// Initializes a rng stream using a given seed. Every stream with the same seed produces
     /// the same output
     /// </summary>
     public void Init(int seed)

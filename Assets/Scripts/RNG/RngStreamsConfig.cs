@@ -12,10 +12,19 @@ public class RngStreamsConfig : ScriptableObject
   [NonSerialized] private int baseSeed;
   [NonSerialized] private bool hasSetBaseSeed = false;
 
-  [NonSerialized] private RngStream _combat;
-  [NonSerialized] private RngStream _loot;
-  [NonSerialized] private RngStream _levelGen;
-  [NonSerialized] private RngStream _cosmetic;
+  /// <summary>
+  /// All the systems that need independent RNG streams. Add new systems to the
+  /// end of the enum.
+  /// </summary>
+  public enum RngStreamType
+  {
+    Combat,
+    Loot,
+    LevelGen,
+    Cosmetic
+  }
+
+  [NonSerialized] private RngStream[] _streams;
 
   /// <summary>
   /// Creates a new baseseed, then initializes each stream with the baseseed.
@@ -23,84 +32,35 @@ public class RngStreamsConfig : ScriptableObject
   public void InitAll()
   {
     hasSetBaseSeed = false;
-    _combat = null;
-    _loot = null;
-    _levelGen = null;
-    _cosmetic = null;
+    _streams = new RngStream[Enum.GetNames(typeof(RngStreamType)).Length];
     SetBaseSeed();
 
-    _ = Combat;
-    _ = Loot;
-    _ = LevelGen;
-    _ = Cosmetic;
-  }
-
-  /// <summary>
-  /// Returns the Combat stream, creating it if it hasn't been created yet
-  /// </summary>
-  public RngStream Combat
-  {
-    get
+    foreach (RngStreamType type in Enum.GetValues(typeof(RngStreamType)))
     {
-      if (_combat == null)
-      {
-        _combat = new RngStream();
-        SetBaseSeed();
-        _combat.Init(DeriveSeed(baseSeed, 0));
-      }
-      return _combat;
+      Get(type);
     }
   }
 
   /// <summary>
-  /// Returns the Loot stream, creating it if it hasn't been created yet
+  /// Returns the stream for the given type, creating it if it hasn't been created yet
   /// </summary>
-  public RngStream Loot
+  public RngStream Get(RngStreamType type)
   {
-    get
+    if (_streams == null)
     {
-      if (_loot == null)
-      {
-        _loot = new RngStream();
-        SetBaseSeed();
-        _loot.Init(DeriveSeed(baseSeed, 1));
-      }
-      return _loot;
+      _streams = new RngStream[Enum.GetNames(typeof(RngStreamType)).Length];
     }
-  }
+    int i = (int)(type);
 
-  /// <summary>
-  /// Returns the LevelGen stream, creating it if it hasn't been created yet
-  /// </summary>
-  public RngStream LevelGen
-  {
-    get
+    if (_streams[i] != null)
     {
-      if (_levelGen == null)
-      {
-        _levelGen = new RngStream();
-        SetBaseSeed();
-        _levelGen.Init(DeriveSeed(baseSeed, 2));
-      }
-      return _levelGen;
+      return _streams[i];
     }
-  }
+    SetBaseSeed();
+    _streams[i] = new RngStream();
+    _streams[i].Init(DeriveSeed(baseSeed, i));
 
-  /// <summary>
-  /// Returns the Cosmetic stream, creating it if it hasn't been created yet
-  /// </summary>
-  public RngStream Cosmetic
-  {
-    get
-    {
-      if (_cosmetic == null)
-      {
-        _cosmetic = new RngStream();
-        SetBaseSeed();
-        _cosmetic.Init(DeriveSeed(baseSeed, 3));
-      }
-      return _cosmetic;
-    }
+    return _streams[i];
   }
 
   /// <summary>
@@ -123,7 +83,7 @@ public class RngStreamsConfig : ScriptableObject
   }
 
   /// <summary>
-  /// If a base seed hasn't been set, it sets the base seed to the master seed if useFixedSeed  
+  /// If a base seed hasn't been set, it sets the base seed to the master seed if useFixedSeed
   /// is true or creates a time-based base seed otherwise
   /// </summary>
   private void SetBaseSeed()

@@ -6,9 +6,9 @@ public class RngTestScript : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Random number: " + rngConfig.Combat.Range(0, 100));
+        Debug.Log("Random number: " + rngConfig.Get(RngStreamsConfig.RngStreamType.Combat).Range(0, 100));
 
-        for (int i = 0; i < 1000; i++) rngConfig.Combat.Value();
-        Debug.Log("Loot value: " + rngConfig.Loot.Value());
+        for (int i = 0; i < 1000; i++) rngConfig.Get(RngStreamsConfig.RngStreamType.Combat).Value();
+        Debug.Log("Loot value: " + rngConfig.Get(RngStreamsConfig.RngStreamType.Loot).Value());
     }
 }
