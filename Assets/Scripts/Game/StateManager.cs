@@ -1,7 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// A class that manages the current state of the game, including transitions between different states such as start, in play, room transition, death, and restart.
+/// A class that manages the current state of the game, including transitions between menu, tutorial,
+/// loading, play, room transitions, win, and death.
 /// </summary>
 public class StateManager : MonoBehaviour 
 {
@@ -20,87 +21,125 @@ public class StateManager : MonoBehaviour
         death  
     }
 
-    currentState state;
+    private currentState state = currentState.mainMenu;
+
+
 
     /// <summary>
-    /// Start is called before the first frame update, initializes the game state to start.
+    /// Sets the game to the main menu state.
     /// </summary>
-    public void startState() {
-        
-        // set state to start
-        state = currentState.start;
-
-        // set player to active
-        // set enemies to active
-        // set camera to follow player
-        // ect
-
-    }
-
-    /// <summary>
-    /// Handles the transition between rooms, including setting the game state to roomTransition and managing the activation and deactivation of the player, enemies, and camera.
-    /// </summary>
-    public void roomTransitionState(beforeRoom, afterRoom, tbd) {
-        // set state to roomTransition
-        currentState = currentState.roomTransition;
-
+    public void mainMenuState()
+    {
+        state = currentState.mainMenu;
         // set player to inactive
         // set enemies to inactive
-        // set camera to follow player
-        // load new room
-        // set player to active
-        // set enemies to active
-        // set state to start
+        // load main menu screen
+    }
 
+    /// <summary>   
+    /// Sets the game to the pause state.
+    /// </summary>
+    public void pauseState()
+    {
+        state = currentState.pause;
+        // freeze player and enemies (e.g. Time.timeScale = 0f)
+        // show pause menu
+    }
+
+
+    /// <summary>
+    /// Sets the game to the tutorial state.
+    /// </summary>
+    public void tutorialState()
+    {
+        state = currentState.tutorial;
+        // load tutorial room
+        // set player to active
+        // show tutorial prompts
     }
 
     /// <summary>
-    /// Handles the death state of the game, including setting the game state to death and managing the activation and deactivation of the player, enemies, and camera, as well as loading the death screen.
+    /// Sets the game to the loading state.
     /// </summary>
-    public void deathState() {
-        // set state to death
-        currentState = currentState.death;
+    public void loadingState()
+    {
+        state = currentState.loading;
+        // set player to inactive
         // set enemies to inactive
+        // show loading screen
+    }
+
+    /// <summary>
+    /// Sets the game to the in play state.
+    /// </summary>
+    public void inPlayState()
+    {
+        state = currentState.inPlay;
+        // unfreeze time (e.g. Time.timeScale = 1f)
+        // set player to active
+        // set enemies to active
         // set camera to follow player
+    }
+
+    /// <summary>
+    /// Handles the transition between rooms.
+    /// </summary>
+    public void roomTransitionState(GameObject beforeRoom, GameObject afterRoom)
+    {
+        state = currentState.roomTransition;
+        // set player to inactive
+        // set enemies to inactive
+        // set player to active
+        // set enemies to active
+        // then call inPlayState() in a conditional(player has entered the new room) 
+
+        // no need to worry about loading rooms since it should be preloaded before the game starts
+
+    }
+
+
+    //// <summary>
+    /// Sets the game to the win state.
+    /// </summary>
+    public void winState()
+    {
+        state = currentState.win;
+        // set enemies to inactive
+        // load win screen
+    }
+
+    /// <summary>
+    /// Handles the death state of the game.
+    /// </summary>
+    public void deathState()
+    {
+        state = currentState.death;
+        // set enemies to inactive
         // load death screen
     }
 
-    /// <summary>
-    /// Handles the restart state of the game, including setting the game state to restart and managing the activation and deactivation of the player, enemies, and camera, as well as loading the start screen.
-    /// </summary>
-    public void restartState() {
-        // set state to restart
-        currentState = currentState.restart;
-        // set player to inactive
-        // set enemies to inactive
-        // set camera to follow player idk if we need this
-        // load start screen
-        // set state to start
-    }
 
     /// <summary>
-    /// Handles the in play state of the game, including setting the game state to inPlay and managing the activation and deactivation of the player, enemies, and camera.
+    /// Restarts the game by returning to the main menu (there is no restart state in the enum).
     /// </summary>
-    public void inPlayState() {
-        // set state to inPlay
-        currentState = currentState.inPlay;
-        // set player to active
-        // set enemies to active
-        // set camera to follow player
+    public void restartState()
+    {
+        // reset run data (deck, lives, stage) here
+        mainMenuState();
     }
 
     /// <summary>
     /// Gets the current state of the game.     
     /// </summary>
     public void getCurrentState() {
-        return currentState;
+        return state;
     }
 
     /// <summary>
     /// Sets the current state of the game to the specified new state.
     /// </summary>
     public void setCurrentState(currentState newState) {
-        currentState = newState;
+        state = newState;
     }
 }
 
