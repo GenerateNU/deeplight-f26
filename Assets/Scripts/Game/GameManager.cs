@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -5,41 +6,121 @@ using UnityEngine;
 /// </summary>
 public class GameManager : MonoBehaviour 
 {
-    public StateManeger state; // Reference to the StateManeger component
+    public StateManager stateManager; // Reference to the StateManager component
+    [SerializeField] private GameObject currentRoom; // might be scripted objects with Vincint's code ?
+    [SerializeField] private GameObject nextRoom;
+    private GameState currentState; 
+    private bool firstPlayThrough = false;
+    private MetaProgression metaProgression; 
+    
 
     /// <summary>
     /// Start is called before the first frame update, sets the run state to start.
     /// </summary>
     void Start()
     {
-        StateManeger.setCurrentState(StateManeger.currentState.start);
+        stateManager.SetCurrentState(GameState.mainMenu);
+
+        // TODO, how will we set the current and next room for this class...
+        // do we get it from StateManager ?
     }
 
     /// <summary>
     /// Update is called once per frame, checks the current state and calls the appropriate method in RunState.
     /// </summary>
-    update() {
-        switch (state.getCurrentState()) {
-            case StateManeger.currentState.start:
-                state.startState();
-                break;
-            case StateManeger.currentState.inPlay:
-                state.inPlayState();
-                break;
-            case StateManeger.currentState.roomTransition:
-                state.roomTransitionState();
-                break;
-            case StateManeger.currentState.death:
-                state.deathState();
-                // add method in meta progression to update run count and other relevant stats
-                break;
-            case StateManeger.currentState.restart:
-                state.restartState();
-                break;
-            default:
-                Debug.LogWarning("Unhandled game state: " + state.getCurrentState());
-                break;
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
         }
+    }
+
+    // Methods called by other scripts: 
+
+    /// <summary>
+    /// Starts the run after pressing the Main menu play button.
+    /// </summary>
+    public void StartRun()
+    {
+        // reset run data (deck, lives, stage) ?
+        stateManager.SetCurrentState(GameState.loading);
+    }
+ 
+    /// <summary>
+    /// Starts the tutorial after pressing the tutorial button.
+    /// </summary>
+    public void StartTutorial()
+    {
+        stateManager.SetCurrentState(GameState.tutorial);
+    }
+
+    /// <summary>
+    /// Called when loading has finished.
+    /// </summary>
+    public void FinishedLoading()
+    {
+        stateManager.SetCurrentState(GameState.inPlay);
+    }
+    
+    /// <summary>
+    /// A method that sets the next room for the game.
+    /// Is called by a door between rooms. 
+    /// </summary>
+    /// <param name="room"></param>
+    public void SetUpRoomTransition(GameObject currentRoom, GameObject nextRoom)
+    {
+        this.currentRoom = currentRoom;
+        this.nextRoom = nextRoom; 
+    }
+    
+    /// <summary>
+    /// A method that is called when the player dies.
+    /// Should be called by the player's health script.
+    /// </summary>
+    public void PlayerDied()
+    {
+        stateManager.SetCurrentState(GameState.death);
+        metaProgression.RecordLoss();
+    }
+
+    /// <summary>
+    /// A method that is called when the player defeats the game. 
+    /// Called by the final room's exit.
+    /// </summary>
+    public void PlayerWonGame()
+    {
+        stateManager.SetCurrentState(GameState.win);
+        metaProgression.RecordWin();
+    }
+
+    /// <summary>
+    /// A method that is called when the player dies/wins the game and goes back to the menu.
+    /// </summary>
+    public void ReturnToMainMenu()
+    {
+        stateManager.SetCurrentState(GameState.mainMenu);
+    }
+
+    /// <summary>
+    /// A method that is called when an enemy dies.
+    /// </summary>
+    public void EnemyKilled()
+    {
+        metaProgression.RecordEnemyKill();
+    }
+
+    /// <summary>
+    /// A method that either pauses or unpauses the game depending on the current state.
+    /// </summary>
+    private void TogglePause()
+    {
+        GameState current = stateManager.GetCurrentState();
+ 
+        if (current == GameState.inPlay)
+            stateManager.SetCurrentState(GameState.pause);
+        else if (current == GameState.pause)
+            stateManager.SetCurrentState(GameState.inPlay);
     }
 }
 

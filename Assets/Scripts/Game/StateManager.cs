@@ -6,31 +6,14 @@ using UnityEngine;
 /// </summary>
 public class StateManager : MonoBehaviour 
 {
-
-    // todo: make seperate enum class???
-    /// Enum representing the different states of the game
-    public enum currentState
-    {
-        mainMenu,
-        pause, 
-        tutorial, 
-        loading,   
-        inPlay,
-        roomTransition, 
-        win,   
-        death  
-    }
-
-    private currentState state = currentState.mainMenu;
-
-
+    private GameState state = GameState.mainMenu;
 
     /// <summary>
     /// Sets the game to the main menu state.
     /// </summary>
-    public void mainMenuState()
+    public void MainMenuState()
     {
-        state = currentState.mainMenu;
+        state = GameState.mainMenu;
         // set player to inactive
         // set enemies to inactive
         // load main menu screen
@@ -39,9 +22,9 @@ public class StateManager : MonoBehaviour
     /// <summary>   
     /// Sets the game to the pause state.
     /// </summary>
-    public void pauseState()
+    public void PauseState()
     {
-        state = currentState.pause;
+        state = GameState.pause;
         // freeze player and enemies (e.g. Time.timeScale = 0f)
         // show pause menu
     }
@@ -50,9 +33,9 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the tutorial state.
     /// </summary>
-    public void tutorialState()
+    public void TutorialState()
     {
-        state = currentState.tutorial;
+        state = GameState.tutorial;
         // load tutorial room
         // set player to active
         // show tutorial prompts
@@ -61,9 +44,9 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the loading state.
     /// </summary>
-    public void loadingState()
+    public void LoadingState()
     {
-        state = currentState.loading;
+        state = GameState.loading;
         // set player to inactive
         // set enemies to inactive
         // show loading screen
@@ -72,9 +55,9 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the in play state.
     /// </summary>
-    public void inPlayState()
+    public void InPlayState()
     {
-        state = currentState.inPlay;
+        state = GameState.inPlay;
         // unfreeze time (e.g. Time.timeScale = 1f)
         // set player to active
         // set enemies to active
@@ -84,9 +67,9 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Handles the transition between rooms.
     /// </summary>
-    public void roomTransitionState(GameObject beforeRoom, GameObject afterRoom)
+    public void RoomTransitionState(GameObject beforeRoom, GameObject afterRoom)
     {
-        state = currentState.roomTransition;
+        state = GameState.roomTransition;
         // set player to inactive
         // set enemies to inactive
         // set player to active
@@ -97,13 +80,12 @@ public class StateManager : MonoBehaviour
 
     }
 
-
-    //// <summary>
+    /// <summary>
     /// Sets the game to the win state.
     /// </summary>
-    public void winState()
+    public void WinState()
     {
-        state = currentState.win;
+        state = GameState.win;
         // set enemies to inactive
         // load win screen
     }
@@ -111,36 +93,33 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Handles the death state of the game.
     /// </summary>
-    public void deathState()
+    public void DeathState()
     {
-        state = currentState.death;
+        state = GameState.death;
         // set enemies to inactive
         // load death screen
     }
 
-
     /// <summary>
     /// Restarts the game by returning to the main menu (there is no restart state in the enum).
     /// </summary>
-    public void restartState()
+    public void RestartState()
     {
         // reset run data (deck, lives, stage) here
-        mainMenuState();
+        MainMenuState();
     }
 
     /// <summary>
     /// Gets the current state of the game.     
     /// </summary>
-    public void getCurrentState() {
+    public GameState GetCurrentState() {
         return state;
     }
 
     /// <summary>
     /// Sets the current state of the game to the specified new state.
     /// </summary>
-    public void setCurrentState(currentState newState) {
+    public void SetCurrentState(GameState newState) {
         state = newState;
     }
 }
-
-
