@@ -26,7 +26,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float bottomClampAngle = -30f;
 
     [Header ("Sensitivity")]
-    [SerializeField] private float lookSensitivity = 10f;
+    [SerializeField] private float lookSensitivity = 0.15f;
 
     [Header ("Wall Handling")]
     [SerializeField] private float wallCheckDistance = 0.1f;
@@ -34,6 +34,8 @@ public class ThirdPersonController : MonoBehaviour
 
     [Header ("Other")]
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private float animatorRunningSpeed = 2.0f;
+    [SerializeField] private float animatorWalkingSpeed = 1.0f;
     public Animator playerAnimator;
 
     // Movement and Look Vectors //
@@ -59,8 +61,12 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary> 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
+        if (rb == null)
+        {
+            Debug.LogError("No Rigidbody found, disabling ThirdPersonController.");
+            enabled = false;
+            return;
+        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -174,7 +180,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
 
-        playerAnimator.speed = (isRunning ? 2.0f : 1.0f);
+        playerAnimator.speed = (isRunning ? animatorRunningSpeed : animatorWalkingSpeed);
 
         // Snap to zero when there's no input, otherwise ease toward the target speed. NECESSARY FOR ANIMATOR TO WORK
         if (move.sqrMagnitude < 0.01f)
@@ -200,6 +206,8 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
+        // TODO: currently gets overridden every tick, so having a dash or something 
+        // like that wont work. Look into having some kind of movement-locked state.
         Vector3 currentVelocity = rb.linearVelocity;
 
         if (moveDirection.sqrMagnitude > 0.01f)
@@ -236,9 +244,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         if (look.sqrMagnitude >= lookThreshold)
         {
-            float deltaTimeMultiplier = Time.deltaTime * lookSensitivity;
-            yaw += look.x * deltaTimeMultiplier;
-            pitch -= look.y * deltaTimeMultiplier;
+            yaw += look.x * lookSensitivity;
+            pitch -= look.y * lookSensitivity;
         }
 
         yaw = ClampAngle(yaw, float.MinValue, float.MaxValue);

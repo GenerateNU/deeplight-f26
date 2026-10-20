@@ -30,7 +30,7 @@ public class HealthComponent : MonoBehaviour
 
     }
 
-    //maybe temporary, since enemies dont shoot projectiles yet, deals damage when they run into player
+    //TODO: Temporary, since enemies dont shoot projectiles yet, deals damage when they run into player
     void OnCollisionEnter(Collision objectHit)
     {
         Debug.Log("collision detected");
