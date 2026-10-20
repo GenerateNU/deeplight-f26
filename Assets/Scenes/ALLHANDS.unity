@@ -6076,10 +6076,12 @@ MonoBehaviour:
   cameraTarget: {fileID: 2055630122}
   topClampAngle: 60
   bottomClampAngle: -30
-  lookSensitivity: 10
+  lookSensitivity: 5
   wallCheckDistance: 0.1
   maxWalkableNormalY: 0.7
   rb: {fileID: 501705140}
+  animatorRunningSpeed: 2
+  animatorWalkingSpeed: 1
   playerAnimator: {fileID: 2136781744}
 --- !u!114 &501705139
 MonoBehaviour:
