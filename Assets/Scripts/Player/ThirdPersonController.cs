@@ -8,31 +8,31 @@ using UnityEngine.InputSystem;
 /// Here we set fields like movement speed, look sensitivity, and check for ground collisions.
 /// </summary>
 public class ThirdPersonController : MonoBehaviour
-{   
-    [Header ("Stats")]
+{
+    [Header("Stats")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float jumpCooldown = 1f;
     [SerializeField] private float sprintMultiplier = 5f;
 
-    [Header ("Grounded")]
+    [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header ("Cinemachine")]
+    [Header("Cinemachine")]
     [SerializeField] private Transform cameraTarget;
     [SerializeField] private float topClampAngle = 60f;
     [SerializeField] private float bottomClampAngle = -30f;
 
-    [Header ("Sensitivity")]
+    [Header("Sensitivity")]
     [SerializeField] private float lookSensitivity = 5f;
 
-    [Header ("Wall Handling")]
+    [Header("Wall Handling")]
     [SerializeField] private float wallCheckDistance = 0.1f;
     [SerializeField] private float maxWalkableNormalY = 0.7f; // surfaces steeper than this count as walls
 
-    [Header ("Other")]
+    [Header("Other")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float animatorRunningSpeed = 2.0f;
     [SerializeField] private float animatorWalkingSpeed = 1.0f;
@@ -44,7 +44,7 @@ public class ThirdPersonController : MonoBehaviour
 
     // Camera Variables //
     private float yaw;
-    private float pitch;   
+    private float pitch;
     private const float lookThreshold = 0.01f;
 
     // Movement-Related Variables //
@@ -213,10 +213,10 @@ public class ThirdPersonController : MonoBehaviour
         if (moveDirection.sqrMagnitude > 0.01f)
         {
             Vector3 horizontalVelocity = moveDirection * currentSpeed;
-        
+
             // Look ahead for a wall so we don't keep pushing into it
             float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
-        
+
             if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
                 && hit.normal.y < maxWalkableNormalY)
             {
@@ -224,7 +224,7 @@ public class ThirdPersonController : MonoBehaviour
                 Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
                 horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
             }
-        
+
             rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
         }
         else

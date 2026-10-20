@@ -62,7 +62,8 @@ public abstract class EnemyBase : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (playerLocation == null) return;
+        if (playerLocation == null)
+            return;
         distanceFromPlayer = Vector3.Distance(transform.position, playerLocation.position);
 
         switch (currentState)
@@ -139,7 +140,7 @@ public abstract class EnemyBase : MonoBehaviour
             SetState(EnemyState.Chase);
         }
 
-        
+
         agent.isStopped = true;
         attackTimer += Time.deltaTime;
         //Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);

@@ -22,7 +22,7 @@ public class HealthComponent : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        if(healthBar)
+        if (healthBar)
         {
             healthBar.maxValue = maxHealth;
             healthBar.value = currentHealth;
@@ -35,10 +35,10 @@ public class HealthComponent : MonoBehaviour
     {
         Debug.Log("collision detected");
         Debug.Log(objectHit.gameObject.tag);
-        if(gameObject.CompareTag("Player") && objectHit.gameObject.CompareTag("Enemy"))
+        if (gameObject.CompareTag("Player") && objectHit.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("EnemyHitPlayer");
-            if(objectHit.gameObject.TryGetComponent<TestEnemy>(out TestEnemy enemyScript))
+            if (objectHit.gameObject.TryGetComponent<TestEnemy>(out TestEnemy enemyScript))
             {
                 TakeDamage(enemyScript.GetAttackDamage());
             }
@@ -57,12 +57,13 @@ public class HealthComponent : MonoBehaviour
     {
         int newHealth = currentHealth - damageVal;
 
-        if(healthBar)
+        if (healthBar)
         {
             healthBar.value = newHealth;
         }
 
-        if (newHealth > 0) {
+        if (newHealth > 0)
+        {
             currentHealth = newHealth;
         }
         else
@@ -75,7 +76,7 @@ public class HealthComponent : MonoBehaviour
     /// <summary>
     /// This method represents the behavior when player is dead 
     /// </summary>
-    private void OnDeath() 
+    private void OnDeath()
     {
         Debug.Log("Health is Zero!");
         //Just for allhands

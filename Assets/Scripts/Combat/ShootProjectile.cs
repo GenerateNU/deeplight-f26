@@ -8,8 +8,8 @@ using System.Collections.Generic;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] public float projectileSpeed = 5f; 
-    [SerializeField] public float projectileRange = 20f; 
+    [SerializeField] public float projectileSpeed = 5f;
+    [SerializeField] public float projectileRange = 20f;
 
     // Update is called once per frame
     void Update()
@@ -34,29 +34,29 @@ public class ShootProjectile : MonoBehaviour
     {
         GameObject projectile = ObjectPool.instance.GetPooledObject();
 
-        if(projectile)
+        if (projectile)
         {
             projectile.transform.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
             //projectile.SetActive(true); pool does this now 
 
-            if(rb)
+            if (rb)
             {
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
             }
-            
+
             // setting the base attributes of the projectile on the object itself so that information can be used and tampered with
             // after the projectile is spawned, if necessary
-            if(projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
+            if (projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
             {
-                if(this.gameObject.CompareTag("Player"))
+                if (this.gameObject.CompareTag("Player"))
                 {
                     pb.SetType("playerProjectile");
                 }
-                else if(this.gameObject.CompareTag("Enemy"))
+                else if (this.gameObject.CompareTag("Enemy"))
                 {
                     pb.SetType("enemyProjectile");
                 }
