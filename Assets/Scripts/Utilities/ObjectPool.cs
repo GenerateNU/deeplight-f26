@@ -11,8 +11,8 @@ public class ObjectPool : MonoBehaviour
     public static ObjectPool instance;
 
     [Header("Object Pool Settings")]
-    [SerializeField] private int startingCapacity = 50; 
-    [SerializeField] private int maxSize = 500; 
+    [SerializeField] private int startingCapacity = 50;
+    [SerializeField] private int maxSize = 500;
     [SerializeField] private GameObject objectPrefab; // Can later be turned into a list of projectile types for example
 
     private List<GameObject> pooledObjects = new List<GameObject>(); // Can later be turned into a dictionary of projectile types for example
@@ -32,7 +32,7 @@ public class ObjectPool : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        FillPool(); 
+        FillPool();
     }
 
     /// <summary>
@@ -68,8 +68,10 @@ public class ObjectPool : MonoBehaviour
     /// <param name="pooledObject"></param>
     public void ReturnPooledObject(GameObject pooledObject)
     {
-        if (pooledObject == null) return;
-        if (!pooledObject.activeSelf) return;
+        if (pooledObject == null)
+            return;
+        if (!pooledObject.activeSelf)
+            return;
 
         pooledObject.SetActive(false);
     }
@@ -95,11 +97,11 @@ public class ObjectPool : MonoBehaviour
     /// <returns>The count of inactive objects in ObjectPool.</returns>
     private int InactiveCount()
     {
-        int count = 0; 
+        int count = 0;
 
         foreach (GameObject obj in pooledObjects)
         {
-            if(!obj.activeSelf)
+            if (!obj.activeSelf)
             {
                 count++;
             }

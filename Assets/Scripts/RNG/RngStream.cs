@@ -22,7 +22,7 @@ public class RngStream
     /// maxExclusive
     /// </summary>
     public int Range(int minInclusive, int maxExclusive) => _rng.Next(minInclusive, maxExclusive);
-    
+
     /// <summary>
     /// Generates a decimal from 0 to 1
     /// </summary>

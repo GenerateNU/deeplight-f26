@@ -13,7 +13,7 @@ public class HealthBarFacePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player)
+        if (player)
         {
             Vector3 targetPosition = player.position;
 
