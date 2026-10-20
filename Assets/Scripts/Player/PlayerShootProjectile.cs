@@ -16,7 +16,7 @@ public class PlayerShootProjectile : MonoBehaviour
 
     [Header("Aiming")]
     [SerializeField] private Camera aimCamera;          // defaults to Camera.main
-    [SerializeField] private float spawnDistance = 5f;  // how far along the center ray the projectile appears
+    [SerializeField] private float spawnDistance = 2f;  // how far along the center ray the projectile appears
 
     //animation controller
     [SerializeField] private Animator playerAnimator;
