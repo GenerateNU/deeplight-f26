@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -7,11 +6,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour 
 {
     public StateManager stateManager; // Reference to the StateManager component
-    [SerializeField] private GameObject currentRoom; // might be scripted objects with Vincint's code ?
+    [SerializeField] private GameObject currentRoom; // TODO: Change to scripted object later
     [SerializeField] private GameObject nextRoom;
+    [SerializeField] private MetaProgression metaProgression;
     private GameState currentState; 
-    private bool firstPlayThrough = false;
-    private MetaProgression metaProgression; 
+    private bool firstPlayThrough = false; 
     
 
     /// <summary>
@@ -21,8 +20,7 @@ public class GameManager : MonoBehaviour
     {
         stateManager.SetCurrentState(GameState.mainMenu);
 
-        // TODO, how will we set the current and next room for this class...
-        // do we get it from StateManager ?
+        // TODO, how will we set the current and next room for this class...we get it from StateManager ?
     }
 
     /// <summary>
@@ -43,7 +41,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartRun()
     {
-        // reset run data (deck, lives, stage) ?
         stateManager.SetCurrentState(GameState.loading);
     }
  
@@ -52,7 +49,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartTutorial()
     {
-        stateManager.SetCurrentState(GameState.tutorial);
+        stateManager.SetState(GameState.tutorial);
     }
 
     /// <summary>
@@ -123,12 +120,3 @@ public class GameManager : MonoBehaviour
             stateManager.SetCurrentState(GameState.inPlay);
     }
 }
-
-
-
-
-
-
-
-
-
