@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //TODO: connect this functionality to a void onPuase function, put it into a different class called InputSystem with the other types of inputs in player input. 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
