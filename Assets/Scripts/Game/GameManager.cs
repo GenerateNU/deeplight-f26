@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        stateManager.SetCurrentState(GameState.mainMenu);
+        stateManager.SetState(GameState.mainMenu);
 
         // TODO, how will we set the current and next room for this class...we get it from StateManager ?
     }
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartRun()
     {
-        stateManager.SetCurrentState(GameState.loading);
+        stateManager.SetState(GameState.loading);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void FinishedLoading()
     {
-        stateManager.SetCurrentState(GameState.inPlay);
+        stateManager.SetState(GameState.inPlay);
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerDied()
     {
-        stateManager.SetCurrentState(GameState.death);
+        stateManager.SetState(GameState.death);
         metaProgression.RecordLoss();
     }
 
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerWonGame()
     {
-        stateManager.SetCurrentState(GameState.win);
+        stateManager.SetState(GameState.win);
         metaProgression.RecordWin();
     }
 
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
-        stateManager.SetCurrentState(GameState.mainMenu);
+        stateManager.SetState(GameState.mainMenu);
     }
 
     /// <summary>
@@ -116,8 +116,8 @@ public class GameManager : MonoBehaviour
         GameState current = stateManager.GetCurrentState();
 
         if (current == GameState.inPlay)
-            stateManager.SetCurrentState(GameState.pause);
+            stateManager.SetState(GameState.pause);
         else if (current == GameState.pause)
-            stateManager.SetCurrentState(GameState.inPlay);
+            stateManager.SetState(GameState.inPlay);
     }
 }

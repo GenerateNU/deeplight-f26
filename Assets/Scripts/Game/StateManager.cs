@@ -119,7 +119,35 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the current state of the game to the specified new state.
     /// </summary>
-    public void SetCurrentState(GameState newState) {
+    public void SetState(GameState newState) {
         state = newState;
-    }
+
+        //Switch case for each state to call corresponding method
+        switch (state)
+        {
+            case GameState.mainMenu:
+                MainMenuState(); 
+                break;
+            case GameState.pause:
+                PauseState(); 
+                break;
+            case GameState.tutorial:
+                TutorialState(); 
+                break;
+            case GameState.loading:
+                LoadingState(); 
+                break;
+            case GameState.inPlay:
+                InPlayState(); 
+                break;
+            case GameState.roomTransition:
+                RoomTransitionState(); 
+                break;
+            case GameState.win:
+                WinState(); 
+                break; 
+            case GameState.death:
+                DeathState(); 
+                break; 
+        }
 }
