@@ -330,7 +330,7 @@ MonoBehaviour:
   potionData: {fileID: 11400000, guid: 492cc09deba980344a4ce34cf4929935, type: 2}
   rarity: 1
   operation: 1
-  rngStreamsConfig: {fileID: 0}
+  rngStreamsConfig: {fileID: 11400000, guid: e1e8d3b28ceb04550ab30b6cfed98d58, type: 2}
 --- !u!4 &1511890092
 Transform:
   m_ObjectHideFlags: 0
