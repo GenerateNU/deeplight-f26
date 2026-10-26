@@ -6,17 +6,29 @@ public class ExampleTarotCard : TarotCard<GameObject>
 {
     public override string CardName
     {
-        get { return "The Fool"; }
+        get
+        {
+            Debug.Log("The Fool");
+            return "The Fool";
+        }
     }
 
     public override string CardDescription
     {
-        get { return "A new beginning. Affects the game objects it is applied to."; }
+        get
+        {
+            Debug.Log("A new beginning. Affects the game objects it is applied to.");
+            return "A new beginning. Affects the game objects it is applied to.";
+        }
     }
 
     public override CardRarity Rarity
     {
-        get { return CardRarity.Common; }
+        get
+        {
+            Debug.Log(CardRarity.Common);
+            return CardRarity.Common;
+        }
     }
 
     /// <summary>
