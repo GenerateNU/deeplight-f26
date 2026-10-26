@@ -3,6 +3,13 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
+/// A representation of a Tarot Card with a name, description, and rarity.
+///
+/// Each Tarot card will be a child of TarotCard and contain a special ability
+/// for the player. The logic for that ability is contained in the ApplyTarotCard
+/// method, which must be overriden by the child. Whichever objects are needed to
+/// apply the effects of the tarot card's ability should be included in the
+/// _objectsToManipulate list.
 ///
 /// </summary>
 /// <typeparam name="T">The game objects that will be manipulated by the card.</typeparam>
@@ -24,8 +31,6 @@ public abstract class TarotCard<T> : MonoBehaviour
         Rare,
         Epic
     }
-
-    // Methods:
 
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
