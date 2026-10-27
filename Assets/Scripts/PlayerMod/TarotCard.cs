@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using System.Collections.Generic;
 
 /// <summary>
 /// A representation of a Tarot Card with a name, description, and rarity.
@@ -8,15 +7,12 @@ using System.Collections.Generic;
 /// Each Tarot card will be a child of TarotCard and contain a special ability
 /// for the player. The logic for that ability is contained in the ApplyTarotCard
 /// method, which must be overriden by the child. Whichever objects are needed to
-/// apply the effects of the tarot card's ability should be included in the
-/// _objectsToManipulate list.
+/// apply the effects of the tarot card's ability should be added as an additional
+/// field that can be set elsewhere.
 ///
 /// </summary>
-/// <typeparam name="T">The game objects that will be manipulated by the card.</typeparam>
-public abstract class TarotCard<T> : MonoBehaviour
+public abstract class TarotCard : ScriptableObject
 {
-    [NonSerialized] protected List<T> _objectsToManipulate = new List<T>();
-
     public abstract String CardName { get; }
     public abstract String CardDescription { get; }
     public abstract CardRarity Rarity { get; }
@@ -35,6 +31,5 @@ public abstract class TarotCard<T> : MonoBehaviour
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    /// <param name="_objectsToManipulate">A list of game objects that the tarot card impacts.</param>
-    public abstract void ApplyTarotCard(List<T> _objectsToManipulate);
+    public abstract void ApplyTarotCard();
 }

@@ -1,8 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
-public class ExampleTarotCard : TarotCard<GameObject>
+/// <summary>
+/// Example implementation of a tarot card.
+/// </summary>
+[CreateAssetMenu(fileName = "TheFool", menuName = "Tarot/The Fool")]
+public class ExampleTarotCard : TarotCard
 {
     public override string CardName
     {
@@ -34,8 +36,7 @@ public class ExampleTarotCard : TarotCard<GameObject>
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    /// <param name="_objectsToManipulate">A list of game objects that the tarot card impacts.</param>
-    public override void ApplyTarotCard(List<GameObject> _objectsToManipulate)
+    public override void ApplyTarotCard()
     {
         Debug.Log("Tarot Activated!");
     }
