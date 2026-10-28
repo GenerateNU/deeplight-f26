@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec9480d37ea6754f91d7ed43d206926, type: 3}
+  m_Name: Example Room Datafile 2
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  minEnemyCount: 1
+  maxEnemyCount: 2
+  enemySpawnTable:
+  - prefab: {fileID: 7334210978069143095, guid: 283fd142ec6551744972b2469c528732, type: 3}
+    weight: 0.1
+  - prefab: {fileID: 6971022601207801563, guid: 57c27cef744990b4cbf125ca31595d26, type: 3}
+    weight: 0.15
+  - prefab: {fileID: 8928144524902162660, guid: 115ec9711ec819f49b61e5022b949c46, type: 3}
+    weight: 0.95
+  minItemCount: 2
+  maxItemCount: 3
+  itemSpawnTable:
+  - prefab: {fileID: 2446368247520795170, guid: 96f690bda80772447a0d3c2d78de65e8, type: 3}
+    weight: 0.1
+  - prefab: {fileID: 5747985965711578304, guid: 41bdd78310ce0bf4a9bdcccab9602123, type: 3}
+    weight: 0.2
+  - prefab: {fileID: 4142855329694506272, guid: 4fd5e8c26b12ed74f92ea7b3c331684c, type: 3}
+    weight: 0.3
+  - prefab: {fileID: 6879888933066494490, guid: 1fa5a166dfaf19440b33d2a0b705d027, type: 3}
+    weight: 0.5
