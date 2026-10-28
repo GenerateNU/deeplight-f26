@@ -65,7 +65,7 @@ public class ProjectileBehavior : MonoBehaviour
             projectileExplodeSFX.Play();
         if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            hc.TakeDamage(projectileDamage);
+            hc.Damage(projectileDamage);
         }
         DisableProjectile();
     }
