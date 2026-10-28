@@ -12,7 +12,6 @@ public class DestroyOnDeath : MonoBehaviour
     {
         health = GetComponent<HealthComponent>();
     }
-
     private void OnEnable()
     {
         health.OnDeath += HandleDeath;
