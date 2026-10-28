@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Functionality for spawning entities in rooms using a roomData file
+/// </summary>
 public class RoomSpawner : MonoBehaviour
 {
     [Header("Room Data File")]

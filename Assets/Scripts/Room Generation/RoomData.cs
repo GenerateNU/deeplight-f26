@@ -42,25 +42,33 @@ public class RoomData : ScriptableObject
         maxItemCount = Mathf.Max(minItemCount, maxItemCount);
 
         //if any non-enemy prefab is placed in the enemy spawn table, it's weight will be defaulted to 0
-        foreach (SpawnEntry entry in enemySpawnTable)
-        {
-            if (!entry.prefab.CompareTag("Enemy"))
-            {
-                entry.weight = 0f;
-            }
-        }
+        ZeroNonEntryWeights(enemySpawnTable, "Enemy");
 
         //if any non-item prefab is placed in the item spawn table, it's weight will be defaulted to 0
-        foreach (SpawnEntry entry in itemSpawnTable)
+        ZeroNonEntryWeights(itemSpawnTable, "Item");
+    }
+
+    /// <summary>
+    /// Sets the weight of any entry in a table of SpawnEntry to 0f if the entry isn't assigned the desired tag
+    /// </summary>
+    /// <param name="spawnTable"> the table being traversed
+    /// <param name="tableTag"> the tag each entry in the table is being compared to
+    private void ZeroNonEntryWeights(List<SpawnEntry> spawnTable, string tableTag)
+    {
+        if(spawnTable == null) { return; }
+
+        foreach (SpawnEntry entry in spawnTable)
         {
-            if (!entry.prefab.CompareTag("Item"))
+            if (entry == null) { continue; }
+
+            if (!entry.prefab.CompareTag(tableTag))
             {
                 entry.weight = 0f;
             }
         }
     }
 
-    // -------------------------------- SPWAN COUNTS -------------------------------- //
+    // -------------------------------- SPAWN COUNTS -------------------------------- //
 
     /// <summary>
     /// Random enemy count in [min, max] inclusive.
