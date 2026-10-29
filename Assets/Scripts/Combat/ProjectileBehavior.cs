@@ -44,7 +44,7 @@ public class ProjectileBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// This method destroys a projectile during a collision with the player. If colliding with the player, will call TakeDamage on the player's 
+    /// This method destroys a projectile during a collision with the player. If colliding with the player, will call Damage on the player's
     /// health component script. Projectile will be destroyed if shot by a player and hits an enemy, or shot by the enemy and hits a player.
     /// </summary>
     /// <param name="other"></param> Represents a collider object.
@@ -65,7 +65,7 @@ public class ProjectileBehavior : MonoBehaviour
             projectileExplodeSFX.Play();
         if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            hc.TakeDamage(projectileDamage);
+            hc.Damage(projectileDamage);
         }
         DisableProjectile();
     }
