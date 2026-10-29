@@ -2368,12 +2368,24 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: chaseMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: firePoint
       value: 
       objectReference: {fileID: 1990088037}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: attackRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: attackDamage
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: detectionRange
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: coreAttackPattern
