@@ -1,16 +1,23 @@
 using UnityEngine;
 
+/// <summary>
+/// A script for a prefab that heals the player on collision
+/// </summary>
 public class HealthPickup : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int healAmount = 20;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            if (other.TryGetComponent<HealthComponent>(out HealthComponent hc))
+            {
+                if (hc.Heal(healAmount) > 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
     }
 }
