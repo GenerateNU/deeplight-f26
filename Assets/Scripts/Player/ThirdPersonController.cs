@@ -233,8 +233,13 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         //USED FOR ANIMATOR, takes flat velocity ignoring acceleration, used for anim triggers
+        // USED FOR ANIMATOR
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         playerAnimator.SetFloat("playerSpeed", flatVelocity.magnitude);
+
+        // Direction relative to the player's facing (-1 to 1). Damped so blends are smooth.
+        playerAnimator.SetFloat("moveX", move.x, 0.1f, Time.fixedDeltaTime);
+        playerAnimator.SetFloat("moveY", move.y, 0.1f, Time.fixedDeltaTime);
     }
 
     /// <summary>

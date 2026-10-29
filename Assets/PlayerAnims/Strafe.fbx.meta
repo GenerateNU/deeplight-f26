@@ -1,0 +1,1532 @@
+fileFormatVersion: 2
+guid: a25f6d97a02bfa64383bef8fc557d6fd
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'CharacterDeeplight:RootPart2_M' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Spine1Part1_M'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Chest_M'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Neck2Part1_M'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:ShoulderPart2_R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:ElbowPart1_R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Wrist_R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:ShoulderPart2_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:ElbowPart1_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Wrist_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Hip_R'
+      has translation animation that will be discarded.\n\t'CharacterDeeplight:Hip_R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:HipPart2_R'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:Hip_L'
+      has translation animation that will be discarded.\n\t'CharacterDeeplight:Hip_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'CharacterDeeplight:HipPart2_L'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Strafe
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 1
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: CharacterDeeplight:Root_M
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:HipPart1_L
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:HipPart1_R
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Knee_L
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Knee_R
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Ankle_L
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Ankle_R
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RootPart1_M
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Spine1_M
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Neck2_M
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Neck2Part2_M
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Shoulder_L
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Shoulder_R
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ShoulderPart1_L
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ShoulderPart1_R
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Elbow_L
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Elbow_R
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ElbowPart2_L
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ElbowPart2_R
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Toes_L
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Toes_R
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Eye_L
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Eye_R
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Jaw_M
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger1_L
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger2_L
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger3_L
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger1_L
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger2_L
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger3_L
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger1_L
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger2_L
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger3_L
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger1_L
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger2_L
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger3_L
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger1_L
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger2_L
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger3_L
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger1_R
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger2_R
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:ThumbFinger3_R
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger1_R
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger2_R
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:IndexFinger3_R
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger1_R
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger2_R
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:MiddleFinger3_R
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger1_R
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger2_R
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:RingFinger3_R
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger1_R
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger2_R
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:PinkyFinger3_R
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CharacterDeeplight:Spine1Part2_M
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Strafe(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MotionSystem
+      parentName: Strafe(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKSystem
+      parentName: CharacterDeeplight:MotionSystem
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 56.633682, y: 56.633682, z: 56.633682}
+    - name: CharacterDeeplight:FKParentConstraintToChest_M
+      parentName: CharacterDeeplight:FKSystem
+      position: {x: 1.9100649e-18, y: 0.022731869, z: 0.0010093456}
+      rotation: {x: 0.54788506, y: -0.44701448, z: -0.54788506, w: 0.44701448}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetScapula_R
+      parentName: CharacterDeeplight:FKParentConstraintToChest_M
+      position: {x: -0.0008879613, y: -0.00025831323, z: -0.003162681}
+      rotation: {x: 0.07106088, y: -0.70359695, z: 0.07126785, w: 0.70343626}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraScapula_R
+      parentName: CharacterDeeplight:FKOffsetScapula_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKScapula_R
+      parentName: CharacterDeeplight:FKExtraScapula_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXScapula_R
+      parentName: CharacterDeeplight:FKScapula_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetShoulder_R
+      parentName: CharacterDeeplight:FKXScapula_R
+      position: {x: -0.0014011705, y: -3.0128676e-16, z: -6.217249e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.043018553, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraShoulder_R
+      parentName: CharacterDeeplight:FKOffsetShoulder_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKShoulder_R
+      parentName: CharacterDeeplight:FKExtraShoulder_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXShoulder_R
+      parentName: CharacterDeeplight:FKShoulder_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetElbow_R
+      parentName: CharacterDeeplight:FKXShoulder_R
+      position: {x: -0.0030445256, y: 0, z: 3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0.02666726, w: 0.9996444}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraElbow_R
+      parentName: CharacterDeeplight:FKOffsetElbow_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKElbow_R
+      parentName: CharacterDeeplight:FKExtraElbow_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXElbow_R
+      parentName: CharacterDeeplight:FKElbow_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetWrist_R
+      parentName: CharacterDeeplight:FKXElbow_R
+      position: {x: -0.0053253067, y: 6.661338e-18, z: -1.7763568e-17}
+      rotation: {x: -0.23890448, y: 0.053076886, z: -0.007022042, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraWrist_R
+      parentName: CharacterDeeplight:FKOffsetWrist_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKWrist_R
+      parentName: CharacterDeeplight:FKExtraWrist_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXWrist_R
+      parentName: CharacterDeeplight:FKWrist_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetScapula_L
+      parentName: CharacterDeeplight:FKParentConstraintToChest_M
+      position: {x: -0.0008879613, y: -0.00025831323, z: 0.003162681}
+      rotation: {x: 0.70359695, y: 0.07106088, z: 0.70343626, w: -0.07126785}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraScapula_L
+      parentName: CharacterDeeplight:FKOffsetScapula_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKScapula_L
+      parentName: CharacterDeeplight:FKExtraScapula_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXScapula_L
+      parentName: CharacterDeeplight:FKScapula_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetShoulder_L
+      parentName: CharacterDeeplight:FKXScapula_L
+      position: {x: 0.0014011705, y: 6.46011e-16, z: 5.3290704e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.043018553, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraShoulder_L
+      parentName: CharacterDeeplight:FKOffsetShoulder_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKShoulder_L
+      parentName: CharacterDeeplight:FKExtraShoulder_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXShoulder_L
+      parentName: CharacterDeeplight:FKShoulder_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetElbow_L
+      parentName: CharacterDeeplight:FKXShoulder_L
+      position: {x: 0.0030445256, y: 2.220446e-18, z: -3.5527136e-17}
+      rotation: {x: 0.000000014895862, y: -3.973731e-10, z: -0.02666726, w: 0.9996444}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraElbow_L
+      parentName: CharacterDeeplight:FKOffsetElbow_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKElbow_L
+      parentName: CharacterDeeplight:FKExtraElbow_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXElbow_L
+      parentName: CharacterDeeplight:FKElbow_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetWrist_L
+      parentName: CharacterDeeplight:FKXElbow_L
+      position: {x: 0.0053253067, y: -1.3322676e-17, z: 1.3322676e-17}
+      rotation: {x: -0.23890448, y: 0.053076886, z: -0.007022042, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraWrist_L
+      parentName: CharacterDeeplight:FKOffsetWrist_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKWrist_L
+      parentName: CharacterDeeplight:FKExtraWrist_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXWrist_L
+      parentName: CharacterDeeplight:FKWrist_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKParentConstraintToRoot_M
+      parentName: CharacterDeeplight:FKSystem
+      position: {x: 1.6891365e-18, y: 0.013319332, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetHip_R
+      parentName: CharacterDeeplight:FKParentConstraintToRoot_M
+      position: {x: 0.0002628281, y: -0.00008736477, z: -0.0021969595}
+      rotation: {x: 0.050472174, y: -0.5157157, z: 0.8550007, w: 0.021534424}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraHip_R
+      parentName: CharacterDeeplight:FKOffsetHip_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKHip_R
+      parentName: CharacterDeeplight:FKExtraHip_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXHip_R
+      parentName: CharacterDeeplight:FKHip_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetKnee_R
+      parentName: CharacterDeeplight:FKXHip_R
+      position: {x: -0.0067377547, y: -2.7755575e-19, z: 1.6653345e-18}
+      rotation: {x: 0, y: 0, z: 0.021652794, w: 0.9997656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraKnee_R
+      parentName: CharacterDeeplight:FKOffsetKnee_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKKnee_R
+      parentName: CharacterDeeplight:FKExtraKnee_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXKnee_R
+      parentName: CharacterDeeplight:FKKnee_R
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetHip_L
+      parentName: CharacterDeeplight:FKParentConstraintToRoot_M
+      position: {x: 0.0002628281, y: -0.00008736477, z: 0.0021969595}
+      rotation: {x: -0.5157157, y: -0.050472174, z: -0.021534422, w: 0.8550007}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraHip_L
+      parentName: CharacterDeeplight:FKOffsetHip_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKHip_L
+      parentName: CharacterDeeplight:FKExtraHip_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXHip_L
+      parentName: CharacterDeeplight:FKHip_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKOffsetKnee_L
+      parentName: CharacterDeeplight:FKXHip_L
+      position: {x: 0.0067377547, y: 6.1062266e-18, z: -6.1062266e-18}
+      rotation: {x: 0, y: 0, z: 0.021652794, w: 0.9997656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKExtraKnee_L
+      parentName: CharacterDeeplight:FKOffsetKnee_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKKnee_L
+      parentName: CharacterDeeplight:FKExtraKnee_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKXKnee_L
+      parentName: CharacterDeeplight:FKKnee_L
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKSystem
+      parentName: CharacterDeeplight:MotionSystem
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKJoints
+      parentName: CharacterDeeplight:IKSystem
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 56.633682, y: 56.633682, z: 56.633682}
+    - name: CharacterDeeplight:IKParentConstraintShoulder_R
+      parentName: CharacterDeeplight:IKJoints
+      position: {x: 0.003162681, y: 0.023653606, z: 0.00093451364}
+      rotation: {x: 0.00018054793, y: 0.706944, z: 0.7072695, w: -0.000041576033}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXOffsetShoulder_R
+      parentName: CharacterDeeplight:IKParentConstraintShoulder_R
+      position: {x: -0.0014011705, y: -1.9595436e-16, z: -6.217249e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.043018553, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXShoulder_R
+      parentName: CharacterDeeplight:IKXOffsetShoulder_R
+      position: {x: -0, y: -2.220446e-18, z: 0}
+      rotation: {x: -0.0000000074462903, y: 2.5281613e-10, z: 7.908909e-24, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXElbow_R
+      parentName: CharacterDeeplight:IKXShoulder_R
+      position: {x: -0.0030445256, y: 6.661338e-18, z: 3.1086245e-17}
+      rotation: {x: 1.8724368e-21, y: 1.670766e-19, z: -0.026666638, w: 0.9996444}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXWrist_R
+      parentName: CharacterDeeplight:IKXElbow_R
+      position: {x: -0.0053253067, y: 8.881784e-18, z: -2.2204459e-17}
+      rotation: {x: -0.23890445, y: 0.053077035, z: -0.0070226425, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKParentConstraintHip_R
+      parentName: CharacterDeeplight:IKJoints
+      position: {x: 1.6891365e-18, y: 0.013319332, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXOffsetHip_R
+      parentName: CharacterDeeplight:IKParentConstraintHip_R
+      position: {x: 0.0002628281, y: -0.00008736477, z: -0.0021969595}
+      rotation: {x: 0.050472174, y: -0.5157157, z: 0.8550007, w: 0.021534424}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXHip_R
+      parentName: CharacterDeeplight:IKXOffsetHip_R
+      position: {x: 4.440892e-18, y: 2.7755575e-19, z: -1.110223e-18}
+      rotation: {x: -0.8503541, y: -0.014573674, z: 2.671296e-16, w: 0.52600914}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXKnee_R
+      parentName: CharacterDeeplight:IKXHip_R
+      position: {x: -0.0067377547, y: -2.220446e-18, z: 3.8857806e-18}
+      rotation: {x: 3.3639104e-24, y: -1.5532053e-22, z: 0.021652807, w: 0.9997656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKParentConstraintShoulder_L
+      parentName: CharacterDeeplight:IKJoints
+      position: {x: -0.003162681, y: 0.023653606, z: 0.00093451364}
+      rotation: {x: 0.000041575684, y: 0.7072695, z: -0.706944, w: 0.0001805464}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXOffsetShoulder_L
+      parentName: CharacterDeeplight:IKParentConstraintShoulder_L
+      position: {x: 0.0014011705, y: 3.3348322e-16, z: 6.217249e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.043018553, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXShoulder_L
+      parentName: CharacterDeeplight:IKXOffsetShoulder_L
+      position: {x: 5.551115e-19, y: 2.220446e-18, z: 0}
+      rotation: {x: 0.000000012897353, y: -4.3789036e-10, z: -6.860216e-24, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXElbow_L
+      parentName: CharacterDeeplight:IKXShoulder_L
+      position: {x: 0.0030445256, y: -2.220446e-18, z: -2.2204459e-17}
+      rotation: {x: 0.00000001485352, y: -3.9623435e-10, z: -0.026666638, w: 0.9996444}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXWrist_L
+      parentName: CharacterDeeplight:IKXElbow_L
+      position: {x: 0.0053253067, y: -6.661338e-18, z: 1.7763568e-17}
+      rotation: {x: -0.23890445, y: 0.05307703, z: -0.0070226435, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKParentConstraintHip_L
+      parentName: CharacterDeeplight:IKJoints
+      position: {x: 1.6891365e-18, y: 0.013319332, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXOffsetHip_L
+      parentName: CharacterDeeplight:IKParentConstraintHip_L
+      position: {x: 0.0002628281, y: -0.00008736477, z: 0.0021969595}
+      rotation: {x: -0.5157157, y: -0.050472174, z: -0.021534422, w: 0.8550007}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXHip_L
+      parentName: CharacterDeeplight:IKXOffsetHip_L
+      position: {x: -2.220446e-18, y: 0, z: -5.551115e-19}
+      rotation: {x: -0.8344406, y: -0.014300942, z: 6.203174e-16, w: 0.55091244}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IKXKnee_L
+      parentName: CharacterDeeplight:IKXHip_L
+      position: {x: 0.0067377547, y: 6.661338e-18, z: -4.440892e-18}
+      rotation: {x: 8.981735e-24, y: 5.9691533e-23, z: 0.021652807, w: 0.9997656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKSystem
+      parentName: CharacterDeeplight:MotionSystem
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 56.633682, y: 56.633682, z: 56.633682}
+    - name: CharacterDeeplight:FKIKParentConstraintArm_R
+      parentName: CharacterDeeplight:FKIKSystem
+      position: {x: 0.003162681, y: 0.023653606, z: 0.00093451364}
+      rotation: {x: 0.00018054793, y: 0.706944, z: 0.7072695, w: -0.000041576033}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKArm_R
+      parentName: CharacterDeeplight:FKIKParentConstraintArm_R
+      position: {x: -0.0034234696, y: -0.00033680256, z: 0.00092767266}
+      rotation: {x: 0.00018054793, y: 0.706944, z: 0.7072695, w: 0.000041576033}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKParentConstraintLeg_R
+      parentName: CharacterDeeplight:FKIKSystem
+      position: {x: 1.6891365e-18, y: 0.013319332, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKLeg_R
+      parentName: CharacterDeeplight:FKIKParentConstraintLeg_R
+      position: {x: 0.0020511213, y: 0.0012630497, z: -0.0030947535}
+      rotation: {x: -0.48223174, y: 0.5171582, z: 0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKParentConstraintArm_L
+      parentName: CharacterDeeplight:FKIKSystem
+      position: {x: -0.003162681, y: 0.023653606, z: 0.00093451364}
+      rotation: {x: 0.000041575684, y: 0.7072695, z: -0.706944, w: 0.0001805464}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKArm_L
+      parentName: CharacterDeeplight:FKIKParentConstraintArm_L
+      position: {x: 0.0034234696, y: 0.00033680256, z: -0.00092767266}
+      rotation: {x: 0.000041575684, y: 0.7072695, z: -0.706944, w: -0.0001805464}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKParentConstraintLeg_L
+      parentName: CharacterDeeplight:FKIKSystem
+      position: {x: 1.6891365e-18, y: 0.013319332, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:FKIKLeg_L
+      parentName: CharacterDeeplight:FKIKParentConstraintLeg_L
+      position: {x: 0.0020511213, y: 0.0012630497, z: 0.0030947535}
+      rotation: {x: -0.48223174, y: 0.5171582, z: 0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:DeformationSystem
+      parentName: Strafe(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 56.633682, y: 56.633682, z: 56.633682}
+    - name: CharacterDeeplight:Root_M
+      parentName: CharacterDeeplight:DeformationSystem
+      position: {x: 1.6891364e-18, y: 0.012464317, z: 0.0012434409}
+      rotation: {x: 0.48223174, y: -0.5171582, z: -0.48223174, w: 0.5171582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RootPart1_M
+      parentName: CharacterDeeplight:Root_M
+      position: {x: -0.0014966857, y: 2.7755575e-19, z: -6.5424646e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RootPart2_M
+      parentName: CharacterDeeplight:RootPart1_M
+      position: {x: -0.0014966857, y: 1.110223e-18, z: -3.2191543e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Spine1_M
+      parentName: CharacterDeeplight:RootPart2_M
+      position: {x: -0.0014966857, y: 1.110223e-18, z: -9.657463e-19}
+      rotation: {x: 0, y: -0, z: -0.042962432, w: 0.9990767}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Spine1Part1_M
+      parentName: CharacterDeeplight:Spine1_M
+      position: {x: -0.0016446903, y: -1.3877787e-19, z: -6.0961877e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Spine1Part2_M
+      parentName: CharacterDeeplight:Spine1Part1_M
+      position: {x: -0.0016446903, y: -4.1633362e-19, z: -6.0961877e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Chest_M
+      parentName: CharacterDeeplight:Spine1Part2_M
+      position: {x: -0.0016446903, y: -5.551115e-19, z: -1.1427964e-18}
+      rotation: {x: 0, y: -0, z: -0.092866346, w: 0.9956786}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Neck2_M
+      parentName: CharacterDeeplight:Chest_M
+      position: {x: -0.0032544578, y: 5.551115e-19, z: 5.8820764e-18}
+      rotation: {x: 0, y: 0, z: 0.10966238, w: 0.9939689}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Neck2Part1_M
+      parentName: CharacterDeeplight:Neck2_M
+      position: {x: -0.00079149776, y: 0, z: 8.453337e-20}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Neck2Part2_M
+      parentName: CharacterDeeplight:Neck2Part1_M
+      position: {x: -0.00079149776, y: -8.3266725e-19, z: 8.453337e-20}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Head2_M
+      parentName: CharacterDeeplight:Neck2Part2_M
+      position: {x: -0.00079149776, y: -1.3877787e-18, z: -7.612739e-20}
+      rotation: {x: 0, y: -0, z: -0.04981996, w: 0.9987582}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:HeadEnd_M
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.0023102867, y: 9.714452e-19, z: 5.361678e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Eye_R
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.000395448, y: 0.0013212388, z: -0.00043899717}
+      rotation: {x: -0.102655776, y: -0.081318095, z: -0.5498651, w: 0.82492274}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:EyeEnd_R
+      parentName: CharacterDeeplight:Eye_R
+      position: {x: -0.0016294268, y: -4.440892e-18, z: -6.245004e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Jaw_M
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: 0.00031673274, y: 0.00054766703, z: -7.2987465e-19}
+      rotation: {x: 0, y: 0, z: -0.80708706, w: 0.59043247}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:JawEnd_M
+      parentName: CharacterDeeplight:Jaw_M
+      position: {x: -0.0024786573, y: -4.440892e-18, z: -2.7809525e-21}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Eye_L
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.000395448, y: 0.0013212388, z: 0.00043899717}
+      rotation: {x: 0.102655776, y: 0.081318095, z: -0.5498651, w: 0.82492274}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:EyeEnd_L
+      parentName: CharacterDeeplight:Eye_L
+      position: {x: -0.0016294268, y: 0, z: -1.7347235e-18}
+      rotation: {x: -5.3306573e-17, y: 4.0133578e-16, z: 1.1449175e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Hat_1
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.0022550276, y: -0.0014221567, z: 0.0007437203}
+      rotation: {x: 0.027897352, y: -0.011686935, z: 0.005459397, w: 0.9995276}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Hat_2
+      parentName: CharacterDeeplight:Hat_1
+      position: {x: 0.0007916242, y: -0.0033860616, z: 0.002465506}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_L
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.0013900349, y: 0.0030333507, z: 0.0032314328}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_L1
+      parentName: CharacterDeeplight:Dangle_L
+      position: {x: 0.0017304524, y: 0.00014221476, z: 0.0001338159}
+      rotation: {x: 2.7755576e-17, y: -1.6653345e-16, z: -1.3877789e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_L2
+      parentName: CharacterDeeplight:Dangle_L1
+      position: {x: 0.0019036342, y: 0.00021718543, z: 0.000050492512}
+      rotation: {x: 2.7755576e-17, y: -1.6653345e-16, z: -1.3877789e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_L3
+      parentName: CharacterDeeplight:Dangle_L2
+      position: {x: 0.0019083616, y: 0.00022848572, z: 0.000050865943}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_R
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.0013626629, y: 0.0026733647, z: -0.0038405468}
+      rotation: {x: 0.0008977375, y: -0.010923564, z: 3.4671807e-13, w: 0.99994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_R1
+      parentName: CharacterDeeplight:Dangle_R
+      position: {x: 0.0016725136, y: 0.0001223417, z: -0.00012976366}
+      rotation: {x: 0, y: -0, z: -1.110223e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_R2
+      parentName: CharacterDeeplight:Dangle_R1
+      position: {x: 0.0019707175, y: 0.00021821083, z: -0.00011185747}
+      rotation: {x: 0, y: -0, z: -1.110223e-16, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Dangle_R3
+      parentName: CharacterDeeplight:Dangle_R2
+      position: {x: 0.0018944558, y: 0.00015569315, z: -0.00006337405}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Hair
+      parentName: CharacterDeeplight:Head2_M
+      position: {x: -0.0007601833, y: 0.002785614, z: -0.00006469808}
+      rotation: {x: 0.5200739, y: -0.47908574, z: -0.5200739, w: -0.47908574}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Scapula_R
+      parentName: CharacterDeeplight:Chest_M
+      position: {x: -0.0008879613, y: -0.00025831323, z: -0.003162681}
+      rotation: {x: 0.07106084, y: -0.703597, z: 0.07126783, w: 0.7034363}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Shoulder_R
+      parentName: CharacterDeeplight:Scapula_R
+      position: {x: -0.0014011705, y: -1.9498291e-16, z: -6.217249e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.04301855, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ShoulderPart1_R
+      parentName: CharacterDeeplight:Shoulder_R
+      position: {x: -0.0010148418, y: -1.7763568e-17, z: 4.440892e-18}
+      rotation: {x: -0.000000029802312, y: 0.023366798, z: 0.011772261, w: 0.99965763}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ShoulderPart2_R
+      parentName: CharacterDeeplight:ShoulderPart1_R
+      position: {x: -0.0010148418, y: -1.7763568e-17, z: 4.440892e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Elbow_R
+      parentName: CharacterDeeplight:ShoulderPart2_R
+      position: {x: -0.0010148418, y: -8.881784e-18, z: 4.440892e-18}
+      rotation: {x: 0.00027935026, y: 0.010472888, z: -0.013656892, w: 0.9998519}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ElbowPart1_R
+      parentName: CharacterDeeplight:Elbow_R
+      position: {x: -0.0017751021, y: -2.2204459e-17, z: -2.6645352e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ElbowPart2_R
+      parentName: CharacterDeeplight:ElbowPart1_R
+      position: {x: -0.0017751021, y: -2.2204459e-17, z: -2.6645352e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Wrist_R
+      parentName: CharacterDeeplight:ElbowPart2_R
+      position: {x: -0.0017751021, y: -3.1086245e-17, z: -4.4408918e-17}
+      rotation: {x: -0.23890448, y: 0.053076886, z: -0.0070220404, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger1_R
+      parentName: CharacterDeeplight:Wrist_R
+      position: {x: -0.0020795257, y: -3.6385822e-18, z: -4.440892e-18}
+      rotation: {x: 0.0040566903, y: -0.05885996, z: 0.07268586, w: 0.9956083}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger2_R
+      parentName: CharacterDeeplight:MiddleFinger1_R
+      position: {x: -0.0004746985, y: 0, z: -8.881784e-18}
+      rotation: {x: -0.0002676819, y: 0.024146687, z: -0.021944985, w: 0.9994675}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger3_R
+      parentName: CharacterDeeplight:MiddleFinger2_R
+      position: {x: -0.00039938907, y: -5.551115e-19, z: 3.1086245e-17}
+      rotation: {x: -0.000019545501, y: 0.018942727, z: 0.020645967, w: 0.9996074}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger4_R
+      parentName: CharacterDeeplight:MiddleFinger3_R
+      position: {x: -0.00040817715, y: 0, z: -8.881784e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger1_R
+      parentName: CharacterDeeplight:Wrist_R
+      position: {x: -0.001329337, y: 0.0009576911, z: -0.000027317554}
+      rotation: {x: -0.40729317, y: 0.09949833, z: -0.30033538, w: 0.85674447}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger2_R
+      parentName: CharacterDeeplight:ThumbFinger1_R
+      position: {x: -0.0005728997, y: -2.2204459e-17, z: 4.440892e-18}
+      rotation: {x: -0.0061872266, y: -0.022741653, z: 0.030065823, w: 0.99927}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger3_R
+      parentName: CharacterDeeplight:ThumbFinger2_R
+      position: {x: -0.00036184068, y: -8.881784e-18, z: 6.661338e-18}
+      rotation: {x: -0.0061556483, y: -0.014876079, z: -0.037228055, w: 0.9991771}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger4_R
+      parentName: CharacterDeeplight:ThumbFinger3_R
+      position: {x: -0.0004318511, y: 0, z: -2.220446e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger1_R
+      parentName: CharacterDeeplight:Wrist_R
+      position: {x: -0.0021129237, y: 0.0004364397, z: -0.000020791238}
+      rotation: {x: 0.011702742, y: -0.04971664, z: 0.07649006, w: 0.99576133}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger2_R
+      parentName: CharacterDeeplight:IndexFinger1_R
+      position: {x: -0.00036958314, y: 5.551115e-19, z: 2.6645352e-17}
+      rotation: {x: -0.000050100967, y: 0.009922708, z: -0.0034341165, w: 0.99994487}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger3_R
+      parentName: CharacterDeeplight:IndexFinger2_R
+      position: {x: -0.00040456688, y: -5.551115e-19, z: -2.2204459e-17}
+      rotation: {x: -0.014518562, y: 0.028045168, z: 0.00011756953, w: 0.9995012}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger4_R
+      parentName: CharacterDeeplight:IndexFinger3_R
+      position: {x: -0.00042448635, y: 5.551115e-19, z: 1.3322676e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Cup_R
+      parentName: CharacterDeeplight:Wrist_R
+      position: {x: -0.00080235326, y: -0.0005668407, z: -0.000047738566}
+      rotation: {x: 0.046035554, y: 0.009795801, z: -0.13449146, w: 0.9897964}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger1_R
+      parentName: CharacterDeeplight:Cup_R
+      position: {x: -0.00079651416, y: -0.000548853, z: 0.00004870176}
+      rotation: {x: -0.06018439, y: -0.06657242, z: 0.20767629, w: 0.9740721}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger2_R
+      parentName: CharacterDeeplight:PinkyFinger1_R
+      position: {x: -0.00063581194, y: 6.245004e-19, z: 4.440892e-18}
+      rotation: {x: 0.0022877338, y: 0.00041641755, z: 0.0011375205, w: 0.99999666}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger3_R
+      parentName: CharacterDeeplight:PinkyFinger2_R
+      position: {x: -0.00036111634, y: 3.6082247e-18, z: 1.7763568e-17}
+      rotation: {x: 0.016406255, y: 0.018118097, z: -0.036297113, w: 0.99904215}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger4_R
+      parentName: CharacterDeeplight:PinkyFinger3_R
+      position: {x: -0.00046898614, y: -6.9388935e-19, z: -2.2204459e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger1_R
+      parentName: CharacterDeeplight:Cup_R
+      position: {x: -0.0010771983, y: -0.00020697273, z: 0.000014575228}
+      rotation: {x: -0.04128888, y: -0.042776342, z: 0.21409445, w: 0.97500205}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger2_R
+      parentName: CharacterDeeplight:RingFinger1_R
+      position: {x: -0.00061068486, y: 0, z: -1.3322676e-17}
+      rotation: {x: -0.0020062274, y: -0.00927224, z: -0.03610584, w: 0.999303}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger3_R
+      parentName: CharacterDeeplight:RingFinger2_R
+      position: {x: -0.00040422752, y: 4.1633362e-19, z: -8.881784e-18}
+      rotation: {x: 0.0030387396, y: 0.020942789, z: -0.005207941, w: 0.99976254}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger4_R
+      parentName: CharacterDeeplight:RingFinger3_R
+      position: {x: -0.00044578733, y: -1.3877787e-19, z: 4.440892e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Scapula_L
+      parentName: CharacterDeeplight:Chest_M
+      position: {x: -0.0008879613, y: -0.00025831323, z: 0.003162681}
+      rotation: {x: 0.70359695, y: 0.07106088, z: 0.70343626, w: -0.071267866}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Shoulder_L
+      parentName: CharacterDeeplight:Scapula_L
+      position: {x: 0.0014011705, y: 3.3265056e-16, z: 5.3290704e-17}
+      rotation: {x: 0.23146601, y: -0.050717235, z: -0.04301855, w: 0.97056717}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ShoulderPart1_L
+      parentName: CharacterDeeplight:Shoulder_L
+      position: {x: 0.0010148418, y: 9.7699626e-17, z: 3.5527136e-17}
+      rotation: {x: 0.000000029802319, y: 0.0233758, z: 0.011780255, w: 0.9996574}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ShoulderPart2_L
+      parentName: CharacterDeeplight:ShoulderPart1_L
+      position: {x: 0.0010148418, y: 9.7699626e-17, z: 3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Elbow_L
+      parentName: CharacterDeeplight:ShoulderPart2_L
+      position: {x: 0.0010148418, y: 1.02140514e-16, z: 3.9968027e-17}
+      rotation: {x: 0.00027941365, y: 0.010472763, z: -0.013654645, w: 0.99985194}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ElbowPart1_L
+      parentName: CharacterDeeplight:Elbow_L
+      position: {x: 0.0017751021, y: 1.6653345e-16, z: -2.8163249e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ElbowPart2_L
+      parentName: CharacterDeeplight:ElbowPart1_L
+      position: {x: 0.0017751021, y: 1.6653345e-16, z: -2.8163249e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Wrist_L
+      parentName: CharacterDeeplight:ElbowPart2_L
+      position: {x: 0.0017751021, y: 1.6209255e-16, z: -2.8163338e-12}
+      rotation: {x: -0.23890448, y: 0.053076886, z: -0.0070220404, w: 0.969566}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger1_L
+      parentName: CharacterDeeplight:Wrist_L
+      position: {x: 0.0020795257, y: 1.2620113e-18, z: 0}
+      rotation: {x: 0.004056705, y: -0.05885957, z: 0.0726851, w: 0.9956083}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger2_L
+      parentName: CharacterDeeplight:MiddleFinger1_L
+      position: {x: 0.0004746985, y: 1.110223e-18, z: 2.2204459e-17}
+      rotation: {x: -0.0002676819, y: 0.024146687, z: -0.021944985, w: 0.9994675}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger3_L
+      parentName: CharacterDeeplight:MiddleFinger2_L
+      position: {x: 0.00039938907, y: 1.6653345e-18, z: -3.5527136e-17}
+      rotation: {x: -0.000019545501, y: 0.018942727, z: 0.020645967, w: 0.9996074}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:MiddleFinger4_L
+      parentName: CharacterDeeplight:MiddleFinger3_L
+      position: {x: 0.00040817715, y: -5.551115e-19, z: 1.3322676e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger1_L
+      parentName: CharacterDeeplight:Wrist_L
+      position: {x: 0.001329337, y: -0.0009576911, z: 0.000027317554}
+      rotation: {x: -0.4072934, y: 0.09949774, z: -0.3003352, w: 0.8567445}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger2_L
+      parentName: CharacterDeeplight:ThumbFinger1_L
+      position: {x: 0.0005728997, y: -4.440892e-18, z: -2.220446e-18}
+      rotation: {x: -0.0061872266, y: -0.022741653, z: 0.030065823, w: 0.99927}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger3_L
+      parentName: CharacterDeeplight:ThumbFinger2_L
+      position: {x: 0.00036184068, y: 8.881784e-18, z: -2.220446e-18}
+      rotation: {x: -0.006155429, y: -0.014874343, z: -0.03722085, w: 0.9991774}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ThumbFinger4_L
+      parentName: CharacterDeeplight:ThumbFinger3_L
+      position: {x: 0.0004318511, y: -8.881784e-18, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger1_L
+      parentName: CharacterDeeplight:Wrist_L
+      position: {x: 0.0021129237, y: -0.0004364397, z: 0.000020791238}
+      rotation: {x: 0.011702728, y: -0.049716767, z: 0.076490425, w: 0.99576133}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger2_L
+      parentName: CharacterDeeplight:IndexFinger1_L
+      position: {x: 0.00036958314, y: -5.551115e-19, z: 0}
+      rotation: {x: -0.000050100967, y: 0.009922708, z: -0.0034341165, w: 0.99994487}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger3_L
+      parentName: CharacterDeeplight:IndexFinger2_L
+      position: {x: 0.00040456688, y: -1.6653345e-18, z: 1.3322676e-17}
+      rotation: {x: -0.014518562, y: 0.028045168, z: 0.00011756953, w: 0.9995012}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:IndexFinger4_L
+      parentName: CharacterDeeplight:IndexFinger3_L
+      position: {x: 0.00042448635, y: -5.551115e-19, z: -1.7763568e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Cup_L
+      parentName: CharacterDeeplight:Wrist_L
+      position: {x: 0.00080235326, y: 0.0005668407, z: 0.000047738566}
+      rotation: {x: 0.046035554, y: 0.009795801, z: -0.13449146, w: 0.9897964}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger1_L
+      parentName: CharacterDeeplight:Cup_L
+      position: {x: 0.00079651416, y: 0.000548853, z: -0.00004870176}
+      rotation: {x: -0.06018447, y: -0.066572234, z: 0.20767549, w: 0.9740723}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger2_L
+      parentName: CharacterDeeplight:PinkyFinger1_L
+      position: {x: 0.00063581194, y: 2.7755575e-19, z: -8.881784e-18}
+      rotation: {x: 0.0022877338, y: 0.00041641755, z: 0.0011375205, w: 0.99999666}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger3_L
+      parentName: CharacterDeeplight:PinkyFinger2_L
+      position: {x: 0.00036111634, y: -3.7470024e-18, z: 4.440892e-18}
+      rotation: {x: 0.01640639, y: 0.01811997, z: -0.03629508, w: 0.99904215}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:PinkyFinger4_L
+      parentName: CharacterDeeplight:PinkyFinger3_L
+      position: {x: 0.00046898614, y: 7.8062554e-19, z: 2.2204459e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger1_L
+      parentName: CharacterDeeplight:Cup_L
+      position: {x: 0.0010771983, y: 0.00020697273, z: -0.000014575228}
+      rotation: {x: -0.041288868, y: -0.042776626, z: 0.21409565, w: 0.9750018}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger2_L
+      parentName: CharacterDeeplight:RingFinger1_L
+      position: {x: 0.00061068486, y: 1.110223e-18, z: 2.6645352e-17}
+      rotation: {x: -0.0020062274, y: -0.00927224, z: -0.03610584, w: 0.999303}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger3_L
+      parentName: CharacterDeeplight:RingFinger2_L
+      position: {x: 0.00040422752, y: 0, z: -2.2204459e-17}
+      rotation: {x: 0.0030387396, y: 0.020942789, z: -0.005207941, w: 0.99976254}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:RingFinger4_L
+      parentName: CharacterDeeplight:RingFinger3_L
+      position: {x: 0.00044578733, y: 2.7755575e-19, z: -8.881784e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Hip_R
+      parentName: CharacterDeeplight:Root_M
+      position: {x: 0.0002628281, y: -0.00008736477, z: -0.0021969595}
+      rotation: {x: 0.05062996, y: -0.51645154, z: 0.85478985, w: 0.0069813672}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:HipPart1_R
+      parentName: CharacterDeeplight:Hip_R
+      position: {x: -0.0022459184, y: 1.6653345e-18, z: -5.551115e-19}
+      rotation: {x: -0.33249053, y: 0, z: -0, w: 0.9431066}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:HipPart2_R
+      parentName: CharacterDeeplight:HipPart1_R
+      position: {x: -0.0022459184, y: 1.6653345e-18, z: -5.551115e-19}
+      rotation: {x: -0.33249053, y: 0, z: -0, w: 0.9431066}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Knee_R
+      parentName: CharacterDeeplight:HipPart2_R
+      position: {x: -0.0022459184, y: -5.551115e-19, z: 3.0531133e-18}
+      rotation: {x: -0.3324127, y: 0.0071993535, z: 0.020420907, w: 0.94288546}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Ankle_R
+      parentName: CharacterDeeplight:Knee_R
+      position: {x: -0.0044119246, y: 0, z: -5.551115e-19}
+      rotation: {x: 0.054381516, y: -0.043664988, z: 0.03699055, w: 0.99687904}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Toes_R
+      parentName: CharacterDeeplight:Ankle_R
+      position: {x: -0.00085528573, y: 0.0051383055, z: 7.6841756e-13}
+      rotation: {x: 0.032833483, y: 0.02470403, z: -0.4931639, w: 0.86896557}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ToesEnd_R
+      parentName: CharacterDeeplight:Toes_R
+      position: {x: -0.0015718378, y: 1.110223e-18, z: -5.551115e-19}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Hip_L
+      parentName: CharacterDeeplight:Root_M
+      position: {x: 0.0002628281, y: -0.00008736477, z: 0.0021969595}
+      rotation: {x: -0.5164351, y: -0.051049016, z: -0.0072647235, w: 0.85477257}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:HipPart1_L
+      parentName: CharacterDeeplight:Hip_L
+      position: {x: 0.0022459184, y: -2.4980017e-18, z: -1.6653345e-18}
+      rotation: {x: -0.32318258, y: 0, z: -0, w: 0.9463367}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:HipPart2_L
+      parentName: CharacterDeeplight:HipPart1_L
+      position: {x: 0.0022459184, y: -2.4980017e-18, z: -1.6653345e-18}
+      rotation: {x: -0.32318258, y: 0, z: -0, w: 0.9463367}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Knee_L
+      parentName: CharacterDeeplight:HipPart2_L
+      position: {x: 0.0022459184, y: 3.8857806e-18, z: -2.359224e-18}
+      rotation: {x: -0.32310677, y: 0.0069978083, z: 0.020490846, w: 0.9461148}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Ankle_L
+      parentName: CharacterDeeplight:Knee_L
+      position: {x: 0.0044119246, y: 5.5511148e-18, z: -3.330669e-18}
+      rotation: {x: 0.024937034, y: -0.041782223, z: 0.03822227, w: 0.9980839}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Toes_L
+      parentName: CharacterDeeplight:Ankle_L
+      position: {x: 0.00085528573, y: -0.0051383055, z: -6.8975766e-13}
+      rotation: {x: 0.032833483, y: 0.02470403, z: -0.4931639, w: 0.86896557}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:ToesEnd_L
+      parentName: CharacterDeeplight:Toes_L
+      position: {x: 0.0015718378, y: 1.110223e-18, z: 0}
+      rotation: {x: 0.000000012904785, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Cloth1
+      parentName: CharacterDeeplight:Root_M
+      position: {x: -0.00030724777, y: 0.0035431283, z: 9.663891e-18}
+      rotation: {x: 2.7755576e-17, y: 2.7755576e-17, z: -2.7755576e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Cloth2
+      parentName: CharacterDeeplight:Cloth1
+      position: {x: 0.0044609276, y: 0.00020857588, z: -6.8806968e-18}
+      rotation: {x: 2.7755576e-17, y: 2.7755576e-17, z: -2.7755576e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: CharacterDeeplight:Cloth3
+      parentName: CharacterDeeplight:Cloth2
+      position: {x: 0.005214615, y: 0.00004925683, z: 2.3266911e-18}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
