@@ -24,7 +24,8 @@ public class HealthComponent : MonoBehaviour
     {
         int newHealth = currentHealth - damageVal;
 
-        if (newHealth > 0) {
+        if (newHealth > 0)
+        {
             currentHealth = newHealth;
         }
         else
@@ -37,7 +38,7 @@ public class HealthComponent : MonoBehaviour
     /// <summary>
     /// This method represents the behavior when player is dead 
     /// </summary>
-    private void OnDeath() 
+    private void OnDeath()
     {
         Debug.Log("Health is Zero!");
     }

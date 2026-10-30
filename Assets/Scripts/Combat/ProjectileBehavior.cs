@@ -11,7 +11,7 @@ public class ProjectileBehavior : MonoBehaviour
     /// <param name="other"></param> Represents a collider object.
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Target"))
+        if (other.CompareTag("Target"))
         {
             DestroyProjectile();
         }

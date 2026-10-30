@@ -8,27 +8,27 @@ using UnityEngine.InputSystem;
 /// Here we set fields like movement speed, look sensitivity, and check for ground collisions.
 /// </summary>
 public class ThirdPersonController : MonoBehaviour
-{   
-    [Header ("Stats")]
+{
+    [Header("Stats")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float jumpCooldown = 1f;
     [SerializeField] private float sprintMultiplier = 5f;
 
-    [Header ("Grounded")]
+    [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header ("Cinemachine")]
+    [Header("Cinemachine")]
     [SerializeField] private Transform cameraTarget;
     [SerializeField] private float topClampAngle = 60f;
     [SerializeField] private float bottomClampAngle = -30f;
 
-    [Header ("Sensitivity")]
+    [Header("Sensitivity")]
     [SerializeField] private float lookSensitivity = 10f;
 
-    [Header ("Other")]
+    [Header("Other")]
     [SerializeField] private Rigidbody rb;
 
     // Movement and Look Vectors //
@@ -37,7 +37,7 @@ public class ThirdPersonController : MonoBehaviour
 
     // Camera Variables //
     private float yaw;
-    private float pitch;   
+    private float pitch;
     private const float lookThreshold = 0.01f;
 
     // Movement-Related Variables //

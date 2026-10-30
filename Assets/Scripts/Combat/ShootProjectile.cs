@@ -6,10 +6,10 @@ using UnityEngine;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float projectileSpeed = 5f; 
-    
+    [SerializeField] private float projectileSpeed = 5f;
+
     // TODO: Add projectileRange logic
-    [SerializeField] private float projectileRange = 20f; 
+    [SerializeField] private float projectileRange = 20f;
 
     [SerializeField] private GameObject projectile;
 
@@ -36,12 +36,12 @@ public class ShootProjectile : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        if(projectile)
+        if (projectile)
         {
             GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
             Rigidbody rb = projectileObject.GetComponent<Rigidbody>();
 
-            if(rb)
+            if (rb)
             {
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
             }

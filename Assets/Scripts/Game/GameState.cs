@@ -6,11 +6,11 @@ using UnityEngine;
 public enum GameState
 {
     mainMenu,
-    pause, 
-    tutorial, 
-    loading,   
+    pause,
+    tutorial,
+    loading,
     inPlay,
-    roomTransition, 
-    win,   
-    death  
+    roomTransition,
+    win,
+    death
 }

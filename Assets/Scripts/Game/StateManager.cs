@@ -4,7 +4,7 @@ using UnityEngine;
 /// A class that manages the current state of the game, including transitions between menu, tutorial,
 /// loading, play, room transitions, win, and death.
 /// </summary>
-public class StateManager : MonoBehaviour 
+public class StateManager : MonoBehaviour
 {
     private GameState state = GameState.mainMenu;
 
@@ -112,42 +112,44 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Gets the current state of the game.     
     /// </summary>
-    public GameState GetCurrentState() {
+    public GameState GetCurrentState()
+    {
         return state;
     }
 
     /// <summary>
     /// Sets the current state of the game to the specified new state.
     /// </summary>
-    public void SetState(GameState newState) {
+    public void SetState(GameState newState)
+    {
         state = newState;
 
         //Switch case for each state to call corresponding method
         switch (state)
         {
             case GameState.mainMenu:
-                MainMenuState(); 
+                MainMenuState();
                 break;
             case GameState.pause:
-                PauseState(); 
+                PauseState();
                 break;
             case GameState.tutorial:
-                TutorialState(); 
+                TutorialState();
                 break;
             case GameState.loading:
-                LoadingState(); 
+                LoadingState();
                 break;
             case GameState.inPlay:
-                InPlayState(); 
+                InPlayState();
                 break;
             case GameState.roomTransition:
-                RoomTransitionState(); 
+                RoomTransitionState();
                 break;
             case GameState.win:
-                WinState(); 
-                break; 
+                WinState();
+                break;
             case GameState.death:
-                DeathState(); 
-                break; 
+                DeathState();
+                break;
         }
-}
+    }
