@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// This class deals with the behavior of shooting a projectile.
@@ -10,6 +11,7 @@ public class ShootProjectile : MonoBehaviour
     [Header("Projectile Settings")]
     [SerializeField] public float projectileSpeed = 5f;
     [SerializeField] public float projectileRange = 20f;
+    public event Action OnPlayerShoot;
 
     // Update is called once per frame
     void Update()
@@ -55,6 +57,7 @@ public class ShootProjectile : MonoBehaviour
                 if (this.gameObject.CompareTag("Player"))
                 {
                     pb.SetType("playerProjectile");
+                    OnPlayerShoot?.Invoke();
                 }
                 else if (this.gameObject.CompareTag("Enemy"))
                 {
