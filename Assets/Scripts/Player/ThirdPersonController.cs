@@ -26,10 +26,17 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float bottomClampAngle = -30f;
 
     [Header("Sensitivity")]
-    [SerializeField] private float lookSensitivity = 10f;
+    [SerializeField] private float lookSensitivity = 5f;
+
+    [Header("Wall Handling")]
+    [SerializeField] private float wallCheckDistance = 0.1f;
+    [SerializeField] private float maxWalkableNormalY = 0.7f; // surfaces steeper than this count as walls
 
     [Header("Other")]
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private float animatorRunningSpeed = 2.0f;
+    [SerializeField] private float animatorWalkingSpeed = 1.0f;
+    public Animator playerAnimator;
 
     // Movement and Look Vectors //
     private Vector2 move;
@@ -54,8 +61,12 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary> 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
+        if (rb == null)
+        {
+            Debug.LogError("No Rigidbody found, disabling ThirdPersonController.");
+            enabled = false;
+            return;
+        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -119,6 +130,9 @@ public class ThirdPersonController : MonoBehaviour
     private void GroundedCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+
+        //PLACEHOLDER - USED FOR ANIMATOR, edge cases with falling so doing it the dumb dumb way
+        //playerAnimator.SetBool("isJumping", false);
     }
 
     /// <summary>
@@ -132,6 +146,10 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         rb.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+
+        //PLACEHOLDER - USED FOR ANIMATOR
+        //playerAnimator.SetBool("isJumping", true);
+
         canJump = false;
         StartCoroutine(JumpCooldown());
     }
@@ -161,7 +179,23 @@ public class ThirdPersonController : MonoBehaviour
     private void Move()
     {
         float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
-        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+
+        playerAnimator.speed = (isRunning ? animatorRunningSpeed : animatorWalkingSpeed);
+
+        // Snap to zero when there's no input, otherwise ease toward the target speed. NECESSARY FOR ANIMATOR TO WORK
+        if (move.sqrMagnitude < 0.01f)
+        {
+            currentSpeed = 0f;
+        }
+        else
+        {
+            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+        }
+
+        //ORIGINALcurrentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+
+        // Rotate the player body to match the camera's horizontal rotation (mouse X)
+        rb.MoveRotation(Quaternion.Euler(0f, yaw, 0f));
 
         Vector3 forward = cameraTarget.forward;
         Vector3 right = cameraTarget.right;
@@ -172,20 +206,35 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
+        // TODO: currently gets overridden every tick, so having a dash or something 
+        // like that wont work. Look into having some kind of movement-locked state.
+        Vector3 currentVelocity = rb.linearVelocity;
 
         if (moveDirection.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 20f);
+            Vector3 horizontalVelocity = moveDirection * currentSpeed;
 
-            Vector3 currentVelocity = rb.linearVelocity;
-            rb.linearVelocity = new Vector3(moveDirection.x * currentSpeed, currentVelocity.y, moveDirection.z * currentSpeed);
+            // Look ahead for a wall so we don't keep pushing into it
+            float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
+
+            if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
+                && hit.normal.y < maxWalkableNormalY)
+            {
+                // Remove the part of our movement that goes into the wall, keep the part along it
+                Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
+                horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
+            }
+
+            rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
         }
         else
         {
-            Vector3 currentVelocity = rb.linearVelocity;
-            rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
+            rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
         }
+
+        //USED FOR ANIMATOR, takes flat velocity ignoring acceleration, used for anim triggers
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        playerAnimator.SetFloat("playerSpeed", flatVelocity.magnitude);
     }
 
     /// <summary>
@@ -195,9 +244,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         if (look.sqrMagnitude >= lookThreshold)
         {
-            float deltaTimeMultiplier = Time.deltaTime * lookSensitivity;
-            yaw += look.x * deltaTimeMultiplier;
-            pitch -= look.y * deltaTimeMultiplier;
+            yaw += look.x * lookSensitivity;
+            pitch -= look.y * lookSensitivity;
         }
 
         yaw = ClampAngle(yaw, float.MinValue, float.MaxValue);

@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This class deals with the behavior of shooting a projectile.
@@ -6,21 +8,8 @@ using UnityEngine;
 public class ShootProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    [SerializeField] private float projectileSpeed = 5f;
-
-    // TODO: Add projectileRange logic
-    [SerializeField] private float projectileRange = 20f;
-
-    [SerializeField] private GameObject projectile;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (!projectile)
-        {
-            Debug.LogWarning("No Projectile Prefab Assigned.");
-        }
-    }
+    [SerializeField] public float projectileSpeed = 5f;
+    [SerializeField] public float projectileRange = 20f;
 
     // Update is called once per frame
     void Update()
@@ -29,21 +18,48 @@ public class ShootProjectile : MonoBehaviour
         {
             Shoot();
         }
+
+        // Switch to this if statment for testing: 
+        // if (Input.GetButton("Fire1"))
+        // {
+        //     Shoot();
+        // }
     }
 
     /// <summary>
-    /// This is the primary shoot method that deals with the math of shooting a projectile.
+    /// This is the primary shoot method that deals with the math of shooting a projectile. It also initializes all necessary information for the
+    /// projectile onto the object itself.
     /// </summary>
     private void Shoot()
     {
+        GameObject projectile = ObjectPool.instance.GetPooledObject();
+
         if (projectile)
         {
-            GameObject projectileObject = Instantiate(projectile, transform.position + transform.forward, transform.rotation);
-            Rigidbody rb = projectileObject.GetComponent<Rigidbody>();
+            projectile.transform.SetPositionAndRotation(transform.position + transform.forward, transform.rotation);
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+
+            //projectile.SetActive(true); pool does this now 
 
             if (rb)
             {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
                 rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
+            }
+
+            // setting the base attributes of the projectile on the object itself so that information can be used and tampered with
+            // after the projectile is spawned, if necessary
+            if (projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
+            {
+                if (this.gameObject.CompareTag("Player"))
+                {
+                    pb.SetType("playerProjectile");
+                }
+                else if (this.gameObject.CompareTag("Enemy"))
+                {
+                    pb.SetType("enemyProjectile");
+                }
             }
         }
 
