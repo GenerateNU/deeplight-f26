@@ -36,7 +36,7 @@ public class RoomData : ScriptableObject
         //min enemy count will be at least 0, and max enemy count will be at least min enemy count
         minEnemyCount = Mathf.Max(0, minEnemyCount);
         maxEnemyCount = Mathf.Max(minEnemyCount, maxEnemyCount);
- 
+
         //min item count will be at least 0, and max item count will be at least min item count
         minItemCount = Mathf.Max(0, minItemCount);
         maxItemCount = Mathf.Max(minItemCount, maxItemCount);
@@ -55,7 +55,7 @@ public class RoomData : ScriptableObject
     /// <param name="tableTag"> the tag each entry in the table is being compared to
     private void ZeroNonEntryWeights(List<SpawnEntry> spawnTable, string tableTag)
     {
-        if(spawnTable == null) { return; }
+        if (spawnTable == null) { return; }
 
         foreach (SpawnEntry entry in spawnTable)
         {
@@ -78,7 +78,7 @@ public class RoomData : ScriptableObject
     /// (int) a random integer number of enemies to spawn
     /// </returns>
     public int RollEnemyCount(System.Random rng) => rng.Next(minEnemyCount, maxEnemyCount + 1);
- 
+
     /// <summary>
     /// Random item count in [min, max] inclusive.
     /// </summary>
@@ -89,11 +89,11 @@ public class RoomData : ScriptableObject
     public int RollItemCount(System.Random rng) => rng.Next(minItemCount, maxItemCount + 1);
 
     // -------------------------------- SELECTING ENTITIES -------------------------------- //
- 
+
     public GameObject PickEnemyPrefab(System.Random rng) => PickWeighted(enemySpawnTable, rng);
- 
+
     public GameObject PickItemPrefab(System.Random rng) => PickWeighted(itemSpawnTable, rng);
- 
+
     /// <summary>
     /// Weighted random pick. Entries with a null prefab or weight of 0f are ignored.
     /// Returns null if nothing is pickable.
@@ -106,28 +106,28 @@ public class RoomData : ScriptableObject
     public static GameObject PickWeighted(List<SpawnEntry> table, System.Random rng)
     {
         if (table == null) return null;
- 
+
         double total = 0.0;
         foreach (SpawnEntry entry in table)
         {
             if (entry != null && entry.prefab != null && entry.weight > 0f)
                 total += entry.weight;
         }
- 
+
         if (total <= 0.0) return null;
- 
+
         double roll = rng.NextDouble() * total;
         GameObject lastValid = null;
- 
+
         foreach (SpawnEntry entry in table)
         {
             if (entry == null || entry.prefab == null || entry.weight <= 0f) continue;
- 
+
             lastValid = entry.prefab;
             roll -= entry.weight;
             if (roll < 0.0) return entry.prefab;
         }
- 
+
         return lastValid;
     }
 }

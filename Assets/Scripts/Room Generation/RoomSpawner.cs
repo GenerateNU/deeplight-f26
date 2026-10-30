@@ -44,7 +44,7 @@ public class RoomSpawner : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if(debugKeyEnabled && Input.GetKeyDown(debugSpawnKey)) Spawn();
+        if (debugKeyEnabled && Input.GetKeyDown(debugSpawnKey)) Spawn();
     }
 
     // ---------------------------------------- RNG SETUP --------------------------------------- //
@@ -82,13 +82,13 @@ public class RoomSpawner : MonoBehaviour
             Debug.LogWarning("No RoomData assigned.", this);
             return;
         }
- 
+
         if (useSeed || rng == null) CreateRng();
- 
+
         Despawn();
- 
+
         SpawnPoint[] points = GetComponentsInChildren<SpawnPoint>();
- 
+
         SpawnCategory(points, SpawnType.Enemy, roomData.RollEnemyCount(rng), roomData.PickEnemyPrefab);
         SpawnCategory(points, SpawnType.Item, roomData.RollItemCount(rng), roomData.PickItemPrefab);
     }
@@ -126,25 +126,25 @@ public class RoomSpawner : MonoBehaviour
         {
             if (point.Type == type) candidates.Add(point);
         }
- 
+
         if (desiredCount > candidates.Count)
         {
             Debug.LogWarning("Less candidates available than the desired count.", this);
             desiredCount = candidates.Count;
         }
- 
+
         for (int i = 0; i < desiredCount; i++)
         {
             int j = rng.Next(i, candidates.Count);
             (candidates[i], candidates[j]) = (candidates[j], candidates[i]);
- 
+
             GameObject prefab = pickPrefab(rng);
             if (prefab == null)
             {
                 Debug.LogWarning($"{name}: {type} spawn table has no valid entries.", this);
                 return;
             }
- 
+
             Transform point = candidates[i].transform;
             GameObject instance = Instantiate(prefab, point.position, point.rotation, transform);
             spawnedObjects.Add(instance);

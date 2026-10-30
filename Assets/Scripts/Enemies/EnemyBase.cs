@@ -139,7 +139,7 @@ public abstract class EnemyBase : MonoBehaviour
             SetState(EnemyState.Chase);
         }
 
-        
+
         agent.isStopped = true;
         attackTimer += Time.deltaTime;
         Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);

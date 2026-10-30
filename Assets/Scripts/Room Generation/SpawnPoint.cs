@@ -18,6 +18,6 @@ public enum SpawnType
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField] private SpawnType spawnType = SpawnType.Enemy;
- 
+
     public SpawnType Type => spawnType;
 }
