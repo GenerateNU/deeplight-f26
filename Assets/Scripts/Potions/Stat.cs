@@ -1,6 +1,9 @@
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Enum that handles all of the possible Stats
+/// </Sumamry>
 public enum Stat
 {
     AttackDamage,
@@ -12,6 +15,10 @@ public enum Stat
     DashInvincibilityTime
 }
 
+/// <summary>
+/// Serializable class for a StatEntry, which holds fields for the Stat, its base value (usually 1), and the current value
+/// after potion modifications have been applied.
+/// </Sumamry>
 [Serializable]
 public class StatEntry
 {
