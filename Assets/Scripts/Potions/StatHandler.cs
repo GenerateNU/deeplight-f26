@@ -71,10 +71,13 @@ public class StatHandler : MonoBehaviour
 
         foreach (Potion potion in potionsAcquired)
         {
-            if (potion.GetPotionData().GetStat() != stat) { continue; }
+            if (potion.GetPotionData().GetStat() != stat)
+            { continue; }
 
-            if (potion.GetOperation()) { additiveSum += potion.GetFinalModifierValue(); }
-            else { multiplier *= 1 + potion.GetFinalModifierValue(); }
+            if (potion.GetOperation())
+            { additiveSum += potion.GetFinalModifierValue(); }
+            else
+            { multiplier *= 1 + potion.GetFinalModifierValue(); }
         }
 
         // Additive effects apply to the base first, then multiplicative ones
