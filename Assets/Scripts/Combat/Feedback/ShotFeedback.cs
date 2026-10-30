@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public abstract class ShotFeedback : MonoBehaviour
 {
-  [SerializeField] private ShootProjectile shooter;
+  [SerializeField] private PlayerShootProjectile shooter;
 
   protected void OnEnable() => shooter.OnPlayerShoot += HandleShoot;
   protected void OnDisable() => shooter.OnPlayerShoot -= HandleShoot;

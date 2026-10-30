@@ -2,15 +2,12 @@ using UnityEngine;
 
 public class MuzzleFlash : ShotFeedback
 {
-
+    [SerializeField] GameObject flash;
+    [SerializeField] float duration = .05;
     override protected void HandleShoot()
     {
-        
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+        ///flash.enable();
+        ///start timer
     }
 
 }

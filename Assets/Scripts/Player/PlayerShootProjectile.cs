@@ -22,6 +22,8 @@ public class PlayerShootProjectile : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] AudioClip shootSFX;
 
+    public event Action OnPlayerShoot;
+
     private void Awake()
     {
         if (aimCamera == null)
@@ -85,6 +87,8 @@ public class PlayerShootProjectile : MonoBehaviour
             {
                 pb.SetType("playerProjectile");
             }
+
+            OnPlayerShoot?.Invoke();
         }
     }
 }
