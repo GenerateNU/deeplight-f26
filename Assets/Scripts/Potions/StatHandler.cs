@@ -12,11 +12,17 @@ public class StatHandler : MonoBehaviour
 
     private Dictionary<Stat, StatEntry> statLookup = new Dictionary<Stat, StatEntry>();
 
+    /// <Summary>
+    /// Runs on Start
+    /// </Summary>
     void Start()
     {
         AddPotionToList(GameObject.Find("RareAttackDamagePotion").GetComponent<Potion>());
     }
 
+    /// <Summary>
+    /// Runs on Awake
+    /// </Summary>
     void Awake()
     {
         SyncStatEntries();
@@ -29,13 +35,17 @@ public class StatHandler : MonoBehaviour
         }
     }
 
-    // Runs in the editor whenever the script changes, so new enum values show up in the Inspector
+    /// <Summary>
+    /// Runs in the editor whenever the script changes, so new enum values show up in the Inspector
+    /// </Summary>
     void OnValidate()
     {
         SyncStatEntries();
     }
 
-    // Adds an entry for every Stat enum value that doesn't have one yet
+    /// <Summary>
+    /// Adds an entry for every Stat enum value that doesn't have one yet
+    /// </Summary>
     private void SyncStatEntries()
     {
         foreach (Stat stat in Enum.GetValues(typeof(Stat)))
@@ -47,17 +57,30 @@ public class StatHandler : MonoBehaviour
         }
     }
 
+    /// <Summary>
+    /// Gets the Stat that needs to be updated
+    /// </Summary>
+    /// <param name="potion"></param> The desired Stat to get
+    /// <Returns></Returns> A Stat
     public float GetStat(Stat stat)
     {
         return statLookup.TryGetValue(stat, out StatEntry entry) ? entry.currentValue : 0f;
     }
 
+    /// <Summary>
+    /// Adds a potion to the list of acquired potions
+    /// </Summary>
+    /// <param name="potion"></param> The Potion to add to the list
     void AddPotionToList(Potion potion)
     {
         potionsAcquired.Add(potion);
         SetStat(potion.GetPotionData().GetStat());
     }
 
+    /// <Summary>
+    /// Sets a stat's current value based on the potions of its type in the acquired potions list
+    /// </Summary>
+    /// <param name="potion"></param> The desired Stat to set
     void SetStat(Stat stat)
     {
         if (!statLookup.TryGetValue(stat, out StatEntry entry))
@@ -74,9 +97,9 @@ public class StatHandler : MonoBehaviour
             if (potion.GetPotionData().GetStat() != stat)
             { continue; }
 
-            if (potion.GetOperation())
+            if (potion.GetOperation() == Add)
             { additiveSum += potion.GetFinalModifierValue(); }
-            else
+            else if (potion.GetOperation() == Multiply)
             { multiplier *= 1 + potion.GetFinalModifierValue(); }
         }
 

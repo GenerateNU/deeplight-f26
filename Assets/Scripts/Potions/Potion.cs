@@ -16,12 +16,17 @@ public class Potion : MonoBehaviour
 
     private float finalModifierValue = 0f;
 
+    /// <Summary>
+    /// Runs on awake
+    /// </Summary>
     void Awake()
     {
         finalModifierValue = RollModifierValue();
     }
 
-    // Rolls a value within this potion's rarity-specific range using the loot stream
+    /// <Summary>
+    /// Rolls a value within this potion's rarity-specific range using the loot stream
+    /// </Summary>
     private float RollModifierValue()
     {
         if (rngStreamsConfig == null || potionData == null)
@@ -45,8 +50,27 @@ public class Potion : MonoBehaviour
         return Mathf.Lerp(range.min, range.max, roll);
     }
 
+    /// <Summary>
+    /// Gets the Rarity from the PotionData file
+    /// </Summary>
+    /// <Returns></Returns> The Rarity of the potion
     public Rarity GetRarity() => rarity;
-    public bool GetOperation() => operation;
+
+    /// <Summary>
+    /// Gets the Operation from the PotionData file
+    /// </Summary>
+    /// <Returns></Returns> The Operation of the potion
+    public Operation GetOperation() => operation;
+
+    /// <Summary>
+    /// Gets the PotionData file
+    /// </Summary>
+    /// <Returns></Returns> The PotionData file
     public PotionData GetPotionData() => potionData;
+
+    /// <Summary>
+    /// Gets the final modifier value
+    /// </Summary>
+    /// <Returns></Returns> The final modifier value
     public float GetFinalModifierValue() => finalModifierValue;
 }
