@@ -22,6 +22,9 @@ public class PlayerShootProjectile : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] AudioClip shootSFX;
 
+    /// <summary>
+    /// event that raises when the player fires a projectile.
+    /// </summary>
     public event Action OnPlayerShoot;
 
     private void Awake()
