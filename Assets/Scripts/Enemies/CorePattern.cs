@@ -43,5 +43,11 @@ public class CorePattern : AttackPattern
     /// </summary>
     protected override void OnProjectileSpawned(GameObject projectile, Vector3 direction, AttackPatternRuntime runtime)
     {
+        if (projectile.TryGetComponent(out Rigidbody rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.AddForce(direction * _projectileSpeed, ForceMode.VelocityChange);
+        }
     }
 }

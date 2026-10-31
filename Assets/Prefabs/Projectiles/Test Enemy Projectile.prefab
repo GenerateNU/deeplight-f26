@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   projectileType: enemyProjectile
   projectileDamage: 10
-  duration: 8
+  duration: 5
   projectileExplodeSFX: {fileID: 181059596584907789}
 --- !u!114 &7080996265564696673
 MonoBehaviour:

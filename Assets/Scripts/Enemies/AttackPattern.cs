@@ -303,16 +303,7 @@ public abstract class AttackPattern : ScriptableObject
         Vector3 position = runtime.SpawnPosition;
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-        /* 
-        The pool should bucket by prefab, so each projectile type comes out of its own pool. Right now, to avoid errors, I just have it pulling
-        from the generic pool, but below is how I **********think************ the new pooling is gonna be called but realistically I have
-        zero clue and if it's wrong please feel free to change it.
-
-        GameObject projectile = ObjectPool.instance.GetPooledObject(_projectilePrefab, position, rotation);
-        */
-
-        //temporary default pooling
-        GameObject projectile = ObjectPool.instance.GetPooledObject();
+        GameObject projectile = ObjectPool.instance.GetPooledObject(_projectilePrefab);
 
         if (projectile == null)
         {
