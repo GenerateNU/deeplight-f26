@@ -68,8 +68,10 @@ public class ObjectPool : MonoBehaviour
     /// <param name="pooledObject"></param>
     public void ReturnPooledObject(GameObject pooledObject)
     {
-        if (pooledObject == null) return;
-        if (!pooledObject.activeSelf) return;
+        if (pooledObject == null)
+            return;
+        if (!pooledObject.activeSelf)
+            return;
 
         pooledObject.SetActive(false);
     }

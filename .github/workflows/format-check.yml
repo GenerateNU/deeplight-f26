@@ -1,0 +1,35 @@
+name: Format check
+
+on:
+  pull_request:
+    paths:
+      - "**/*.cs"
+      - ".editorconfig"
+      - ".github/workflows/format-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.cs"
+      - ".editorconfig"
+
+jobs:
+  whitespace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # --folder treats the directory as a plain folder of files, so no
+      # Unity-generated .sln/.csproj is needed. Whitespace rules only.
+      # Add an --exclude for each third-party folder under Assets/.
+      - name: Verify C# whitespace formatting
+        run: >
+          dotnet format whitespace .
+          --folder
+          --verify-no-changes
+          --verbosity diagnostic
+          --include Assets/
+          --exclude Assets/TutorialInfo/ "Assets/TextMesh Pro/" Assets/Samples/

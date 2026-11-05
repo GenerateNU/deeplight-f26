@@ -19,6 +19,9 @@ public class ProjectileBehavior : MonoBehaviour
 
     private float timer;
 
+    //SFX and particles
+    public AudioSource projectileExplodeSFX;
+
     // Update is called once per frame
     void Update()
     {

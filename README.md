@@ -25,6 +25,40 @@ test   — approved PRs land here for QA before merging into main
 
 **Moving files (scripts, prefabs, scenes):** always move via drag-and-drop inside the Unity Editor's Project window, never through the OS file explorer or a raw terminal `mv`. Unity links scenes/prefabs to scripts by GUID (stored in the `.meta` file), not by file path — moving in-editor keeps the `.meta` paired correctly. If you must move via terminal, move the `.cs`/`.prefab` file and its matching `.meta` together, then verify in Unity that nothing shows as "Missing (Mono Script)" before committing.
 
+## Code Formatting
+
+C# formatting is enforced by [`dotnet format`](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-format) using the rules in `.editorconfig`. CI runs a check on every PR, so unformatted code won't merge.
+
+### Setup
+
+- Enable format-on-save in your IDE (Rider, Visual Studio, and VS Code all read `.editorconfig`).
+
+### Check formatting (changes nothing)
+
+Run from the repo root:
+
+```
+dotnet format whitespace . --folder --verify-no-changes --include Assets/ --exclude Assets/TutorialInfo/ Assets/Unity.VisualScripting.Generated/ "Assets/TextMesh Pro/" Assets/Samples/
+```
+
+No output means everything is formatted. Otherwise it lists the files and lines that need fixing.
+
+### Fix formatting (rewrites files)
+
+Same command without `--verify-no-changes`:
+
+```
+dotnet format whitespace . --folder --include Assets/ --exclude Assets/TutorialInfo/ Assets/Unity.VisualScripting.Generated/ "Assets/TextMesh Pro/" Assets/Samples/
+```
+
+This edits files in place, so commit or stash your work first and review `git diff` afterward.
+
+### Notes
+
+- Only whitespace rules (indentation, braces, spacing, line endings) are enforced in CI. Naming and style suggestions show up in your IDE.
+- Third-party and generated code is excluded. If you add a new third-party folder under `Assets/`, add it to the `--exclude` list here, in `.github/workflows/format-check.yml`, and in the third-party section of `.editorconfig`.
+- If CI fails on your PR, run the fix command, commit the result, and push.
+
 ## Project Structure
 
 ```
