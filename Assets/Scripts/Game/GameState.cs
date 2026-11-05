@@ -10,7 +10,6 @@ public enum GameState
     tutorial,
     loading,
     inPlay,
-    roomTransition,
     win,
     death
 }

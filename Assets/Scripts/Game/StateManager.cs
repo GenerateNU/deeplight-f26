@@ -11,7 +11,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the main menu state.
     /// </summary>
-    public void MainMenuState()
+    private void MainMenuState()
     {
         state = GameState.mainMenu;
         // set player to inactive
@@ -22,7 +22,7 @@ public class StateManager : MonoBehaviour
     /// <summary>   
     /// Sets the game to the pause state.
     /// </summary>
-    public void PauseState()
+    private void PauseState()
     {
         state = GameState.pause;
         // freeze player and enemies (e.g. Time.timeScale = 0f)
@@ -33,7 +33,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the tutorial state.
     /// </summary>
-    public void TutorialState()
+    private void TutorialState()
     {
         state = GameState.tutorial;
         // load tutorial room
@@ -44,7 +44,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the loading state.
     /// </summary>
-    public void LoadingState()
+    private void LoadingState()
     {
         state = GameState.loading;
         // set player to inactive
@@ -55,7 +55,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the in play state.
     /// </summary>
-    public void InPlayState()
+    private void InPlayState()
     {
         state = GameState.inPlay;
         // unfreeze time (e.g. Time.timeScale = 1f)
@@ -65,25 +65,9 @@ public class StateManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles the transition between rooms.
-    /// </summary>
-    public void RoomTransitionState(GameObject beforeRoom, GameObject afterRoom)
-    {
-        state = GameState.roomTransition;
-        // set player to inactive
-        // set enemies to inactive
-        // set player to active
-        // set enemies to active
-        // then call inPlayState() in a conditional(player has entered the new room) 
-
-        // no need to worry about loading rooms since it should be preloaded before the game starts
-
-    }
-
-    /// <summary>
     /// Sets the game to the win state.
     /// </summary>
-    public void WinState()
+    private void WinState()
     {
         state = GameState.win;
         // set enemies to inactive
@@ -93,7 +77,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Handles the death state of the game.
     /// </summary>
-    public void DeathState()
+    private void DeathState()
     {
         state = GameState.death;
         // set enemies to inactive
@@ -103,7 +87,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Restarts the game by returning to the main menu (there is no restart state in the enum).
     /// </summary>
-    public void RestartState()
+    private void RestartState()
     {
         // reset run data (deck, lives, stage) here
         MainMenuState();
@@ -142,14 +126,14 @@ public class StateManager : MonoBehaviour
             case GameState.inPlay:
                 InPlayState();
                 break;
-            case GameState.roomTransition:
-                RoomTransitionState();
-                break;
             case GameState.win:
                 WinState();
                 break;
             case GameState.death:
                 DeathState();
+                break;
+            case GameState.restart:
+                RestartState();
                 break;
         }
     }
