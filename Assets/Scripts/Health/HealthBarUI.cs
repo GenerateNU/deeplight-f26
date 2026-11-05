@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Health bar UI for any game object with a health bar. Listens to OnHealthChanged for updating
+/// the health bar UI.
+///
+/// Attach to Health bar prefab for the respective game object. Then, drag the game object
+/// into the health field and drag the health bar slider into the slider field.
+/// </summary>
 public class HealthBarUI : MonoBehaviour
 {
-    /// <summary>
-    /// Health bar UI for player. Listens to OnHealthChanged for updating
-    /// the health bar UI.
-    /// </summary>
     [SerializeField] private HealthComponent health;
     [SerializeField] private Slider slider;
 
