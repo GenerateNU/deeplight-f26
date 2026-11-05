@@ -10,7 +10,7 @@ public enum ProjectileType
 
 public class BaseProjectileBehavior : MonoBehaviour
 {
-    [Header ("Projectile Stats")]
+    [Header("Projectile Stats")]
 
     [SerializeField] private int baseProjectileDamage = 1;
     [SerializeField] private float baseProjectileSpeed = 5f;
@@ -22,14 +22,14 @@ public class BaseProjectileBehavior : MonoBehaviour
     private float currentProjectileLifespan;
     private float currentProjectilePierce;
 
-    [Header ("Projectile Settings")]
-    
+    [Header("Projectile Settings")]
+
     [SerializeField] private ProjectileType type;
 
-    [Header ("Projectile Cosmetics")]
+    [Header("Projectile Cosmetics")]
 
     [SerializeField] private AudioSource projectileExplosionSFX;
-    
+
     // Internal Utilities
 
     private float timer;
@@ -69,7 +69,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     private void Move()
     {
-        if(TryGetComponent<Rigidbody>(out Rigidbody rb))
+        if (TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -88,16 +88,16 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
-        if(objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
+        if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            if((objectHit.CompareTag("Player") && type == Enemy) || (objectHit.CompareTag("Enemy") && type == Player))
+            if ((objectHit.CompareTag("Player") && type == Enemy) || (objectHit.CompareTag("Enemy") && type == Player))
             {
                 hc.Damage(currentProjectileDamage);
             }
 
             currentRemainingPierce -= 1;
 
-            if(currentRemainingPierce == 0)
+            if (currentRemainingPierce == 0)
             {
                 DisableProjectile();
             }
@@ -123,11 +123,11 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     private void SetProjectileStats()
     {
-        if(type == Enemy)
+        if (type == Enemy)
         {
             return;
         }
-        else if(GameObject.Find("Stat Handler").TryGetComponent<StatHandler>(out StatHandler statHandler))
+        else if (GameObject.Find("Stat Handler").TryGetComponent<StatHandler>(out StatHandler statHandler))
         {
             currentProjectileDamage = (statHandler.GetStat(AttackDamage) != 0f) ? statHandler.GetStat(AttackDamage) * baseProjectileDamage : baseProjectileDamage;
             currentProjectileSpeed = (statHandler.GetStat(ProjectileSpeed) != 0f) ? statHandler.GetStat(ProjectileSpeed) * baseProjectileSpeed : baseProjectileSpeed;

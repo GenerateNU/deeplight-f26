@@ -10,7 +10,7 @@ using UnityEngine.Audio;
 /// </summary>
 public class PlayerShootProjectile : MonoBehaviour
 {
-    [Header ("Projectile Prefab")]
+    [Header("Projectile Prefab")]
     [SerializeField] private GameObject projectilePrefab;
 
     [Header("Aiming")]
