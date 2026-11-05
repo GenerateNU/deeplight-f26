@@ -142,9 +142,11 @@ public class RoomData : ScriptableObject
 
             lastValid = entry.prefab;
             roll -= entry.weight;
-            if (roll < 0.0) return entry.prefab;
+            if (roll < 0.0)
+            {
+                return entry.prefab;
+            }
         }
-
         return lastValid;
     }
 }
