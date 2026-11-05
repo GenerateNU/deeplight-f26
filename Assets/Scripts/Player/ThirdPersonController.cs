@@ -26,7 +26,11 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float bottomClampAngle = -30f;
 
     [Header("Sensitivity")]
-    [SerializeField] private float lookSensitivity = 10f;
+    [SerializeField] private float lookSensitivity = 5f;
+
+    [Header("Wall Handling")]
+    [SerializeField] private float wallCheckDistance = 0.1f;
+    [SerializeField] private float maxWalkableNormalY = 0.7f; // surfaces steeper than this count as walls
 
     [Header("Other")]
     [SerializeField] private Rigidbody rb;

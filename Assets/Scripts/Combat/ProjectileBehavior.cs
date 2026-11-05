@@ -26,6 +26,8 @@ public class ProjectileBehavior : MonoBehaviour
 
         if (timer <= 0f)
         {
+            //plays collision/fizz out sound effect 
+            projectileExplodeSFX.Play();
             DisableProjectile();
         }
     }
@@ -53,15 +55,16 @@ public class ProjectileBehavior : MonoBehaviour
         */
         // TODO 
         // Implement a check to see if the player projectile is hitting an enemy, or an enemy projectile is hitting the player.
+        
+        if ((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
+            || otherCollider.CompareTag("Environment"))
+            //plays collision/fizz out sound effect 
+            projectileExplodeSFX.Play();
         if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
             hc.TakeDamage(projectileDamage);
-            DisableProjectile();
         }
-
-        if ((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
-            || otherCollider.CompareTag("Environment"))
-            DisableProjectile();
+        DisableProjectile();
     }
 
     /// <summary>
