@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// This class acts as the primary controller for third person POV. 
+/// This class acts as the primary controller for third person POV.
 /// Here we set fields like movement speed, look sensitivity, and check for ground collisions.
 /// </summary>
 public class ThirdPersonController : MonoBehaviour
@@ -14,6 +14,8 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float jumpCooldown = 1f;
     [SerializeField] private float sprintMultiplier = 5f;
+    [SerializeField] private float fallGravityMultiplier = 1.75f;
+    [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
 
     [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
@@ -51,6 +53,7 @@ public class ThirdPersonController : MonoBehaviour
     private bool isGrounded = true;
     private bool canJump = true;
     private bool isRunning;
+    private bool isJumpHeld;
     private float currentSpeed = 0f;
     private float acceleration = 3f;
 
@@ -58,7 +61,7 @@ public class ThirdPersonController : MonoBehaviour
 
     /// <summary>
     /// Runs on start
-    /// </summary> 
+    /// </summary>
     private void Start()
     {
         if (rb == null)
@@ -96,6 +99,7 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        ApplyJumpGravity();
     }
 
     /// <summary>
@@ -155,11 +159,33 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     /// <summary>
+    /// Adds extra gravity to shape the jump arc so that falls are faster than rises,
+    /// and releasing jump while rising cuts the jump short.
+    /// </summary>
+    private void ApplyJumpGravity()
+    {
+        float verticalSpeed = rb.linearVelocity.y;
+        float multiplier = 1f;
+
+        if (verticalSpeed < 0f)
+        {
+            multiplier = fallGravityMultiplier;
+        }
+        else if (verticalSpeed > 0f && !isJumpHeld)
+        {
+            multiplier = lowJumpGravityMultiplier;
+        }
+
+        // Rigidbody already applies 1x gravity, so only add the difference
+        rb.linearVelocity += Vector3.up * Physics.gravity.y * (multiplier - 1f) * Time.fixedDeltaTime;
+    }
+
+    /// <summary>
     /// The coroutine that runs the duration of the jump cooldown. Waits 0.25s by default, and until grounded if not grounded by that time.
     /// Once grounded, waits the duration of jumpCooldown before allowing the player to jump again
     /// </summary>
-    /// <returns> 
-    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection. 
+    /// <returns>
+    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
     /// </returns>
     private IEnumerator JumpCooldown()
     {
@@ -206,7 +232,7 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
-        // TODO: currently gets overridden every tick, so having a dash or something 
+        // TODO: currently gets overridden every tick, so having a dash or something
         // like that wont work. Look into having some kind of movement-locked state.
         Vector3 currentVelocity = rb.linearVelocity;
 
@@ -268,9 +294,15 @@ public class ThirdPersonController : MonoBehaviour
     /// <summary>
     /// Retrieves the input from the Jump input action in Unity's InputSystem
     /// </summary>
-    private void OnJump()
+    /// <param name="inputValue"></param> the value of the Jump input action (a button press or release)
+    private void OnJump(InputValue inputValue)
     {
-        Jump();
+        isJumpHeld = inputValue.isPressed;
+
+        if (inputValue.isPressed)
+        {
+            Jump();
+        }
     }
 
     /// <summary>
