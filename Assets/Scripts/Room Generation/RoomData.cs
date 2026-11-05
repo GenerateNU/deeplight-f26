@@ -55,11 +55,17 @@ public class RoomData : ScriptableObject
     /// <param name="tableTag"> the tag each entry in the table is being compared to
     private void ZeroNonEntryWeights(List<SpawnEntry> spawnTable, string tableTag)
     {
-        if (spawnTable == null) { return; }
+        if (spawnTable == null) 
+        { 
+            return; 
+        }
 
         foreach (SpawnEntry entry in spawnTable)
         {
-            if (entry == null) { continue; }
+            if (entry == null) 
+            { 
+                continue; 
+            }
 
             if (!entry.prefab.CompareTag(tableTag))
             {
@@ -105,23 +111,34 @@ public class RoomData : ScriptableObject
     /// </returns>
     public static GameObject PickWeighted(List<SpawnEntry> table, System.Random rng)
     {
-        if (table == null) return null;
+        if (table == null) 
+        {
+            return null;
+        }
 
         double total = 0.0;
         foreach (SpawnEntry entry in table)
         {
             if (entry != null && entry.prefab != null && entry.weight > 0f)
+            {
                 total += entry.weight;
+            }
         }
 
-        if (total <= 0.0) return null;
+        if (total <= 0.0) 
+        {
+            return null;
+        }
 
         double roll = rng.NextDouble() * total;
         GameObject lastValid = null;
 
         foreach (SpawnEntry entry in table)
         {
-            if (entry == null || entry.prefab == null || entry.weight <= 0f) continue;
+            if (entry == null || entry.prefab == null || entry.weight <= 0f) 
+            {
+                continue;
+            }
 
             lastValid = entry.prefab;
             roll -= entry.weight;

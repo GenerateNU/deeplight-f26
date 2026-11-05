@@ -44,7 +44,10 @@ public class RoomSpawner : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (debugKeyEnabled && Input.GetKeyDown(debugSpawnKey)) Spawn();
+        if (debugKeyEnabled && Input.GetKeyDown(debugSpawnKey))
+        {
+            Spawn();
+        }
     }
 
     // ---------------------------------------- RNG SETUP --------------------------------------- //
@@ -83,7 +86,10 @@ public class RoomSpawner : MonoBehaviour
             return;
         }
 
-        if (useSeed || rng == null) CreateRng();
+        if (useSeed || rng == null) 
+        {
+            CreateRng();
+        }
 
         Despawn();
 
@@ -100,7 +106,10 @@ public class RoomSpawner : MonoBehaviour
     {
         foreach (GameObject obj in spawnedObjects)
         {
-            if (obj != null) Destroy(obj);
+            if (obj != null) 
+            {
+                Destroy(obj);
+            }
         }
         spawnedObjects.Clear();
     }
@@ -124,7 +133,10 @@ public class RoomSpawner : MonoBehaviour
         var candidates = new List<SpawnPoint>();
         foreach (SpawnPoint point in allPoints)
         {
-            if (point.Type == type) candidates.Add(point);
+            if (point.Type == type) 
+            {
+                candidates.Add(point);
+            }
         }
 
         if (desiredCount > candidates.Count)
