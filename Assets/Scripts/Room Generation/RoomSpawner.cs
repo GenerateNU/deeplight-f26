@@ -86,7 +86,7 @@ public class RoomSpawner : MonoBehaviour
             return;
         }
 
-        if (useSeed || rng == null) 
+        if (useSeed || rng == null)
         {
             CreateRng();
         }
@@ -106,7 +106,7 @@ public class RoomSpawner : MonoBehaviour
     {
         foreach (GameObject obj in spawnedObjects)
         {
-            if (obj != null) 
+            if (obj != null)
             {
                 Destroy(obj);
             }
@@ -133,7 +133,7 @@ public class RoomSpawner : MonoBehaviour
         var candidates = new List<SpawnPoint>();
         foreach (SpawnPoint point in allPoints)
         {
-            if (point.Type == type) 
+            if (point.Type == type)
             {
                 candidates.Add(point);
             }
