@@ -11,5 +11,6 @@ public enum GameState
     loading,
     inPlay,
     win,
-    death
+    death,
+    restart,
 }
