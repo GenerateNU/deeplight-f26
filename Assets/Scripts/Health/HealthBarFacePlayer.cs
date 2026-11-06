@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Rotates enemy health bar to face player.
+/// </summary>
 public class HealthBarFacePlayer : MonoBehaviour
 {
     private Transform player;
