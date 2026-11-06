@@ -83,7 +83,7 @@ public class RoomData : ScriptableObject
     /// <returns>
     /// (int) a random integer number of enemies to spawn
     /// </returns>
-    public int RollEnemyCount(System.Random rng) => rng.Next(minEnemyCount, maxEnemyCount + 1);
+    public int RollEnemyCount(RngStream rng) => rng.Range(minEnemyCount, maxEnemyCount + 1);
 
     /// <summary>
     /// Random item count in [min, max] inclusive.
@@ -92,13 +92,13 @@ public class RoomData : ScriptableObject
     /// <returns>
     /// (int) a random integer number of items to spawn
     /// </returns>
-    public int RollItemCount(System.Random rng) => rng.Next(minItemCount, maxItemCount + 1);
+    public int RollItemCount(RngStream rng) => rng.Range(minItemCount, maxItemCount + 1);
 
     // -------------------------------- SELECTING ENTITIES -------------------------------- //
 
-    public GameObject PickEnemyPrefab(System.Random rng) => PickWeighted(enemySpawnTable, rng);
+    public GameObject PickEnemyPrefab(RngStream rng) => PickWeighted(enemySpawnTable, rng);
 
-    public GameObject PickItemPrefab(System.Random rng) => PickWeighted(itemSpawnTable, rng);
+    public GameObject PickItemPrefab(RngStream rng) => PickWeighted(itemSpawnTable, rng);
 
     /// <summary>
     /// Weighted random pick. Entries with a null prefab or weight of 0f are ignored.
@@ -109,7 +109,7 @@ public class RoomData : ScriptableObject
     /// <returns>
     /// (GameObject) an entry picked at random from table
     /// </returns>
-    public static GameObject PickWeighted(List<SpawnEntry> table, System.Random rng)
+    public static GameObject PickWeighted(List<SpawnEntry> table, RngStream rng)
     {
         if (table == null)
         {
@@ -130,7 +130,7 @@ public class RoomData : ScriptableObject
             return null;
         }
 
-        double roll = rng.NextDouble() * total;
+        double roll = rng.Value() * total;
         GameObject lastValid = null;
 
         foreach (SpawnEntry entry in table)
