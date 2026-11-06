@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Basic class for enemy prefab with state machine, holding minimal basic fields
+/// Basic class for enemy prefab with state machine, holding minimal basic fields.
+/// Attack timing and projectile spawning are delegated to an AttackPattern asset.
 /// </summary>
 public abstract class EnemyBase : MonoBehaviour
 {
@@ -13,6 +14,17 @@ public abstract class EnemyBase : MonoBehaviour
         Chase,
         Attack,
         Dead
+    }
+
+    /// <summary>
+    /// How the enemy closes distance before attacking.
+    /// ChasePlayer - walks straight at the player, attacks once in range.
+    /// RandomRoam  - walks to a random reachable NavMesh point, then attacks from there.
+    /// </summary>
+    public enum ChaseMode
+    {
+        ChasePlayer,
+        RandomRoam
     }
 
     [SerializeField] protected float speed = 10f;
@@ -29,8 +41,30 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected Transform playerLocation;
     [SerializeField] protected float distanceFromPlayer;
 
-    [SerializeField] protected float attackWindupTime = 0.5f;
-    [SerializeField] protected float attackCooldownTime = 1f;
+    [Header("Chase Behaviour")]
+    [SerializeField] protected ChaseMode chaseMode = ChaseMode.ChasePlayer;
+    [Tooltip("RandomRoam only: how far from the enemy to look for a reposition point.")]
+    [SerializeField] protected float roamRadius = 12f;
+    [Tooltip("RandomRoam only: give up and repick if the enemy cannot reach its point in this long.")]
+    [SerializeField] protected float roamTimeout = 6f;
+    protected Vector3 roamDestination;
+    protected bool hasRoamDestination;
+    protected float roamTimer;
+
+    [Header("Core Attack Pattern")]
+    [SerializeField] protected AttackPattern coreAttackPattern;
+    [Tooltip("Where projectiles spawn from. Falls back to this transform if empty.")]
+    [SerializeField] protected Transform firePoint;
+    [Tooltip("Scales the pattern's windup for this enemy class. 1 is the pattern's full windup.")]
+    [SerializeField][Range(0f, 2f)] protected float windupMultiplier = 1f;
+    [Tooltip("Pause between finishing one attack cycle and re-evaluating.")]
+    [SerializeField] protected float attackRepeatDelay = 0.5f;
+    [Tooltip("How fast the enemy body turns to face its aim direction while attacking.")]
+    [SerializeField] protected float turnSpeed = 540f;
+
+    protected AttackPatternRuntime attackRuntime;
+    protected float attackRepeatTimer;
+    protected bool attackInProgress;
 
     protected NavMeshAgent agent;
 
@@ -39,7 +73,32 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected void SetState(EnemyState newState)
     {
+        if (currentState == newState)
+        {
+            return;
+        }
+
+        EnemyState previousState = currentState;
         currentState = newState;
+        OnStateChanged(previousState, newState);
+    }
+
+    /// <summary>
+    /// Hook for reacting to state transitions. Override to add animation triggers etc.
+    /// </summary>
+    protected virtual void OnStateChanged(EnemyState previousState, EnemyState newState)
+    {
+        switch (newState)
+        {
+            case EnemyState.Chase:
+                pathUpdateTimer = pathUpdateInterval;
+                hasRoamDestination = false;
+                break;
+
+            case EnemyState.Attack:
+                BeginAttack();
+                break;
+        }
     }
 
     /// <summary>
@@ -57,6 +116,8 @@ public abstract class EnemyBase : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
 
+        attackRuntime = new AttackPatternRuntime();
+        attackRuntime.SetContext(transform, firePoint, playerLocation);
     }
 
     // Update is called once per frame
@@ -94,94 +155,200 @@ public abstract class EnemyBase : MonoBehaviour
         agent.isStopped = true;
         if (distanceFromPlayer <= detectionRange)
         {
-            pathUpdateTimer = pathUpdateInterval;
             SetState(EnemyState.Chase);
         }
     }
 
     /// <summary>
-    /// Makes enemy actively advance towards the player
+    /// Moves the enemy into attack position, either by advancing on the player or by
+    /// repositioning to a random point on the NavMesh, depending on chaseMode.
     /// </summary>
     protected virtual void HandleChase()
     {
-        pathUpdateTimer += Time.deltaTime;
         agent.isStopped = false;
+
+        // Lost the player entirely, go back to idle in either mode.
+        if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
+        {
+            SetState(EnemyState.Idle);
+            return;
+        }
+
+        if (chaseMode == ChaseMode.RandomRoam)
+        {
+            HandleRoam();
+            return;
+        }
+
+        pathUpdateTimer += Time.deltaTime;
         if (pathUpdateTimer >= pathUpdateInterval)
         {
             agent.SetDestination(playerLocation.position);
             pathUpdateTimer = 0f;
         }
-        //Debug.Log("In chase mode, distance from player: " + distanceFromPlayer);
 
-        //player is too far away, go back to idle
-        if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
+        // Player is close enough to attack, go to attack state
+        if (distanceFromPlayer <= attackRange)
         {
-            //Debug.Log("entering idle mode");
-            SetState(EnemyState.Idle);
-        }
-        //player is close enough to attack, go to attack state
-        else if (distanceFromPlayer <= attackRange)
-        {
-            //Debug.Log("entering attacks mode");
             SetState(EnemyState.Attack);
         }
     }
 
-    protected float attackTimer = 0f;
-    protected bool hasHitThisAttack = false;
-
     /// <summary>
-    /// Makes enemy attack player
+    /// Picks a random reachable point, walks to it, and attacks on arrival rather than
+    /// closing on the player directly.
     /// </summary>
-    protected virtual void HandleAttack()
+    protected virtual void HandleRoam()
     {
-        if (distanceFromPlayer > attackRange)
+        if (!hasRoamDestination)
         {
-            SetState(EnemyState.Chase);
+            if (TryGetRandomNavMeshPoint(transform.position, roamRadius, out roamDestination))
+            {
+                agent.SetDestination(roamDestination);
+                hasRoamDestination = true;
+                roamTimer = 0f;
+            }
+            else
+            {
+                // No valid point this frame, fall back to advancing on the player.
+                agent.SetDestination(playerLocation.position);
+                return;
+            }
         }
 
+        roamTimer += Time.deltaTime;
 
-        agent.isStopped = true;
-        attackTimer += Time.deltaTime;
-        //Debug.Log("In attack mode, distance from player: " + distanceFromPlayer + ", attackTimer: " + attackTimer);
+        bool arrived = !agent.pathPending
+                       && agent.remainingDistance <= agent.stoppingDistance + 0.25f;
 
-        // still winding up, do nothing yet (or flash a warning color here)
-        if (attackTimer < attackWindupTime)
+        if (arrived)
         {
-            //Debug.Log("Winding up attack, attackTimer: " + attackTimer);
-            return;
+            hasRoamDestination = false;
+            SetState(EnemyState.Attack);
         }
-
-        // just crossed into "hit" territory, and haven't hit yet this cycle
-        if (!hasHitThisAttack)
+        else if (roamTimer >= roamTimeout)
         {
-            //Debug.Log("Hitting player with attack, attackTimer: " + attackTimer);
-            hasHitThisAttack = true;
-        }
-
-        // fully done with windup + cooldown, reset for next time
-        if (attackTimer >= attackWindupTime + attackCooldownTime)
-        {
-            //Debug.Log("Resetting attack cycle, attackTimer: " + attackTimer);
-            attackTimer = 0f;
-            hasHitThisAttack = false;
-        }
-
-        if (distanceFromPlayer > attackRange * exitAttackRangeMultiplier)
-        {
-            pathUpdateTimer = pathUpdateInterval;
-            SetState(EnemyState.Chase);
+            // Stuck or the path got invalidated, pick somewhere else.
+            hasRoamDestination = false;
         }
     }
 
+    /// <summary>
+    /// Samples the NavMesh for a reachable point within radius of center.
+    /// </summary>
+    protected bool TryGetRandomNavMeshPoint(Vector3 center, float radius, out Vector3 result)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            Vector3 candidate = center + Random.insideUnitSphere * radius;
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    result = hit.position;
+                    return true;
+                }
+            }
+        }
+
+        result = center;
+        return false;
+    }
+
+    /// <summary>
+    /// Starts one cycle of the attack pattern.
+    /// </summary>
+    protected virtual void BeginAttack()
+    {
+        if (coreAttackPattern == null || attackRuntime == null)
+        {
+            attackInProgress = false;
+            return;
+        }
+
+        attackRuntime.Target = playerLocation;
+        coreAttackPattern.Begin(attackRuntime, windupMultiplier);
+        attackInProgress = true;
+        attackRepeatTimer = 0f;
+    }
+
+    /// <summary>
+    /// Runs the attack pattern to completion, then decides what to do next.
+    /// The state is deliberately not re-evaluated mid-pattern so a volley is never cut
+    /// off halfway through; range checks happen between cycles instead.
+    /// </summary>
+    protected virtual void HandleAttack()
+    {
+        agent.isStopped = true;
+
+        if (coreAttackPattern == null || attackRuntime == null)
+        {
+            SetState(EnemyState.Chase);
+            return;
+        }
+
+        FaceAimDirection();
+
+        if (attackInProgress)
+        {
+            attackInProgress = coreAttackPattern.Tick(attackRuntime, Time.deltaTime);
+            return;
+        }
+
+        // Pattern finished, brief breather before committing to the next action.
+        attackRepeatTimer += Time.deltaTime;
+        if (attackRepeatTimer < attackRepeatDelay)
+        {
+            return;
+        }
+
+        if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
+        {
+            SetState(EnemyState.Idle);
+        }
+        else if (chaseMode == ChaseMode.RandomRoam)
+        {
+            // Always reposition between volleys.
+            SetState(EnemyState.Chase);
+        }
+        else if (distanceFromPlayer > attackRange * exitAttackRangeMultiplier)
+        {
+            SetState(EnemyState.Chase);
+        }
+        else
+        {
+            BeginAttack();
+        }
+    }
+
+    /// <summary>
+    /// Turns the enemy body toward whatever the pattern is currently aiming at, so the
+    /// visual facing matches the direction projectiles will leave in.
+    /// </summary>
+    protected virtual void FaceAimDirection()
+    {
+        Vector3 aim = AttackPatternRuntime.Flatten(attackRuntime.AimDirection);
+
+        if (aim.sqrMagnitude < 0.0001f)
+        {
+            return;
+        }
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            Quaternion.LookRotation(aim, Vector3.up),
+            turnSpeed * Time.deltaTime);
+    }
 
     /// <summary>
     /// Handles enemy Dead state
     /// </summary>
     protected virtual void HandleDead()
     {
-        //Debug.Log("Enemy is dead, stopping all actions");
         agent.isStopped = true;
+        attackInProgress = false;
         //TODO: add death animation, remove from scene, etc.
     }
 

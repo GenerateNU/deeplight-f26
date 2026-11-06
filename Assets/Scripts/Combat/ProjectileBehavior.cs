@@ -61,13 +61,15 @@ public class ProjectileBehavior : MonoBehaviour
 
         if ((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
             || otherCollider.CompareTag("Environment"))
+        {
             //plays collision/fizz out sound effect 
             projectileExplodeSFX.Play();
-        if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
-        {
-            hc.TakeDamage(projectileDamage);
+            if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
+            {
+                hc.TakeDamage(projectileDamage);
+            }
+            DisableProjectile();
         }
-        DisableProjectile();
     }
 
     /// <summary>

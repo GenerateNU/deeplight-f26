@@ -13,6 +13,7 @@ public class PlayerShootProjectile : MonoBehaviour
     [Header("Projectile Settings")]
     [SerializeField] public float projectileSpeed = 5f;
     [SerializeField] public float projectileRange = 20f;
+    [SerializeField] public GameObject projectilePrefab;
 
     [Header("Aiming")]
     [SerializeField] private Camera aimCamera;          // defaults to Camera.main
@@ -51,7 +52,7 @@ public class PlayerShootProjectile : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        GameObject projectile = ObjectPool.instance.GetPooledObject();
+        GameObject projectile = ObjectPool.instance.GetPooledObject(projectilePrefab);
 
         if (projectile)
         {

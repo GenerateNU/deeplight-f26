@@ -13,9 +13,9 @@ public class ObjectPool : MonoBehaviour
     [Header("Object Pool Settings")]
     [SerializeField] private int startingCapacity = 50;
     [SerializeField] private int maxSize = 500;
-    [SerializeField] private GameObject objectPrefab; // Can later be turned into a list of projectile types for example
+    [SerializeField] private List<GameObject> objectPrefabs = new List<GameObject>(); // Can later be turned into a list of projectile types for example
 
-    private List<GameObject> pooledObjects = new List<GameObject>(); // Can later be turned into a dictionary of projectile types for example
+    private Dictionary<GameObject, List<GameObject>> pooledObjects = new Dictionary<GameObject, List<GameObject>>(); // Can later be turned into a dictionary of projectile types for example
 
     /// <summary>
     /// A method that is called when the script is loaded, before Start.
@@ -39,28 +39,34 @@ public class ObjectPool : MonoBehaviour
     /// A method that chooses the next Pooled Object to extract from the ObjectPool. 
     /// </summary>
     /// <returns>The next available Pooled Object.</returns>
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject(GameObject prefab)
     {
-        for (int i = pooledObjects.Count - 1; i >= 0; i--)
+        if (prefab == null)
         {
-            if (pooledObjects[i] == null)
+            return null;
+        }
+
+        List<GameObject> pool = GetPool(prefab);
+
+        for (int i = pool.Count - 1; i >= 0; i--)
+        {
+            if (pool[i] == null)
             {
-                pooledObjects.RemoveAt(i);
+                pool.RemoveAt(i);
                 continue;
             }
 
-            if (!pooledObjects[i].activeSelf)
+            if (!pool[i].activeSelf)
             {
-                pooledObjects[i].SetActive(true);
-                return pooledObjects[i];
+                pool[i].SetActive(true);
+                return pool[i];
             }
         }
 
-        GameObject obj = Instantiate(objectPrefab, transform);
-        pooledObjects.Add(obj);
+        GameObject obj = Instantiate(prefab, GetPoolParent(prefab));
+        pool.Add(obj);
         return obj;
     }
-
 
     /// <summary>
     /// A method that returns a pooled object to the ObjectPool.
@@ -82,11 +88,16 @@ public class ObjectPool : MonoBehaviour
     /// </summary>
     private void FillPool()
     {
-        for (int i = 0; i < startingCapacity; i++)
+        foreach (GameObject prefab in objectPrefabs)
         {
-            GameObject obj = Instantiate(objectPrefab, transform);
-            obj.SetActive(false);
-            pooledObjects.Add(obj);
+            List<GameObject> pool = GetPool(prefab);
+
+            for (int i = 0; i < startingCapacity; i++)
+            {
+                GameObject obj = Instantiate(prefab, GetPoolParent(prefab));
+                obj.SetActive(false);
+                pool.Add(obj);
+            }
         }
     }
 
@@ -95,11 +106,11 @@ public class ObjectPool : MonoBehaviour
     /// i.e. the number of available objects to take out of the pool. 
     /// </summary>
     /// <returns>The count of inactive objects in ObjectPool.</returns>
-    private int InactiveCount()
+    private int InactiveCount(GameObject prefab)
     {
         int count = 0;
 
-        foreach (GameObject obj in pooledObjects)
+        foreach (GameObject obj in GetPool(prefab))
         {
             if (!obj.activeSelf)
             {
@@ -108,5 +119,38 @@ public class ObjectPool : MonoBehaviour
         }
 
         return count;
+    }
+
+    /// <summary>
+    /// A method that searches the dictionary for a specific object and returns that object pool.
+    /// If the object searched for doesn't have a pool, it creates one. 
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <returns>A specific object pool.</returns>
+    private List<GameObject> GetPool(GameObject prefab)
+    {
+        if (!pooledObjects.TryGetValue(prefab, out List<GameObject> pool))
+        {
+            pool = new List<GameObject>();
+            pooledObjects.Add(prefab, pool);
+        }
+        return pool;
+    }
+
+    /// <summary>
+    /// A method that finds or creates a parent for a specific object pool. 
+    /// This allows the hierarchy in the Unity UI to look cleaner.
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <returns></returns>
+    private Transform GetPoolParent(GameObject prefab)
+    {
+        Transform parent = transform.Find(prefab.name);
+        if (parent == null)
+        {
+            parent = new GameObject(prefab.name).transform;
+            parent.SetParent(transform);
+        }
+        return parent;
     }
 }
