@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject nextRoom;
     [SerializeField] private MetaProgression metaProgression;
     private GameState currentState;
-    private bool firstPlayThrough = false;
 
 
     /// <summary>
