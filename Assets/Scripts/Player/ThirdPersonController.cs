@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System;
 
 /// <summary>
 /// This class acts as the primary controller for third person POV.
@@ -10,11 +11,11 @@ using UnityEngine.InputSystem;
 public class ThirdPersonController : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private float jumpCooldown = 1f;
-    [SerializeField] private float sprintMultiplier = 5f;
-    [SerializeField] private float fallGravityMultiplier = 1.75f;
+    [SerializeField] private float moveSpeed = 6f;
+    [SerializeField] private float jumpHeight = 5.2f;
+    [SerializeField] private float jumpCooldown = .1f;
+    [SerializeField] private float sprintMultiplier = 2f;
+    [SerializeField] private float fallGravityMultiplier = 2f;
     [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
 
     [Header("Grounded")]
@@ -40,6 +41,15 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float animatorWalkingSpeed = 1.0f;
     public Animator playerAnimator;
 
+    [Header("Dashing")]
+    [SerializeField] private float dashPower = 2;
+    [SerializeField] private float dashUpwardPower;
+    [SerializeField] private float dashDuration = 1;
+    [SerializeField] private float dashCooldown = 1;
+    private float dashCooldownTimer;
+    private Transform orientation;
+    public KeyCode dashKey = KeyCode.C;
+
     // Movement and Look Vectors //
     private Vector2 move;
     private Vector2 look;
@@ -56,6 +66,7 @@ public class ThirdPersonController : MonoBehaviour
     private bool isJumpHeld;
     private float currentSpeed = 0f;
     private float acceleration = 3f;
+    private bool MovementLocked = false;
 
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////
 
@@ -232,30 +243,32 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
-        // TODO: currently gets overridden every tick, so having a dash or something
-        // like that wont work. Look into having some kind of movement-locked state.
         Vector3 currentVelocity = rb.linearVelocity;
 
-        if (moveDirection.sqrMagnitude > 0.01f)
+        // While locked, something else (a dash for now) owns horizontal velocity
+        if (!MovementLocked)
         {
-            Vector3 horizontalVelocity = moveDirection * currentSpeed;
-
-            // Look ahead for a wall so we don't keep pushing into it
-            float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
-
-            if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
-                && hit.normal.y < maxWalkableNormalY)
+            if (moveDirection.sqrMagnitude > 0.01f)
             {
-                // Remove the part of our movement that goes into the wall, keep the part along it
-                Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
-                horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
-            }
+                Vector3 horizontalVelocity = moveDirection * currentSpeed;
 
-            rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
-        }
-        else
-        {
-            rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
+                // Look ahead for a wall so we don't keep pushing into it
+                float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
+
+                if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
+                    && hit.normal.y < maxWalkableNormalY)
+                {
+                    // Remove the part of our movement that goes into the wall, keep the part along it
+                    Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
+                    horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
+                }
+
+                rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
+            }
         }
 
         //USED FOR ANIMATOR, takes flat velocity ignoring acceleration, used for anim triggers
