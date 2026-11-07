@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using System;
 
 /// <summary>
 /// This class acts as the primary controller for third person POV.
@@ -12,11 +10,12 @@ public class ThirdPersonController : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private float moveSpeed = 6f;
-    [SerializeField] private float jumpHeight = 5.2f;
+    [SerializeField] private float jumpHeight = 6.2f;
     [SerializeField] private float jumpCooldown = .1f;
     [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float fallGravityMultiplier = 2f;
     [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
+    [SerializeField] private float dragForce = 3f;
 
     [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
@@ -193,6 +192,14 @@ public class ThirdPersonController : MonoBehaviour
 
         // Rigidbody already applies 1x gravity, so only add the difference
         rb.linearVelocity += Vector3.up * Physics.gravity.y * (multiplier - 1f) * Time.fixedDeltaTime;
+
+        // adds drag to the Y value to make jumping look more natural
+        if (!isGrounded && !MovementLocked)
+        {
+            Vector3 v = rb.linearVelocity;
+            v.y *= 1f - dragForce * Time.fixedDeltaTime;
+            rb.linearVelocity = v;
+        }
     }
 
     /// <summary>
@@ -308,6 +315,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             return;
         }
+        rb.linearDamping = 0;
 
         Transform forwardT;
         forwardT = orientation;
