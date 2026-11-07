@@ -5809,11 +5809,17 @@ MonoBehaviour:
   animatorRunningSpeed: 2
   animatorWalkingSpeed: 1
   playerAnimator: {fileID: 2136781744}
-  dashPower: 2
+  dashPower: 20
   dashUpwardPower: 0
-  dashDuration: 1
-  dashCooldown: 1
+  dashDuration: 0.4
+  dashCooldown: 0.5
+  dashSpeedIncrease: 10
+  orientation: {fileID: 2055630122}
   dashKey: 99
+  useCameraForward: 1
+  allowAllDirections: 1
+  disableGravity: 0
+  resetVel: 1
 --- !u!114 &501705139
 MonoBehaviour:
   m_ObjectHideFlags: 0

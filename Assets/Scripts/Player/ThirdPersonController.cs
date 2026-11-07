@@ -42,13 +42,17 @@ public class ThirdPersonController : MonoBehaviour
     public Animator playerAnimator;
 
     [Header("Dashing")]
-    [SerializeField] private float dashPower = 2;
-    [SerializeField] private float dashUpwardPower;
-    [SerializeField] private float dashDuration = 1;
-    [SerializeField] private float dashCooldown = 1;
-    private float dashCooldownTimer;
-    private Transform orientation;
-    public KeyCode dashKey = KeyCode.C;
+    [SerializeField] private float dashPower = 20;
+    [SerializeField] private float dashUpwardPower = 0;
+    [SerializeField] private float dashDuration = 0.3f;
+    [SerializeField] private float dashCooldown = 0.7f;
+    [SerializeField] private float dashSpeedIncrease = 10; // how much the player move speed should increase by during the dash
+    [SerializeField] private Transform orientation;
+    private bool isDashHeld;
+    private bool canDash = true;
+    public bool allowAllDirections = true;
+    public bool disableGravity = true;
+    public bool resetVel = true;
 
     // Movement and Look Vectors //
     private Vector2 move;
@@ -293,6 +297,98 @@ public class ThirdPersonController : MonoBehaviour
         cameraTarget.transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 
+    //////////////// DASH-RELATED METHODS ////////////////
+
+    /// <summary>
+    /// applies velocity to make player dash
+    /// </summary>
+    private void Dash()
+    {
+        if (!canDash)
+        {
+            return;
+        }
+
+        Transform forwardT;
+        forwardT = orientation;
+
+        Vector3 direction = GetDirection(forwardT);
+
+        moveSpeed += dashSpeedIncrease;
+        MovementLocked = true;
+        Vector3 forceToApply = direction * dashPower + orientation.up * dashUpwardPower;
+
+        if (disableGravity)
+        {
+            rb.useGravity = false;
+        }
+
+        if (resetVel)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+
+        rb.AddForce(forceToApply, ForceMode.Impulse);
+        Invoke(nameof(ResetDash), dashDuration);
+
+        canDash = false;
+        StartCoroutine(DashCooldown());
+    }
+
+    /// <summary>
+    /// Helper method to stop the dash after set time
+    /// </summary>
+    private void ResetDash()
+    {
+        MovementLocked = false;
+        moveSpeed -= dashSpeedIncrease;
+
+        if (disableGravity)
+        {
+            rb.useGravity = true;
+        }
+    }
+
+    /// <summary>
+    /// The coroutine that runs the duration of the dash cooldown. Waits 0.25s by default, then
+    /// waits the duration of dashCooldown before allowing the player to dash again
+    /// </summary>
+    /// <returns>
+    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+    /// </returns>
+    private IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(dashDuration);
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
+    /// <summary>
+    /// helper method to determine the direction of the dash
+    /// </summary>
+    /// <param name="forwardT"> Transform being used to extract the direction </param>
+    /// <returns> A vector of the direction the player should dash </returns>
+    private Vector3 GetDirection(Transform forwardT)
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3();
+        if (allowAllDirections)
+        {
+            direction = forwardT.forward * verticalInput + forwardT.right * horizontalInput;
+        }
+        else
+        {
+            direction = forwardT.forward;
+        }
+        if (verticalInput == 0 && horizontalInput == 0)
+        {
+            direction = forwardT.forward;
+        }
+        return direction.normalized;
+    }
+
     ///////////////////////////////// ON METHODS FOR RECOGNIZING UNITY'S INPUT SYSTEM /////////////////////////////////////
 
     /// <summary>
@@ -334,5 +430,19 @@ public class ThirdPersonController : MonoBehaviour
     private void OnLook(InputValue inputValue)
     {
         look = inputValue.Get<Vector2>();
+    }
+
+    /// <summary>
+    /// Retrieves the input from the Dash input action in Unity's InputSystem
+    /// </summary>
+    /// <param name="inputValue"></param> the value of the Dash input action (a button press or release)
+    private void OnDash(InputValue inputValue)
+    {
+        isDashHeld = inputValue.isPressed;
+
+        if (inputValue.isPressed)
+        {
+            Dash();
+        }
     }
 }
