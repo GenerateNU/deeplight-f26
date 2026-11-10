@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// A method that either pauses or unpauses the game depending on the current state.
     /// </summary>
-    private void TogglePause()
+    public void TogglePause()
     {
         GameState current = stateManager.GetCurrentState();
 
