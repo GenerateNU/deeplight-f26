@@ -2,8 +2,9 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-/// <Summary>
+/// <summary>
 /// Stat handler class, which handles stat changes and keeping track of your acquired potions
+/// </summary>
 public class StatHandler : MonoBehaviour
 {
     [Header("Stats")]
@@ -14,9 +15,9 @@ public class StatHandler : MonoBehaviour
 
     private Dictionary<Stat, StatEntry> statLookup = new Dictionary<Stat, StatEntry>();
 
-    /// <Summary>
+    /// <summary>
     /// Runs on Awake
-    /// </Summary>
+    /// </summary>
     void Awake()
     {
         SyncStatEntries();
@@ -29,17 +30,17 @@ public class StatHandler : MonoBehaviour
         }
     }
 
-    /// <Summary>
+    /// <summary>
     /// Runs in the editor whenever the script changes, so new enum values show up in the Inspector
-    /// </Summary>
+    /// </summary>
     void OnValidate()
     {
         SyncStatEntries();
     }
 
-    /// <Summary>
+    /// <summary>
     /// Adds an entry for every Stat enum value that doesn't have one yet
-    /// </Summary>
+    /// </summary>
     private void SyncStatEntries()
     {
         foreach (Stat stat in Enum.GetValues(typeof(Stat)))
@@ -51,19 +52,19 @@ public class StatHandler : MonoBehaviour
         }
     }
 
-    /// <Summary>
+    /// <summary>
     /// Gets the Stat that needs to be updated
-    /// </Summary>
+    /// </summary>
     /// <param name="potion"></param> The desired Stat to get
-    /// <Returns></Returns> A Stat
+    /// <returns></returns> A Stat
     public float GetStat(Stat stat)
     {
         return statLookup.TryGetValue(stat, out StatEntry entry) ? entry.currentValue : 0f;
     }
 
-    /// <Summary>
+    /// <summary>
     /// Adds a potion to the list of acquired potions
-    /// </Summary>
+    /// </summary>
     /// <param name="potion"></param> The Potion to add to the list
     void AddPotionToList(Potion potion)
     {
@@ -71,9 +72,9 @@ public class StatHandler : MonoBehaviour
         SetStat(potion.GetStat());
     }
 
-    /// <Summary>
+    /// <summary>
     /// Sets a stat's current value based on the potions of its type in the acquired potions list
-    /// </Summary>
+    /// </summary>
     /// <param name="stat"></param> The desired Stat to set
     void SetStat(Stat stat)
     {

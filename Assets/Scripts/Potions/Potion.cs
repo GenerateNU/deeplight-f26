@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-/// <Summary>
+/// <summary>
 /// Enum for the Rarity of a potion
-/// </Summary>
+/// </summary>
 public enum Rarity
 {
     Common = 0,
@@ -14,18 +14,18 @@ public enum Rarity
     Mythic = 3
 }
 
-/// <Summary>
+/// <summary>
 /// Enum for the stat-modifying operation of the potion
-/// </Summary>
+/// </summary>
 public enum Operation
 {
     Add,
     Multiply
 }
 
-/// <Summary>
+/// <summary>
 /// A serializable Potion object with a Stat, Rarity, and Operation
-/// </Summary>
+/// </summary>
 [Serializable]
 public class Potion
 {
@@ -62,9 +62,9 @@ public class Potion
         return copy;
     }
 
-    /// <Summary>
+    /// <summary>
     /// Rolls a value within this potion's rarity-specific range using the loot stream
-    /// </Summary>
+    /// </summary>
     private float RollModifierValue()
     {
         if (rngStreamsConfig == null)
@@ -87,33 +87,33 @@ public class Potion
         return Mathf.Lerp(range.min, range.max, roll);
     }
 
-    /// <Summary>
+    /// <summary>
     /// Gets the Rarity from the PotionData file
-    /// </Summary>
+    /// </summary>
     /// <Returns></Returns> The Rarity of the potion
     public Rarity GetRarity() => rarity;
 
-    /// <Summary>
+    /// <summary>
     /// Gets the Operation from the PotionData file
-    /// </Summary>
+    /// </summary>
     /// <Returns></Returns> The Operation of the potion
     public Operation GetOperation() => operation;
 
-    /// <Summary>
+    /// <summary>
     /// Gets the final modifier value
-    /// </Summary>
+    /// </summary>
     /// <Returns></Returns> The final modifier value
     public float GetFinalModifierValue() => finalModifierValue;
 
-    /// <Summary>
+    /// <summary>
     /// Gets the Stat of the potion
-    /// </Summary>
+    /// </summary>
     /// <Returns></Returns> The Stat of the potion
     public Stat GetStat() => stat;
 
-    /// <Summary>
+    /// <summary>
     /// Gets the list of FloatRanges of the potion
-    /// </Summary>
+    /// </summary>
     /// <Returns></Returns> The list of FloatRanges of the potion
     public List<FloatRange> GetRanges() => ranges;
 }

@@ -29,6 +29,10 @@ public class AllPotions : ScriptableObject
     [Header("All Potions")]
     [SerializeField] private List<Potion> allPotions = new List<Potion>();
 
+    /// <summary>
+    /// Returns allPotions list
+    /// </summary>
+    /// <
     public List<Potion> GetAllPotions() => allPotions;
 
     /// <summary>
