@@ -10,6 +10,7 @@ public enum Stat
     AttackRate,
     ProjectileSpeed,
     ProjectilePierce,
+    MovementSpeed,
     DashDistance,
     DashCooldown,
     DashInvincibilityTime
