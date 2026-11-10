@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
+/// <Summary>
+/// Stat handler class, which handles stat changes and keeping track of your acquired potions
 public class StatHandler : MonoBehaviour
 {
     [Header("Stats")]
@@ -11,14 +13,6 @@ public class StatHandler : MonoBehaviour
     [SerializeField] private List<Potion> potionsAcquired = new List<Potion>();
 
     private Dictionary<Stat, StatEntry> statLookup = new Dictionary<Stat, StatEntry>();
-
-    /// <Summary>
-    /// Runs on Start
-    /// </Summary>
-    void Start()
-    {
-        AddPotionToList(GameObject.Find("RareAttackDamagePotion").GetComponent<Potion>());
-    }
 
     /// <Summary>
     /// Runs on Awake
@@ -74,13 +68,13 @@ public class StatHandler : MonoBehaviour
     void AddPotionToList(Potion potion)
     {
         potionsAcquired.Add(potion);
-        SetStat(potion.GetPotionData().GetStat());
+        SetStat(potion.GetStat());
     }
 
     /// <Summary>
     /// Sets a stat's current value based on the potions of its type in the acquired potions list
     /// </Summary>
-    /// <param name="potion"></param> The desired Stat to set
+    /// <param name="stat"></param> The desired Stat to set
     void SetStat(Stat stat)
     {
         if (!statLookup.TryGetValue(stat, out StatEntry entry))
@@ -94,12 +88,12 @@ public class StatHandler : MonoBehaviour
 
         foreach (Potion potion in potionsAcquired)
         {
-            if (potion.GetPotionData().GetStat() != stat)
+            if (potion.GetStat() != stat)
             { continue; }
 
-            if (potion.GetOperation() == Add)
+            if (potion.GetOperation() == Operation.Add)
             { additiveSum += potion.GetFinalModifierValue(); }
-            else if (potion.GetOperation() == Multiply)
+            else if (potion.GetOperation() == Operation.Multiply)
             { multiplier *= 1 + potion.GetFinalModifierValue(); }
         }
 

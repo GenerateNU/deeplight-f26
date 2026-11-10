@@ -1,27 +1,65 @@
 using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class Potion : MonoBehaviour
+/// <Summary>
+/// Enum for the Rarity of a potion
+/// </Summary>
+public enum Rarity
+{
+    Common = 0,
+    Rare = 1,
+    UltraRare = 2,
+    Mythic = 3
+}
+
+/// <Summary>
+/// Enum for the stat-modifying operation of the potion
+/// </Summary>
+public enum Operation
+{
+    Add,
+    Multiply
+}
+
+/// <Summary>
+/// A serializable Potion object with a Stat, Rarity, and Operation
+/// </Summary>
+[Serializable]
+public class Potion
 {
     [Header("Generic Potion Data")]
-    [SerializeField] private PotionData potionData;
+    [SerializeField] private Stat stat;
+    [SerializeField] private List<FloatRange> ranges = new List<FloatRange>(4);
 
     [Header("Unique Potion Qualities")]
     [SerializeField] private Rarity rarity;
-    [Tooltip("bool operation: true makes the potion's effect additive, whereas false makes it multiplicative.")]
-    [SerializeField] private bool operation;
+    [Tooltip("Operation: Add or Multiply.")]
+    [SerializeField] private Operation operation;
 
     [Header("LootRngStream")]
     [SerializeField] private RngStreamsConfig rngStreamsConfig;
 
     private float finalModifierValue = 0f;
 
-    /// <Summary>
-    /// Runs on awake
-    /// </Summary>
-    void Awake()
+    /// <summary>
+    /// Rolls this potion's modifier value. Call once when the potion is granted.
+    /// </summary>
+    public void Roll()
     {
         finalModifierValue = RollModifierValue();
+    }
+
+    /// <summary>
+    /// Returns a fresh copy of this definition with its own rolled value.
+    /// </summary>
+    public Potion CreateRolledInstance()
+    {
+        Potion copy = (Potion)MemberwiseClone();
+        copy.ranges = new List<FloatRange>(ranges);
+        copy.Roll();
+        return copy;
     }
 
     /// <Summary>
@@ -29,18 +67,17 @@ public class Potion : MonoBehaviour
     /// </Summary>
     private float RollModifierValue()
     {
-        if (rngStreamsConfig == null || potionData == null)
+        if (rngStreamsConfig == null)
         {
-            Debug.LogWarning($"{name}: missing RngStreamsConfig or PotionData, modifier not rolled.", this);
+            Debug.LogWarning("missing RngStreamsConfig, modifier not rolled.");
             return 0f;
         }
-
-        List<FloatRange> ranges = potionData.GetRanges();
+        
         int index = (int)rarity;
 
         if (index < 0 || index >= ranges.Count)
         {
-            Debug.LogWarning($"{name}: no range defined for rarity {rarity}.", this);
+            Debug.LogWarning("No range defined for rarity " + rarity + ".");
             return 0f;
         }
 
@@ -63,14 +100,20 @@ public class Potion : MonoBehaviour
     public Operation GetOperation() => operation;
 
     /// <Summary>
-    /// Gets the PotionData file
-    /// </Summary>
-    /// <Returns></Returns> The PotionData file
-    public PotionData GetPotionData() => potionData;
-
-    /// <Summary>
     /// Gets the final modifier value
     /// </Summary>
     /// <Returns></Returns> The final modifier value
     public float GetFinalModifierValue() => finalModifierValue;
+
+    /// <Summary>
+    /// Gets the Stat of the potion
+    /// </Summary>
+    /// <Returns></Returns> The Stat of the potion
+    public Stat GetStat() => stat;
+
+    /// <Summary>
+    /// Gets the list of FloatRanges of the potion
+    /// </Summary>
+    /// <Returns></Returns> The list of FloatRanges of the potion
+    public List<FloatRange> GetRanges() => ranges;
 }
