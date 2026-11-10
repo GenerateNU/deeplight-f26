@@ -72,7 +72,7 @@ public class Potion
             Debug.LogWarning("missing RngStreamsConfig, modifier not rolled.");
             return 0f;
         }
-        
+
         int index = (int)rarity;
 
         if (index < 0 || index >= ranges.Count)
