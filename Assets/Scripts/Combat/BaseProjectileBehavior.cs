@@ -32,8 +32,8 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     // Internal Utilities
 
-    private float timer;
-    private int currentRemainingPierce;
+    private float timer = baseProjectileLifespan;
+    private int currentRemainingPierce = baseProjectilePierce;
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
