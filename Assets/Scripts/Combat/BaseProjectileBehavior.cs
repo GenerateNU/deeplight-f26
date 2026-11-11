@@ -32,8 +32,8 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     // Internal Utilities
 
-    private float timer = baseProjectileLifespan;
-    private int currentRemainingPierce = baseProjectilePierce;
+    private float timer;
+    private int currentRemainingPierce;
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -46,19 +46,20 @@ public class BaseProjectileBehavior : MonoBehaviour
 
         if (timer <= 0f)
         {
-            //plays collision/fizz out sound effect 
+            //plays collision/fizz out sound effect
             projectileExplosionSFX.Play();
             DisableProjectile();
         }
     }
 
     /// <summary>
-    /// A method that runs when this GameObject is enabled 
+    /// A method that runs when this GameObject is enabled
     /// </summary>
     private void OnEnable()
     {
         SetProjectileStats();
         timer = currentProjectileLifespan;
+        currentRemainingPierce = baseProjectilePierce;
         Move();
     }
 
@@ -73,6 +74,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            // TODO: current CorePattern attack also adds force meaning 2x force is added !!!
             rb.AddForce(transform.forward * currentProjectileSpeed, ForceMode.VelocityChange);
         }
     }
@@ -97,7 +99,7 @@ public class BaseProjectileBehavior : MonoBehaviour
 
             currentRemainingPierce -= 1;
 
-            if (currentRemainingPierce == 0)
+            if (currentRemainingPierce <= 0)
             {
                 DisableProjectile();
             }
@@ -123,6 +125,16 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     private void SetProjectileStats()
     {
+        currentProjectileDamage = baseProjectileDamage;
+        currentProjectileSpeed = baseProjectileSpeed;
+        currentProjectileLifespan = baseProjectileLifespan;
+        currentProjectilePierce = baseProjectilePierce;
+
+        // TODO: per-enemy stat variance (e.g. stronger enemies sharing this prefab).
+        // The SetOnly* setters can't do this yet: they run after OnEnable, so timer and
+        // Move() have already used the defaults. Needs a single method that applies
+        // overrides and re-runs the timer/pierce reset and Move(). Enemy multipliers
+        // would live on AttackPatternRuntime, since the pattern asset is shared.
         if (type == Enemy)
         {
             return;
