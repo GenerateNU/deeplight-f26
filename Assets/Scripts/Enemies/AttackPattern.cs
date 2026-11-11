@@ -29,7 +29,7 @@ public abstract class AttackPattern : ScriptableObject
     [Tooltip("Which projectile this pattern fires. The pool buckets instances by this prefab.")]
     [SerializeField] protected GameObject _projectilePrefab;
     [Tooltip("Only used by Predictive aim to work out how far ahead to lead. Match the projectile's own speed.")]
-    [SerializeField] protected float _projectileSpeed = 20f;
+    [SerializeField] protected float _predictiveProjectileSpeed = 20f;
 
     [Header("Timing")]
     [Tooltip("Time after entering the attack state before the first shot. Scaled by the enemy's windup multiplier.")]
@@ -175,7 +175,6 @@ public abstract class AttackPattern : ScriptableObject
 
         // Shoot and count the shot
         Fire(runtime);
-        runtime.ShotIndex = runtime.ShotIndex + 1;
 
         // Check if that was the last shot
         if (runtime.ShotIndex >= GetFireCountPerAttack())
@@ -266,7 +265,7 @@ public abstract class AttackPattern : ScriptableObject
         Vector3 toTarget = runtime.Target.position - spawn;
         toTarget.y = 0f;
 
-        float travelTime = toTarget.magnitude / Mathf.Max(0.01f, _projectileSpeed);
+        float travelTime = toTarget.magnitude / Mathf.Max(0.01f, _predictiveProjectileSpeed);
         Vector3 predicted = runtime.Target.position + (runtime.TargetVelocity * travelTime);
 
         return AttackPatternRuntime.Flatten(predicted - spawn);

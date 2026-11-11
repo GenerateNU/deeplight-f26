@@ -16,6 +16,8 @@ public class CorePattern : AttackPattern
     /// </summary>
     protected override void Fire(AttackPatternRuntime runtime)
     {
+        runtime.ShotIndex = runtime.ShotIndex + 1;
+
         if (_firingAngles.Count == 0)
         {
             return;
@@ -31,7 +33,7 @@ public class CorePattern : AttackPattern
             return;
         }
 
-        int angleIndex = runtime.ShotIndex % _firingAngles.Count;
+        int angleIndex = (runtime.ShotIndex - 1) % _firingAngles.Count;
         SpawnProjectile(runtime, _firingAngles[angleIndex]);
     }
 
