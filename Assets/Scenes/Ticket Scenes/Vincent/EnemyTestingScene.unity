@@ -2281,7 +2281,7 @@ Transform:
   m_GameObject: {fileID: 1990088036}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.78}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2384,11 +2384,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: speed
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: chaseMode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: firePoint
@@ -2396,7 +2396,11 @@ PrefabInstance:
       objectReference: {fileID: 1990088037}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: attackRange
-      value: 10
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: roamTimeout
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: attackDamage
@@ -2410,6 +2414,14 @@ PrefabInstance:
       propertyPath: coreAttackPattern
       value: 
       objectReference: {fileID: 11400000, guid: 9f7ca1ece25490b4084a2abaa9336c19, type: 2}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: exitChaseRangeMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: exitAttackRangeMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

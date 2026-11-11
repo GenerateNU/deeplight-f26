@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: TestAttackPattern
   m_EditorClassIdentifier: Assembly-CSharp::CorePattern
   _projectilePrefab: {fileID: 2279860737726650598, guid: 065d243ef2384bc43868557c5d63ab9f, type: 3}
-  _projectileSpeed: 20
-  _windUpTime: 1
-  _coolDown: 0.2
-  _aimMode: 0
-  _trackingSensitivity: 12
+  _projectileSpeed: 10
+  _windUpTime: 2
+  _coolDown: 0.1
+  _aimMode: 3
+  _trackingSensitivity: 15
   _trackingWindupFraction: 1
-  _trackWhileFiring: 1
+  _trackWhileFiring: 0
   _rotationSpeed: 90
   _firingAngles: 0000000078000000f0000000
   _simultaneousShooting: 1
-  _burstCount: 5
+  _burstCount: 15

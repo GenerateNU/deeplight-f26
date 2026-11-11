@@ -38,9 +38,14 @@ public class CorePattern : AttackPattern
     /// <summary>
     /// Wire the projectile up here once its own script is in. Everything above this point
     /// is deliberately ignorant of how projectiles move or deal damage.
-    /// Example:
-    ///   if (projectile.TryGetComponent(out Projectile p)) p.Launch(direction, runtime.Owner);
     /// </summary>
+    /// <remarks>
+    /// Currently commented out because its functionality is now held on the projectile itself after
+    /// the new projectile behavior script is merged. Didn't outright delete it because it could be useful
+    /// for testing purposes here, as well as the fact that this method could be used for other things, like
+    /// enemy-unique stats for the same projectile type should Kevin say that's the direction we should go when
+    /// he reviews the new projectile behavior pull request comment(s) I left.
+    /*
     protected override void OnProjectileSpawned(GameObject projectile, Vector3 direction, AttackPatternRuntime runtime)
     {
         if (projectile.TryGetComponent(out Rigidbody rb))
@@ -50,4 +55,5 @@ public class CorePattern : AttackPattern
             rb.AddForce(direction * _projectileSpeed, ForceMode.VelocityChange);
         }
     }
+    */
 }

@@ -24,28 +24,46 @@ public abstract class EnemyBase : MonoBehaviour
     public enum ChaseMode
     {
         ChasePlayer,
-        RandomRoam
+        RandomRoam,
+        RandomOrbit
     }
-
-    [SerializeField] protected float speed = 10f;
+    
+    [Header("Generics")]
+    [Tooltip("Currently obsolete since attack damage is projectile-dependent.")]
     [SerializeField] protected int attackDamage = 10;
-
+    [SerializeField] protected Transform playerLocation;
+    [SerializeField] protected float distanceFromPlayer;
     [SerializeField] protected EnemyState currentState = EnemyState.Idle;
+
+    [Header("Enemy Movement Specifics")]
+    [Tooltip("Enemy movement speed during chase phase.")]
+    [SerializeField] protected float speed = 10f;
+    [Tooltip("The range from the player at which the enemy will begin to chase.")]
     [SerializeField] protected float detectionRange = 10f;
+    [Tooltip("ChasePlayer: the range at which an enemy will stop chasing the player and begin it's attack. RandomOrbit: default radius from player the enemy will orbit if roamOrbitRadius is 0.")]
     [SerializeField] protected float attackRange = 5f;
+    [Tooltip("ChasePlayer only: enemy will idle when the player is detectionRange * exitChaseRangeMultiplier away.")]
     [SerializeField][Range(1f, 2f)] protected float exitChaseRangeMultiplier = 1.1f;
+    [Tooltip("ChasePlayer only: enemy will chase when the player is attackRange * exitAttackRangeMultiplier away.")]
     [SerializeField][Range(1f, 2f)] protected float exitAttackRangeMultiplier = 1.1f;
+    [Tooltip("The interval of time between the each time the enemy will check the player's position (longer interval => less accurate position but less taxing on hardware)")]
     [SerializeField] protected float pathUpdateInterval = 0.2f;
     protected float pathUpdateTimer = 0f;
 
-    [SerializeField] protected Transform playerLocation;
-    [SerializeField] protected float distanceFromPlayer;
-
     [Header("Chase Behaviour")]
+    [Tooltip("The behavior of the enemy between attacks: ChasePlayer => chases player until in attack range; RandomRoam => randomly roams within its roam radius; RandomOrbit => moves to a random position around the player at its roam orbit radius.")]
     [SerializeField] protected ChaseMode chaseMode = ChaseMode.ChasePlayer;
     [Tooltip("RandomRoam only: how far from the enemy to look for a reposition point.")]
     [SerializeField] protected float roamRadius = 12f;
-    [Tooltip("RandomRoam only: give up and repick if the enemy cannot reach its point in this long.")]
+    [Tooltip("RandomOrbit only: how far from the player the enemy tries to hold. 0 uses attack range.")]
+    [SerializeField] protected float roamOrbitRadius = 0f;
+    [Tooltip("RandomOrbit only: how much the orbit distance varies per reposition, plus or minus.")]
+    [SerializeField] protected float roamRadiusJitter = 2f;
+    [Tooltip("RandomOrbit only: smallest arc around the player the enemy will move, in degrees.")]
+    [SerializeField] protected float minRoamAngle = 40f;
+    [Tooltip("RandomOrbit only: largest arc around the player the enemy will move, in degrees.")]
+    [SerializeField] protected float maxRoamAngle = 140f;
+    [Tooltip("Both roaming modes: give up and attack in place if the point is not reached in this long.")]
     [SerializeField] protected float roamTimeout = 6f;
     protected Vector3 roamDestination;
     protected bool hasRoamDestination;
@@ -167,16 +185,16 @@ public abstract class EnemyBase : MonoBehaviour
     {
         agent.isStopped = false;
 
+        if (chaseMode == ChaseMode.RandomRoam || chaseMode == ChaseMode.RandomOrbit)
+        {
+            HandleRoam();
+            return;
+        }
+
         // Lost the player entirely, go back to idle in either mode.
         if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
         {
             SetState(EnemyState.Idle);
-            return;
-        }
-
-        if (chaseMode == ChaseMode.RandomRoam)
-        {
-            HandleRoam();
             return;
         }
 
@@ -202,7 +220,11 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (!hasRoamDestination)
         {
-            if (TryGetRandomNavMeshPoint(transform.position, roamRadius, out roamDestination))
+            bool found = chaseMode == ChaseMode.RandomOrbit
+                ? TryGetRoamPointNearPlayer(out roamDestination)
+                : TryGetRandomNavMeshPoint(transform.position, roamRadius, out roamDestination);
+
+            if (found)
             {
                 agent.SetDestination(roamDestination);
                 hasRoamDestination = true;
@@ -210,26 +232,23 @@ public abstract class EnemyBase : MonoBehaviour
             }
             else
             {
-                // No valid point this frame, fall back to advancing on the player.
-                agent.SetDestination(playerLocation.position);
+                // Nowhere reachable to go, attack from where we stand.
+                SetState(EnemyState.Attack);
                 return;
             }
         }
 
         roamTimer += Time.deltaTime;
 
-        bool arrived = !agent.pathPending
+        bool arrived = roamTimer > 0.1f
+                       && !agent.pathPending
                        && agent.remainingDistance <= agent.stoppingDistance + 0.25f;
 
-        if (arrived)
+        if (arrived || roamTimer >= roamTimeout)
         {
+            agent.ResetPath();
             hasRoamDestination = false;
             SetState(EnemyState.Attack);
-        }
-        else if (roamTimer >= roamTimeout)
-        {
-            // Stuck or the path got invalidated, pick somewhere else.
-            hasRoamDestination = false;
         }
     }
 
@@ -258,6 +277,59 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     /// <summary>
+    /// Picks a reachable point on a ring around the player, a random arc away from where the
+    /// enemy currently stands, so roamers circle the player instead of wandering the level.
+    /// </summary>
+    protected bool TryGetRoamPointNearPlayer(out Vector3 result)
+    {
+        result = transform.position;
+
+        if (playerLocation == null)
+        {
+            return false;
+        }
+
+        Vector3 center = playerLocation.position;
+        float radius = roamOrbitRadius > 0f ? roamOrbitRadius : attackRange;
+
+        // Where the enemy sits on the ring right now. If it is standing on the player,
+        // any starting angle will do.
+        Vector3 fromPlayer = AttackPatternRuntime.Flatten(transform.position - center);
+        if (fromPlayer == Vector3.zero)
+        {
+            fromPlayer = Vector3.forward;
+        }
+
+        float currentAngle = Mathf.Atan2(fromPlayer.x, fromPlayer.z) * Mathf.Rad2Deg;
+
+        for (int i = 0; i < 10; i++)
+        {
+            // Move a meaningful arc around the ring, either way round.
+            float arc = Random.Range(minRoamAngle, maxRoamAngle);
+            if (Random.value < 0.5f)
+            {
+                arc = -arc;
+            }
+
+            float distance = Mathf.Max(1f, radius + Random.Range(-roamRadiusJitter, roamRadiusJitter));
+            Vector3 direction = Quaternion.Euler(0f, currentAngle + arc, 0f) * Vector3.forward;
+            Vector3 candidate = center + (direction * distance);
+
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            {
+                NavMeshPath path = new NavMeshPath();
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete)
+                {
+                    result = hit.position;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Starts one cycle of the attack pattern.
     /// </summary>
     protected virtual void BeginAttack()
@@ -268,7 +340,6 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        attackRuntime.Target = playerLocation;
         coreAttackPattern.Begin(attackRuntime, windupMultiplier);
         attackInProgress = true;
         attackRepeatTimer = 0f;
@@ -304,14 +375,13 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
+        if (chaseMode == ChaseMode.RandomRoam || chaseMode == ChaseMode.RandomOrbit)
+        {
+            SetState(EnemyState.Chase);
+        }
+        else if (distanceFromPlayer > detectionRange * exitChaseRangeMultiplier)
         {
             SetState(EnemyState.Idle);
-        }
-        else if (chaseMode == ChaseMode.RandomRoam)
-        {
-            // Always reposition between volleys.
-            SetState(EnemyState.Chase);
         }
         else if (distanceFromPlayer > attackRange * exitAttackRangeMultiplier)
         {
