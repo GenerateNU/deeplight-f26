@@ -13,7 +13,6 @@ public class PlayerShootProjectile : MonoBehaviour
     [Header("Projectile Settings")]
     [SerializeField] public float projectileSpeed = 5f;
     [SerializeField] public float projectileRange = 20f;
-    [SerializeField] public GameObject projectilePrefab;
     [Header("Projectile Prefab")]
     [SerializeField] private GameObject projectilePrefab;
 

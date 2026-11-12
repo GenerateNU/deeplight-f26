@@ -133,6 +133,7 @@ public abstract class AttackPattern : ScriptableObject
             }
         }
 
+        runtime.ResetTargetTracking();
         // Snap aim on entry rather than lerping up from a stale direction.
         Vector3 desired = GetDesiredAimDirection(runtime);
         if (desired != Vector3.zero)

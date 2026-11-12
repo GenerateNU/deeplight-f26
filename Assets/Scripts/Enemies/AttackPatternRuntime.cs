@@ -160,4 +160,13 @@ public class AttackPatternRuntime
 
         return vector.normalized;
     }
+
+    ///<summary>
+    /// Resets velocity and positioning in between attacks.
+    ///</summary>
+    public void ResetTargetTracking()
+    {
+        TargetVelocity = Vector3.zero;
+        _hasLastTargetPosition = false;
+    }
 }
