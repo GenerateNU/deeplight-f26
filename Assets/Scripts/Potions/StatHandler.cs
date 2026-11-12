@@ -68,7 +68,8 @@ public class StatHandler : MonoBehaviour
     /// <param name="potion"></param> The Potion to add to the list
     public void AddPotionToList(Potion potion)
     {
-        if (potion == null) {
+        if (potion == null)
+        {
             return;
         }
         potionsAcquired.Add(potion);
