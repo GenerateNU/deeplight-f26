@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Environment
   - Enemy
+  - Item
   layers:
   - Default
   - TransparentFX

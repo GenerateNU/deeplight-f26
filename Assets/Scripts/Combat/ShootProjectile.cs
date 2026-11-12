@@ -10,6 +10,7 @@ public class ShootProjectile : MonoBehaviour
     [Header("Projectile Settings")]
     [SerializeField] public float projectileSpeed = 5f;
     [SerializeField] public float projectileRange = 20f;
+    [SerializeField] private GameObject projectilePrefab;
 
     // Update is called once per frame
     void Update()
@@ -32,7 +33,7 @@ public class ShootProjectile : MonoBehaviour
     /// </summary>
     private void Shoot()
     {
-        GameObject projectile = ObjectPool.instance.GetPooledObject();
+        GameObject projectile = ObjectPool.instance.GetPooledObject(projectilePrefab);
 
         if (projectile)
         {
