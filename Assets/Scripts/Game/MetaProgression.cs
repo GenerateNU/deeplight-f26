@@ -65,8 +65,10 @@ public class MetaProgression : MonoBehaviour
     private void HandleRunEnded(bool won)
     {
         totalRunsPlayed++;
-        if (won) totalRunsWon++;
-        else totalRunsLost++;
+        if (won)
+            totalRunsWon++;
+        else
+            totalRunsLost++;
 
         // End of run is also the natural flush point for the kill count accumulated below.
         Save();
@@ -108,12 +110,14 @@ public class MetaProgression : MonoBehaviour
     /// </summary>
     private void Load()
     {
-        if (!File.Exists(SavePath)) return;
+        if (!File.Exists(SavePath))
+            return;
 
         try
         {
             SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(SavePath));
-            if (data == null) return;
+            if (data == null)
+                return;
 
             totalRunsPlayed = data.totalRunsPlayed;
             totalRunsWon = data.totalRunsWon;
@@ -130,11 +134,13 @@ public class MetaProgression : MonoBehaviour
     // is why the win/loss records save immediately. These are the safety net for kill counts.
     private void OnApplicationQuit()
     {
-        if (isDirty) Save();
+        if (isDirty)
+            Save();
     }
 
     private void OnApplicationPause(bool paused)
     {
-        if (paused && isDirty) Save();
+        if (paused && isDirty)
+            Save();
     }
 }

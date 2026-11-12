@@ -30,9 +30,11 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        if (stateManager == null) { stateManager = GetComponent<StateManager>(); }
-        if (stateManager == null) { Debug.LogError("[GameManager] StateManager must be on the same GameObject.", this); }
+
+        if (stateManager == null)
+        { stateManager = GetComponent<StateManager>(); }
+        if (stateManager == null)
+        { Debug.LogError("[GameManager] StateManager must be on the same GameObject.", this); }
     }
 
     private void OnEnable()

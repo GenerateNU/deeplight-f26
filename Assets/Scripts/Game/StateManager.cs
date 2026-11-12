@@ -40,7 +40,8 @@ public class StateManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Instance == this) Instance = null;
+        if (Instance == this)
+            Instance = null;
     }
 
     /// <summary>
@@ -82,7 +83,8 @@ public class StateManager : MonoBehaviour
         AudioListener.pause = false;
         LoadProgress = 0f;
 
-        if (loadRoutine != null) StopCoroutine(loadRoutine);
+        if (loadRoutine != null)
+            StopCoroutine(loadRoutine);
         loadRoutine = StartCoroutine(LoadGameplayRoutine());
     }
 
@@ -108,7 +110,7 @@ public class StateManager : MonoBehaviour
         LoadProgress = 1f;
         loadRoutine = null;
         OnLoadingFinished?.Invoke();
-    }    
+    }
 
     /// <summary>
     /// Sets the game to the in play state.
@@ -166,7 +168,8 @@ public class StateManager : MonoBehaviour
 
         // Re-entering the same state would re-run its setup (and restart a scene load).
         // The flag lets the very first SetState(mainMenu) through on boot.
-        if (hasEnteredAState && newState == state) return;
+        if (hasEnteredAState && newState == state)
+            return;
 
         if (hasEnteredAState && !IsTransitionAllowed(state, newState))
         {

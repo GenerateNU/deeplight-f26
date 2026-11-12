@@ -21,7 +21,8 @@ public class LoadingScreen : MonoBehaviour
     private void OnEnable()
     {
         StateManager.OnStateChanged += HandleStateChanged;
-        if (StateManager.Instance != null) HandleStateChanged(StateManager.Instance.GetCurrentState());
+        if (StateManager.Instance != null)
+            HandleStateChanged(StateManager.Instance.GetCurrentState());
     }
 
     /// <summary>
@@ -56,8 +57,10 @@ public class LoadingScreen : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (!panel.activeSelf || StateManager.Instance == null) return;
-        if (progressBar != null) progressBar.value = StateManager.Instance.LoadProgress;
+        if (!panel.activeSelf || StateManager.Instance == null)
+            return;
+        if (progressBar != null)
+            progressBar.value = StateManager.Instance.LoadProgress;
     }
 
     /// <summary>
