@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8346853040862398552}
   - component: {fileID: 8266368198253405787}
   - component: {fileID: 3781178802149812844}
-  - component: {fileID: 7080996265564696673}
   - component: {fileID: 1616202174653351925}
   - component: {fileID: 6557562719840693949}
   - component: {fileID: -4518045805036198648}
@@ -162,19 +161,6 @@ MonoBehaviour:
   projectileDamage: 10
   duration: 5
   projectileExplodeSFX: {fileID: 181059596584907789}
---- !u!114 &7080996265564696673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279860737726650598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79863430fd94d4aba892fd268ab51a34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DestroyObject
-  duration: 8
 --- !u!96 &1616202174653351925
 TrailRenderer:
   serializedVersion: 4

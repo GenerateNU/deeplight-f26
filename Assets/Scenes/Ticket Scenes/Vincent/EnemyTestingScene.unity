@@ -2411,6 +2411,10 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: playerLocation
+      value: 
+      objectReference: {fileID: 1702274742}
+    - target: {fileID: 8190503501263944132, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: coreAttackPattern
       value: 
       objectReference: {fileID: 11400000, guid: 9f7ca1ece25490b4084a2abaa9336c19, type: 2}

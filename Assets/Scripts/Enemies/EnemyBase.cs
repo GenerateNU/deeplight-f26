@@ -27,7 +27,7 @@ public abstract class EnemyBase : MonoBehaviour
         RandomRoam,
         RandomOrbit
     }
-    
+
     [Header("Generics")]
     [Tooltip("Currently obsolete since attack damage is projectile-dependent.")]
     [SerializeField] protected int attackDamage = 10;
