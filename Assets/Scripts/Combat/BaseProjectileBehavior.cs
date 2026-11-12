@@ -17,7 +17,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     [SerializeField] private float baseProjectileLifespan = 3f;
     [SerializeField] private int baseProjectilePierce = 1;
 
-    private float currentProjectileDamage;
+    private int currentProjectileDamage;
     private float currentProjectileSpeed;
     private float currentProjectileLifespan;
     private float currentProjectilePierce;
@@ -92,7 +92,7 @@ public class BaseProjectileBehavior : MonoBehaviour
 
         if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            if ((objectHit.CompareTag("Player") && type == Enemy) || (objectHit.CompareTag("Enemy") && type == Player))
+            if ((objectHit.CompareTag("Player") && type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && type == ProjectileType.Player))
             {
                 hc.Damage(currentProjectileDamage);
             }
@@ -135,7 +135,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         // Move() have already used the defaults. Needs a single method that applies
         // overrides and re-runs the timer/pierce reset and Move(). Enemy multipliers
         // would live on AttackPatternRuntime, since the pattern asset is shared.
-        if (type == Enemy)
+        if (type == ProjectileType.Enemy)
         {
             return;
         }
