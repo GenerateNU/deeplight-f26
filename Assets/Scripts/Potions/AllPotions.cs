@@ -32,19 +32,17 @@ public class AllPotions : ScriptableObject
     /// <summary>
     /// Returns allPotions list
     /// </summary>
-    /// <
     public List<Potion> GetAllPotions() => allPotions;
 
     /// <summary>
     /// Finds the matching potion definition, or null if there isn't one.
     /// The returned object is the shared definition — do not roll or mutate it.
     /// </summary>
-    public Potion GetPotionFromList(Stat stat, Rarity rarity, Operation operation)
+    public Potion GetPotionFromList(Stat stat, Operation operation)
     {
         foreach (Potion potion in allPotions)
         {
             if (potion.GetStat() == stat
-                && potion.GetRarity() == rarity
                 && potion.GetOperation() == operation)
             {
                 return potion;
@@ -59,7 +57,7 @@ public class AllPotions : ScriptableObject
     /// </summary>
     public Potion CreatePotion(Stat stat, Rarity rarity, Operation operation)
     {
-        Potion definition = GetPotionFromList(stat, rarity, operation);
-        return definition != null ? definition.CreateRolledInstance() : null;
+        Potion definition = GetPotionFromList(stat, operation);
+        return definition != null ? definition.CreateRolledInstance(rarity) : null;
     }
 }

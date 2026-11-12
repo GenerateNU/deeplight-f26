@@ -34,19 +34,19 @@ public class Potion
     [SerializeField] private List<FloatRange> ranges = new List<FloatRange>(4);
 
     [Header("Unique Potion Qualities")]
-    [SerializeField] private Rarity rarity;
     [Tooltip("Operation: Add or Multiply.")]
     [SerializeField] private Operation operation;
 
     [Header("LootRngStream")]
     [SerializeField] private RngStreamsConfig rngStreamsConfig;
 
+    private Rarity rarity;
     private float finalModifierValue = 0f;
 
     /// <summary>
     /// Rolls this potion's modifier value. Call once when the potion is granted.
     /// </summary>
-    public void Roll()
+    private void Roll()
     {
         finalModifierValue = RollModifierValue();
     }
@@ -54,10 +54,11 @@ public class Potion
     /// <summary>
     /// Returns a fresh copy of this definition with its own rolled value.
     /// </summary>
-    public Potion CreateRolledInstance()
+    public Potion CreateRolledInstance(Rarity rarity)
     {
         Potion copy = (Potion)MemberwiseClone();
         copy.ranges = new List<FloatRange>(ranges);
+        copy.rarity = rarity;
         copy.Roll();
         return copy;
     }

@@ -66,8 +66,11 @@ public class StatHandler : MonoBehaviour
     /// Adds a potion to the list of acquired potions
     /// </summary>
     /// <param name="potion"></param> The Potion to add to the list
-    void AddPotionToList(Potion potion)
+    public void AddPotionToList(Potion potion)
     {
+        if (potion == null) {
+            return;
+        }
         potionsAcquired.Add(potion);
         SetStat(potion.GetStat());
     }
