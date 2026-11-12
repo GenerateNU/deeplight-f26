@@ -17,10 +17,10 @@ public class BaseProjectileBehavior : MonoBehaviour
     [SerializeField] private float _baseProjectileLifespan = 3f;
     [SerializeField] private int _baseProjectilePierce = 1;
 
-    private int _currentProjectileDamage;
+    private float _currentProjectileDamage;
     private float _currentProjectileSpeed;
     private float _currentProjectileLifespan;
-    private int _currentProjectilePierce;
+    private float _currentProjectilePierce;
 
     [Header("Projectile Settings")]
 
@@ -94,7 +94,8 @@ public class BaseProjectileBehavior : MonoBehaviour
         {
             if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && _type == ProjectileType.Player))
             {
-                hc.Damage(_currentProjectileDamage);
+                // FIX: This truncation error could be an issue if we use weird multipliers.
+                hc.Damage((int)_currentProjectileDamage);
             }
 
             _currentRemainingPierce -= 1;
@@ -141,10 +142,10 @@ public class BaseProjectileBehavior : MonoBehaviour
         }
         else if (GameObject.Find("Stat Handler").TryGetComponent<StatHandler>(out StatHandler statHandler))
         {
-            _currentProjectileDamage = (statHandler.GetStat(AttackDamage) != 0f) ? statHandler.GetStat(AttackDamage) * baseProjectileDamage : baseProjectileDamage;
-            _currentProjectileSpeed = (statHandler.GetStat(ProjectileSpeed) != 0f) ? statHandler.GetStat(ProjectileSpeed) * baseProjectileSpeed : baseProjectileSpeed;
-            _currentProjectileLifespan = (statHandler.GetStat(ProjectileLifespan) != 0f) ? statHandler.GetStat(ProjectileLifespan) * baseProjectileLifespan : baseProjectileLifespan;
-            _currentProjectilePierce = (statHandler.GetStat(ProjectilePierce) != 0f) ? statHandler.GetStat(ProjectilePierce) * baseProjectilePierce : baseProjectilePierce;
+            _currentProjectileDamage = (statHandler.GetStat(Stat.AttackDamage) != 0f) ? statHandler.GetStat(Stat.AttackDamage) * _baseProjectileDamage : _baseProjectileDamage;
+            _currentProjectileSpeed = (statHandler.GetStat(Stat.ProjectileSpeed) != 0f) ? statHandler.GetStat(Stat.ProjectileSpeed) * _baseProjectileSpeed : _baseProjectileSpeed;
+            _currentProjectileLifespan = (statHandler.GetStat(Stat.ProjectileLifespan) != 0f) ? statHandler.GetStat(Stat.ProjectileLifespan) * _baseProjectileLifespan : _baseProjectileLifespan;
+            _currentProjectilePierce = (statHandler.GetStat(Stat.ProjectilePierce) != 0f) ? statHandler.GetStat(Stat.ProjectilePierce) * _baseProjectilePierce : _baseProjectilePierce;
         }
     }
 

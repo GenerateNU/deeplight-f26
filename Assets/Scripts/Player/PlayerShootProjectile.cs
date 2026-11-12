@@ -61,7 +61,7 @@ public class PlayerShootProjectile : MonoBehaviour
             spawnPos = ray.origin + ray.direction * spawnDistance;
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
-            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+            projectile.SetActive(true);
         }
     }
 }
