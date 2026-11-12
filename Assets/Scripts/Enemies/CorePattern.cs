@@ -1,0 +1,61 @@
+using UnityEngine;
+
+/// <summary>
+/// The one concrete attack pattern every enemy class is built from. All five planned
+/// enemies (basic, sniper, fodder, quick shot, rapid fire) are configurations of this
+/// asset, not separate scripts, so making a new enemy means making a new asset.
+///
+/// Create one per enemy class via Assets > Create > Enemies > Attack Patterns > Core Pattern.
+/// </summary>
+[CreateAssetMenu(menuName = "Enemies/Attack Patterns/Core Pattern", fileName = "CorePattern")]
+public class CorePattern : AttackPattern
+{
+    /// <summary>
+    /// Simultaneous patterns spawn every angle in one call. Consecutive patterns walk the
+    /// angle list one entry per call, wrapping so burst count repeats the whole set.
+    /// </summary>
+    protected override void Fire(AttackPatternRuntime runtime)
+    {
+        runtime.ShotIndex = runtime.ShotIndex + 1;
+
+        if (_firingAngles.Count == 0)
+        {
+            return;
+        }
+
+        if (_simultaneousShooting)
+        {
+            for (int i = 0; i < _firingAngles.Count; i++)
+            {
+                SpawnProjectile(runtime, _firingAngles[i]);
+            }
+
+            return;
+        }
+
+        int angleIndex = (runtime.ShotIndex - 1) % _firingAngles.Count;
+        SpawnProjectile(runtime, _firingAngles[angleIndex]);
+    }
+
+    /// <summary>
+    /// Wire the projectile up here once its own script is in. Everything above this point
+    /// is deliberately ignorant of how projectiles move or deal damage.
+    /// </summary>
+    /// <remarks>
+    /// Currently commented out because its functionality is now held on the projectile itself after
+    /// the new projectile behavior script is merged. Didn't outright delete it because it could be useful
+    /// for testing purposes here, as well as the fact that this method could be used for other things, like
+    /// enemy-unique stats for the same projectile type should Kevin say that's the direction we should go when
+    /// he reviews the new projectile behavior pull request comment(s) I left.
+    /*
+    protected override void OnProjectileSpawned(GameObject projectile, Vector3 direction, AttackPatternRuntime runtime)
+    {
+        if (projectile.TryGetComponent(out Rigidbody rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.AddForce(direction * _predictiveProjectileSpeed, ForceMode.VelocityChange);
+        }
+    }
+    */
+}
