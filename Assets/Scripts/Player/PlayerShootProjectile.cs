@@ -14,6 +14,8 @@ public class PlayerShootProjectile : MonoBehaviour
     [SerializeField] public float projectileSpeed = 5f;
     [SerializeField] public float projectileRange = 20f;
     [SerializeField] public GameObject projectilePrefab;
+    [Header("Projectile Prefab")]
+    [SerializeField] private GameObject projectilePrefab;
 
     [Header("Aiming")]
     [SerializeField] private Camera aimCamera;          // defaults to Camera.main
@@ -38,17 +40,10 @@ public class PlayerShootProjectile : MonoBehaviour
         {
             Shoot();
         }
-
-        // Switch to this if statment for testing: 
-        // if (Input.GetButton("Fire1"))
-        // {
-        //     Shoot();
-        // }
     }
 
     /// <summary>
-    /// This is the primary shoot method that deals with the math of shooting a projectile. It also initializes all necessary information for the
-    /// projectile onto the object itself.
+    /// This is the primary shoot method that pulls a player projectile from the pool and initializes its direction and spawn position.
     /// </summary>
     private void Shoot()
     {
@@ -70,22 +65,7 @@ public class PlayerShootProjectile : MonoBehaviour
             spawnPos = ray.origin + ray.direction * spawnDistance;
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
-            Rigidbody rb = projectile.GetComponent<Rigidbody>();
-
-
-            if (rb)
-            {
-                rb.linearVelocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-                rb.AddForce(direction * projectileSpeed, ForceMode.VelocityChange);
-            }
-
-            // setting the base attributes of the projectile on the object itself so that information can be used and tampered with
-            // after the projectile is spawned, if necessary
-            if (projectile.TryGetComponent<ProjectileBehavior>(out ProjectileBehavior pb))
-            {
-                pb.SetType("playerProjectile");
-            }
+            projectile.SetActive(true);
         }
     }
 }

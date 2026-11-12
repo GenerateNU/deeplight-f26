@@ -36,7 +36,7 @@ public class ObjectPool : MonoBehaviour
     }
 
     /// <summary>
-    /// A method that chooses the next Pooled Object to extract from the ObjectPool. 
+    /// A method that chooses the next Pooled Object to extract from the ObjectPool. Does not activate the object.
     /// </summary>
     /// <returns>The next available Pooled Object.</returns>
     public GameObject GetPooledObject(GameObject prefab)
@@ -58,12 +58,12 @@ public class ObjectPool : MonoBehaviour
 
             if (!pool[i].activeSelf)
             {
-                pool[i].SetActive(true);
                 return pool[i];
             }
         }
 
         GameObject obj = Instantiate(prefab, GetPoolParent(prefab));
+        obj.SetActive(false);
         pool.Add(obj);
         return obj;
     }
