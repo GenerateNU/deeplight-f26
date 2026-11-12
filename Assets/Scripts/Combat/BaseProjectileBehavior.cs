@@ -12,28 +12,28 @@ public class BaseProjectileBehavior : MonoBehaviour
 {
     [Header("Projectile Stats")]
 
-    [SerializeField] private int baseProjectileDamage = 1;
-    [SerializeField] private float baseProjectileSpeed = 5f;
-    [SerializeField] private float baseProjectileLifespan = 3f;
-    [SerializeField] private int baseProjectilePierce = 1;
+    [SerializeField] private int _baseProjectileDamage = 1;
+    [SerializeField] private float _baseProjectileSpeed = 5f;
+    [SerializeField] private float _baseProjectileLifespan = 3f;
+    [SerializeField] private int _baseProjectilePierce = 1;
 
-    private int currentProjectileDamage;
-    private float currentProjectileSpeed;
-    private float currentProjectileLifespan;
-    private float currentProjectilePierce;
+    private int _currentProjectileDamage;
+    private float _currentProjectileSpeed;
+    private float _currentProjectileLifespan;
+    private int _currentProjectilePierce;
 
     [Header("Projectile Settings")]
 
-    [SerializeField] private ProjectileType type;
+    [SerializeField] private ProjectileType _type;
 
     [Header("Projectile Cosmetics")]
 
-    [SerializeField] private AudioSource projectileExplosionSFX;
+    [SerializeField] private AudioSource _projectileExplosionSFX;
 
     // Internal Utilities
 
-    private float timer;
-    private int currentRemainingPierce;
+    private float _timer;
+    private int _currentRemainingPierce;
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -42,12 +42,12 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </summary>
     void Update()
     {
-        timer -= Time.deltaTime;
+        _timer -= Time.deltaTime;
 
-        if (timer <= 0f)
+        if (_timer <= 0f)
         {
             //plays collision/fizz out sound effect
-            projectileExplosionSFX.Play();
+            _projectileExplosionSFX.Play();
             DisableProjectile();
         }
     }
@@ -58,8 +58,8 @@ public class BaseProjectileBehavior : MonoBehaviour
     private void OnEnable()
     {
         SetProjectileStats();
-        timer = currentProjectileLifespan;
-        currentRemainingPierce = baseProjectilePierce;
+        _timer = _currentProjectileLifespan;
+        _currentRemainingPierce = _baseProjectilePierce;
         Move();
     }
 
@@ -75,7 +75,7 @@ public class BaseProjectileBehavior : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             // TODO: current CorePattern attack also adds force meaning 2x force is added !!!
-            rb.AddForce(transform.forward * currentProjectileSpeed, ForceMode.VelocityChange);
+            rb.AddForce(transform.forward * _currentProjectileSpeed, ForceMode.VelocityChange);
         }
     }
 
@@ -92,14 +92,14 @@ public class BaseProjectileBehavior : MonoBehaviour
 
         if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            if ((objectHit.CompareTag("Player") && type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && type == ProjectileType.Player))
+            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && _type == ProjectileType.Player))
             {
-                hc.Damage(currentProjectileDamage);
+                hc.Damage(_currentProjectileDamage);
             }
 
-            currentRemainingPierce -= 1;
+            _currentRemainingPierce -= 1;
 
-            if (currentRemainingPierce <= 0)
+            if (_currentRemainingPierce <= 0)
             {
                 DisableProjectile();
             }
@@ -125,26 +125,26 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     private void SetProjectileStats()
     {
-        currentProjectileDamage = baseProjectileDamage;
-        currentProjectileSpeed = baseProjectileSpeed;
-        currentProjectileLifespan = baseProjectileLifespan;
-        currentProjectilePierce = baseProjectilePierce;
+        _currentProjectileDamage = _baseProjectileDamage;
+        _currentProjectileSpeed = _baseProjectileSpeed;
+        _currentProjectileLifespan = _baseProjectileLifespan;
+        _currentProjectilePierce = _baseProjectilePierce;
 
         // TODO: per-enemy stat variance (e.g. stronger enemies sharing this prefab).
         // The SetOnly* setters can't do this yet: they run after OnEnable, so timer and
         // Move() have already used the defaults. Needs a single method that applies
         // overrides and re-runs the timer/pierce reset and Move(). Enemy multipliers
         // would live on AttackPatternRuntime, since the pattern asset is shared.
-        if (type == ProjectileType.Enemy)
+        if (_type == ProjectileType.Enemy)
         {
             return;
         }
         else if (GameObject.Find("Stat Handler").TryGetComponent<StatHandler>(out StatHandler statHandler))
         {
-            currentProjectileDamage = (statHandler.GetStat(AttackDamage) != 0f) ? statHandler.GetStat(AttackDamage) * baseProjectileDamage : baseProjectileDamage;
-            currentProjectileSpeed = (statHandler.GetStat(ProjectileSpeed) != 0f) ? statHandler.GetStat(ProjectileSpeed) * baseProjectileSpeed : baseProjectileSpeed;
-            currentProjectileLifespan = (statHandler.GetStat(ProjectileLifespan) != 0f) ? statHandler.GetStat(ProjectileLifespan) * baseProjectileLifespan : baseProjectileLifespan;
-            currentProjectilePierce = (statHandler.GetStat(ProjectilePierce) != 0f) ? statHandler.GetStat(ProjectilePierce) * baseProjectilePierce : baseProjectilePierce;
+            _currentProjectileDamage = (statHandler.GetStat(AttackDamage) != 0f) ? statHandler.GetStat(AttackDamage) * baseProjectileDamage : baseProjectileDamage;
+            _currentProjectileSpeed = (statHandler.GetStat(ProjectileSpeed) != 0f) ? statHandler.GetStat(ProjectileSpeed) * baseProjectileSpeed : baseProjectileSpeed;
+            _currentProjectileLifespan = (statHandler.GetStat(ProjectileLifespan) != 0f) ? statHandler.GetStat(ProjectileLifespan) * baseProjectileLifespan : baseProjectileLifespan;
+            _currentProjectilePierce = (statHandler.GetStat(ProjectilePierce) != 0f) ? statHandler.GetStat(ProjectilePierce) * baseProjectilePierce : baseProjectilePierce;
         }
     }
 
@@ -153,7 +153,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     public void SetOnlyDamage(int damage)
     {
-        currentProjectileDamage = damage;
+        _currentProjectileDamage = damage;
     }
 
     /// <Summary>
@@ -161,7 +161,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     public void SetOnlySpeed(float speed)
     {
-        currentProjectileSpeed = speed;
+        _currentProjectileSpeed = speed;
     }
 
     /// <Summary>
@@ -169,7 +169,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     public void SetOnlyLifespan(float lifespan)
     {
-        currentProjectileLifespan = lifespan;
+        _currentProjectileLifespan = lifespan;
     }
 
     /// <Summary>
@@ -177,6 +177,6 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </Summary>
     public void SetOnlyPierce(int pierce)
     {
-        currentProjectilePierce = pierce;
+        _currentProjectilePierce = pierce;
     }
 }
