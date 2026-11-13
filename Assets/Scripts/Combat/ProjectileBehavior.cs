@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// This class represents the behavior of a projectile. It deals with collision detection and 
+/// This class represents the behavior of a projectile. It deals with collision detection and
 /// returning projectiles to the pool.
 /// </summary>
 public class ProjectileBehavior : MonoBehaviour
@@ -29,14 +29,14 @@ public class ProjectileBehavior : MonoBehaviour
 
         if (timer <= 0f)
         {
-            //plays collision/fizz out sound effect 
+            //plays collision/fizz out sound effect
             projectileExplodeSFX.Play();
             DisableProjectile();
         }
     }
 
     /// <summary>
-    /// A method that runs when this GameObject is enabled 
+    /// A method that runs when this GameObject is enabled
     /// </summary>
     private void OnEnable()
     {
@@ -56,18 +56,20 @@ public class ProjectileBehavior : MonoBehaviour
         damage other enemies and the player projectile to damage themselves or other players (if that were to get implemented
         down the road).
         */
-        // TODO 
+        // TODO
         // Implement a check to see if the player projectile is hitting an enemy, or an enemy projectile is hitting the player.
 
         if ((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
             || otherCollider.CompareTag("Environment"))
-            //plays collision/fizz out sound effect 
-            projectileExplodeSFX.Play();
-        if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            hc.Damage(projectileDamage);
+            //plays collision/fizz out sound effect
+            projectileExplodeSFX.Play();
+            if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
+            {
+                hc.Damage(projectileDamage);
+            }
+            DisableProjectile();
         }
-        DisableProjectile();
     }
 
     /// <summary>
