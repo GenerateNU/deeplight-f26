@@ -178,7 +178,8 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void ApplyJumpGravity()
     {
-        if (MovementLocked) {
+        if (MovementLocked)
+        {
             return;
         }
 
