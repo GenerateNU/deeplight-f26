@@ -178,6 +178,10 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void ApplyJumpGravity()
     {
+        if (MovementLocked) {
+            return;
+        }
+
         float verticalSpeed = rb.linearVelocity.y;
         float multiplier = 1f;
 
@@ -194,7 +198,7 @@ public class ThirdPersonController : MonoBehaviour
         rb.linearVelocity += Vector3.up * Physics.gravity.y * (multiplier - 1f) * Time.fixedDeltaTime;
 
         // adds drag to the Y value to make jumping look more natural
-        if (!isGrounded && !MovementLocked)
+        if (!isGrounded)
         {
             Vector3 v = rb.linearVelocity;
             v.y *= 1f - dragForce * Time.fixedDeltaTime;
