@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 3270850857425137053}
   - component: {fileID: 8346853040862398552}
   - component: {fileID: 8266368198253405787}
-  - component: {fileID: 3781178802149812844}
   - component: {fileID: 1616202174653351925}
   - component: {fileID: 6557562719840693949}
   - component: {fileID: -4518045805036198648}
   - component: {fileID: 181059596584907789}
+  - component: {fileID: 1394280263606990386}
   m_Layer: 0
   m_Name: Test Enemy Projectile
   m_TagString: Projectile
@@ -145,22 +145,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &3781178802149812844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2279860737726650598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6991b279e11e74fbb85cc0a9b1326737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  projectileType: enemyProjectile
-  projectileDamage: 10
-  duration: 5
-  projectileExplodeSFX: {fileID: 181059596584907789}
 --- !u!96 &1616202174653351925
 TrailRenderer:
   serializedVersion: 4
@@ -5171,3 +5155,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1394280263606990386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2279860737726650598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efaf3c990361024f983abaf47002db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
+  _baseProjectileDamage: 1
+  _baseProjectileSpeed: 5
+  _baseProjectileLifespan: 3
+  _baseProjectilePierce: 1
+  _type: 1
+  _projectileExplosionSFX: {fileID: 181059596584907789}

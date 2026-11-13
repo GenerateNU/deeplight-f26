@@ -140,7 +140,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         {
             return;
         }
-        else if (GameObject.Find("Stat Handler").TryGetComponent<StatHandler>(out StatHandler statHandler))
+        else if (FindAnyObjectByType<StatHandler>() is StatHandler statHandler)
         {
             _currentProjectileDamage = (statHandler.GetStat(Stat.AttackDamage) != 0f) ? statHandler.GetStat(Stat.AttackDamage) * _baseProjectileDamage : _baseProjectileDamage;
             _currentProjectileSpeed = (statHandler.GetStat(Stat.ProjectileSpeed) != 0f) ? statHandler.GetStat(Stat.ProjectileSpeed) * _baseProjectileSpeed : _baseProjectileSpeed;
