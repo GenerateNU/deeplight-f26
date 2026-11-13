@@ -41,8 +41,13 @@ public class DecoyDashTarotCard : TarotCard
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    public override void ApplyTarotCard()
+    public override void ApplyTarotCard(TarotContext context)
     {
         Debug.Log("Tarot Activated!");
+    }
+
+    public override void RemoveTarotCard()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -41,9 +41,14 @@ public class PierceEffectTarotCard : TarotCard
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    public override void ApplyTarotCard(TarotContext ctx)
+    public override void ApplyTarotCard(TarotContext context)
     {
         Debug.Log("Tarot Activated!");
-        ctx.Stats.AddModifier(Stat.ProjectilePierce, Operation.)
+        //ctx.Stats.AddModifier(Stat.ProjectilePierce, Operation.)
+    }
+
+        public override void RemoveTarotCard()
+    {
+        throw new System.NotImplementedException();
     }
 }

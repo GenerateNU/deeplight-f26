@@ -36,8 +36,16 @@ public class ExampleTarotCard : TarotCard
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    public override void ApplyTarotCard()
+    public override void ApplyTarotCard(TarotContext context)
     {
         Debug.Log("Tarot Activated!");
+    }
+
+    /// <summary>
+    /// An abstract method that each tarot card will implement to remove their special abilites when a run ends.
+    /// </summary>
+    public override void RemoveTarotCard()
+    {
+        Debug.Log("Tarot removed!");
     }
 }

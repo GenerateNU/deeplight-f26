@@ -80,7 +80,7 @@ public class StatHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets a stat's current value based on the potions of its type in the acquired potions list
+    /// Sets a stat's current value based on the potions/tarot cards of its type in the acquired potions and tarot card lists.
     /// </summary>
     /// <param name="stat"></param> The desired Stat to set
     void SetStat(Stat stat)
@@ -133,8 +133,21 @@ public class StatHandler : MonoBehaviour
         SetStat(stat);
     }
 
-    public void RemoveModifiers(TarotCard tarotCard)
+    /// <summary>
+    /// Removes every modifier added by the given tarot card and recalculates the related stats.
+    /// </summary>
+    /// <param name="tarotCard">The tarot card whose modifiers should be removed.</param>
+    public void RemoveModifier(TarotCard tarotCard)
     {
-        //TODO
+        for (int i = _modifiers.Count - 1; i >= 0; i--)
+        {
+            StatModifier modifier = _modifiers[i];
+
+            if (modifier.TarotCard != tarotCard)
+            { continue; }
+
+            _modifiers.RemoveAt(i);
+            SetStat(modifier.Stat);
+        }
     }
 }
