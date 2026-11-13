@@ -16,6 +16,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     [SerializeField] private float _baseProjectileSpeed = 5f;
     [SerializeField] private float _baseProjectileLifespan = 3f;
     [SerializeField] private int _baseProjectilePierce = 1;
+    [SerializeField] private int _baseHeadshotMultiplier = 2;
 
     private float _currentProjectileDamage;
     private float _currentProjectileSpeed;
@@ -90,12 +91,21 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
-        if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
+        HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
+
+        if (hc != null)
         {
-            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && _type == ProjectileType.Player))
+            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || ((objectHit.CompareTag("Enemy") || otherCollider.CompareTag("EnemyHead")) && _type == ProjectileType.Player))
             {
                 // FIX: This truncation error could be an issue if we use weird multipliers.
-                hc.Damage((int)_currentProjectileDamage);
+                if (otherCollider.CompareTag("EnemyHead"))
+                {
+                    hc.Damage((int)_currentProjectileDamage * _baseHeadshotMultiplier);
+                }
+                else
+                {
+                    hc.Damage((int)_currentProjectileDamage);
+                }
             }
 
             _currentRemainingPierce -= 1;
