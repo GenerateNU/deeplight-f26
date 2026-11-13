@@ -106,13 +106,13 @@ public class BaseProjectileBehavior : MonoBehaviour
                 {
                     hc.Damage((int)_currentProjectileDamage);
                 }
-            }
 
-            _currentRemainingPierce -= 1;
+                _currentRemainingPierce -= 1;
 
-            if (_currentRemainingPierce <= 0)
-            {
-                DisableProjectile();
+                if (_currentRemainingPierce <= 0)
+                {
+                    DisableProjectile();
+                }
             }
         }
     }
