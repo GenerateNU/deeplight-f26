@@ -9,7 +9,6 @@ using UnityEngine;
 /// method, which must be overriden by the child. Whichever objects are needed to
 /// apply the effects of the tarot card's ability should be added as an additional
 /// field that can be set elsewhere.
-///
 /// </summary>
 public abstract class TarotCard : ScriptableObject
 {
@@ -31,5 +30,5 @@ public abstract class TarotCard : ScriptableObject
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    public abstract void ApplyTarotCard();
+    public abstract void ApplyTarotCard(TarotContext ctx);
 }

@@ -28,3 +28,15 @@ public class StatEntry
     public float baseValue = 1f;
     public float currentValue;
 }
+
+/// <summary>
+/// A stat change from a tarot card source. 
+/// Used for tracking what modifiers have been applied so they can be removed later.
+/// </summary>
+public class StatModifier
+{
+    public Stat Stat;
+    public Operation Operation;
+    public float Value;
+    public TarotCard TarotCard;   // which tarot card added it, so it can be removed later
+}

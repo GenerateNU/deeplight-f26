@@ -36,11 +36,14 @@ public class OnKillTarotCard : TarotCard
         }
     }
 
+    private float _damageBoostMultiplier = 1.5f;
+
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
-    public override void ApplyTarotCard()
+    public override void ApplyTarotCard(TarotContext ctx)
     {
         Debug.Log("Tarot Activated!");
+        ctx.Stats.AddModifier(Stat.AttackDamage, Operation.Multiply, _damageBoostMultiplier, this);
     }
 }
