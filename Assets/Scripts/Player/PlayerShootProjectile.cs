@@ -16,6 +16,10 @@ public class PlayerShootProjectile : MonoBehaviour
     [Header("Aiming")]
     [SerializeField] private Camera aimCamera;          // defaults to Camera.main
     [SerializeField] private float spawnDistance = 2f;  // how far along the center ray the projectile appears
+    [Tooltip("Where projectiles spawn. Put an empty child at the player's hand/staff tip. If empty, falls back to spawning along the camera ray.")]
+    [SerializeField] private Transform firePoint;
+    [Tooltip("How far the crosshair ray looks for something to aim at. If nothing is hit, aims at a point this far away.")]
+    [SerializeField] private float maxAimDistance = 100f;
 
     //animation controller
     [SerializeField] private Animator playerAnimator;
@@ -25,6 +29,9 @@ public class PlayerShootProjectile : MonoBehaviour
     /// event that raises when the player fires a projectile.
     /// </summary>
     public event Action OnPlayerShoot;
+
+    // Reused buffer for the crosshair raycast so shooting does not allocate every click.
+    private readonly RaycastHit[] aimHits = new RaycastHit[16];
 
     private void Awake()
     {
@@ -60,10 +67,56 @@ public class PlayerShootProjectile : MonoBehaviour
 
             AudioSource.PlayClipAtPoint(shootSFX, transform.position);
 
-            // Center-of-screen ray: no raycast, no target snapping
+            // Ray through the center of the screen, i.e. through the crosshair
             Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             direction = ray.direction;
-            spawnPos = ray.origin + ray.direction * spawnDistance;
+
+            // Spawn from the fire point (hand/staff) if one is set, otherwise use the old camera-ray spawn.
+            if (firePoint != null)
+            {
+                spawnPos = firePoint.position;
+
+                // Find what the crosshair is on. If nothing is hit, aim at a far point along the ray.
+                Vector3 targetPoint = ray.origin + ray.direction * maxAimDistance;
+
+                // Get every solid hit along the ray (triggers like projectiles/pickups are ignored).
+                int hitCount = Physics.RaycastNonAlloc(ray, aimHits, maxAimDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+                float closestDistance = float.MaxValue;
+
+                for (int i = 0; i < hitCount; i++)
+                {
+                    // Skip the player's own colliders so we never aim at our own shoulder/body.
+                    if (aimHits[i].collider.transform.IsChildOf(transform))
+                    {
+                        continue;
+                    }
+
+                    // Hits are not sorted, so keep the nearest one.
+                    if (aimHits[i].distance < closestDistance)
+                    {
+                        closestDistance = aimHits[i].distance;
+                        targetPoint = aimHits[i].point;
+                    }
+                }
+
+                // Aim from the hand toward the crosshair target so the shot lands where the crosshair is.
+                Vector3 toTarget = targetPoint - spawnPos;
+
+                // If the target is on top of or behind the hand (e.g. hugging a wall, enemy right beside us),
+                // aiming at it would fire sideways/backwards. Shoot straight along the camera's view instead.
+                if (toTarget.sqrMagnitude < 0.01f || Vector3.Dot(toTarget, ray.direction) <= 0f)
+                {
+                    direction = ray.direction;
+                }
+                else
+                {
+                    direction = toTarget.normalized;
+                }
+            }
+            else
+            {
+                spawnPos = ray.origin + ray.direction * spawnDistance;
+            }
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
             OnPlayerShoot?.Invoke();

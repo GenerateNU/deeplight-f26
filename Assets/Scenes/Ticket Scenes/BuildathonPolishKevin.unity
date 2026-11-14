@@ -1807,6 +1807,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 386143556}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &115241646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 115241647}
+  m_Layer: 6
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &115241647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115241646}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.15, y: 0, z: 0.311}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1014247428}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &124951920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5821,7 +5852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4170037c3bfee41bdbca08c0a3560001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrosshairExpand
-  shooter: {fileID: 0}
+  shooter: {fileID: 1014247419}
   restScale: 1
   shotBump: 1.7
   maxScale: 2
@@ -16500,11 +16531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796b2e13b9f631649bd766d8519cd603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  projectileSpeed: 500
-  projectileRange: 20
   projectilePrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
   aimCamera: {fileID: 316863677}
   spawnDistance: 2
+  firePoint: {fileID: 0}
   playerAnimator: {fileID: 1387263329}
   shootSFX: {fileID: 8300000, guid: d90997041d15da54d88130c1bd12360c, type: 3}
 --- !u!114 &1014247420
@@ -16551,7 +16581,6 @@ MonoBehaviour:
   moveSpeed: 6
   jumpHeight: 5.2
   jumpCooldown: 0.1
-  sprintMultiplier: 2
   fallGravityMultiplier: 2
   lowJumpGravityMultiplier: 2.5
   dragForce: 3
@@ -16567,8 +16596,7 @@ MonoBehaviour:
   wallCheckDistance: 0.1
   maxWalkableNormalY: 0.7
   rb: {fileID: 1014247424}
-  animatorRunningSpeed: 1.5
-  animatorWalkingSpeed: 1
+  animatorSpeed: 1
   playerAnimator: {fileID: 1387263329}
   dashPower: 20
   dashUpwardPower: 0
@@ -16732,6 +16760,7 @@ Transform:
   - {fileID: 1387263330}
   - {fileID: 2092969609}
   - {fileID: 388644789}
+  - {fileID: 115241647}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -40.863, z: 0}
 --- !u!43 &1025583696

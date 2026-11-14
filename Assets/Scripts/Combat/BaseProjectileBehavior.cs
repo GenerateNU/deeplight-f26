@@ -57,6 +57,12 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Pooled projectiles keep their old trail points; clear them so the trail doesn't streak from the last impact.
+        if (TryGetComponent(out TrailRenderer trail))
+        {
+            trail.Clear();
+        }
+
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
         _currentRemainingPierce = _baseProjectilePierce;
