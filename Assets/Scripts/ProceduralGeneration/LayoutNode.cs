@@ -16,9 +16,9 @@ public class LayoutNode
 
     /// <summary>
     /// Creates a node with every side open and no distance, room number, or seed assigned yet
-    /// </summary>
     /// <param name="gridPosition">Where the unit sits on the map</param>
     /// <param name="type">The role of the unit</param>
+    /// </summary>
     public LayoutNode(Vector2Int gridPosition, RoomType type)
     {
         this.gridPosition = gridPosition;
