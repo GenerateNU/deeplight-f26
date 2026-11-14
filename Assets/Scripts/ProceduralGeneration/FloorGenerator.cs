@@ -4,21 +4,21 @@ using UnityEngine;
 
 /// <summary>
 /// Runs the layout algorithm: grows the map one unit at a time from open slots, then fills in
-/// distances, room numbers, and seeds. The only class in this system that uses the RngStream
+/// distances and room numbers. The only class in this system that uses the RngStream
 /// </summary>
 public static class FloorGenerator
 {
     /// <summary>
     /// Builds a floor layout. The RNG is used in a fixed order so the same stream state always
-    /// gives the same map: first the room pool shuffle, then the layout growth, then the
-    /// per-room seeds. The boss is on hold, so no unit is given the Boss type
+    /// gives the same map: first the room pool shuffle, then the layout growth. The boss is on
+    /// hold, so no unit is given the Boss type
     /// </summary>
     /// <param name="rng">The stream to draw every random choice from</param>
     /// <param name="layoutParams">The settings for this run, such as how many units to place</param>
     /// <param name="poolSize">How many rooms are in the run's pool. If there are more units
     /// than rooms, the shuffled pool is reused from the start</param>
     /// <returns>
-    /// (FloorLayout) the finished map with distances, room numbers, and seeds filled in
+    /// (FloorLayout) the finished map with distances and room numbers filled in
     /// </returns>
     public static FloorLayout Generate(RngStream rng, LayoutParams layoutParams, int poolSize)
     {
@@ -34,7 +34,6 @@ public static class FloorGenerator
         ExpandAll(layout, layoutParams.roomCount, rng, placementOrder, openSlots);
         ComputeDistances(layout);
         AssignRooms(placementOrder, shuffledPool);
-        AssignSeeds(placementOrder, rng);
 
         return layout;
     }
@@ -120,12 +119,7 @@ public static class FloorGenerator
     /// <param name="rng">The stream used to pick open slots</param>
     /// <param name="placementOrder">The list of units in the order they were placed</param>
     /// <param name="openSlots">The list of open slots, which this changes as units are placed</param>
-    private static void ExpandAll(
-        FloorLayout layout,
-        int roomCount,
-        RngStream rng,
-        List<LayoutNode> placementOrder,
-        List<OpenSlot> openSlots)
+    private static void ExpandAll(FloorLayout layout, int roomCount, RngStream rng, List<LayoutNode> placementOrder, List<OpenSlot> openSlots)
     {
         while (layout.nodes.Count < roomCount)
         {
@@ -224,19 +218,6 @@ public static class FloorGenerator
         for (int i = 0; i < placementOrder.Count; i++)
         {
             placementOrder[i].roomNum = shuffledPool[i % shuffledPool.Length];
-        }
-    }
-
-    /// <summary>
-    /// Gives every unit its own seed, drawn in the order the units were placed
-    /// </summary>
-    /// <param name="placementOrder">The units in the order they were placed</param>
-    /// <param name="rng">The stream to draw seeds from</param>
-    private static void AssignSeeds(List<LayoutNode> placementOrder, RngStream rng)
-    {
-        foreach (LayoutNode node in placementOrder)
-        {
-            node.seed = rng.Range(0, int.MaxValue);
         }
     }
 }
