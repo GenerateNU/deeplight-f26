@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// This class acts as the primary controller for third person POV.
@@ -47,11 +48,17 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float dashCooldown = 0.7f;
     [SerializeField] private float dashSpeedIncrease = 10; // how much the player move speed should increase by during the dash
     [SerializeField] private Transform orientation;
+    [SerializeField] private TrailRenderer dashTrail;
     private bool isDashHeld;
     private bool canDash = true;
     public bool allowAllDirections = true;
     public bool disableGravity = true;
     public bool resetVel = true;
+
+    [Header("Dash UI")]
+    [SerializeField] private Image dashCooldownBar;
+    [SerializeField] private Color cooldownColor = new Color(0.6f, 0.6f, 0.6f);
+    [SerializeField] private Color readyColor = Color.cyan;
 
     // Movement and Look Vectors //
     private Vector2 move;
@@ -86,6 +93,12 @@ public class ThirdPersonController : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        //ensures dash trail isn't on at scene start
+        if (dashTrail != null)
+            dashTrail.emitting = false;
+
+        SetDashBar(1f);
     }
 
     /// <summary>
@@ -336,6 +349,15 @@ public class ThirdPersonController : MonoBehaviour
         MovementLocked = true;
         Vector3 forceToApply = direction * dashPower + orientation.up * dashUpwardPower;
 
+        //triggers oneshot dash animation & dash trail renderer
+        playerAnimator.SetTrigger("dash");
+
+        if (dashTrail != null)
+        {
+            dashTrail.Clear();        // removes leftover trail from a previous dash
+            dashTrail.emitting = true;
+        }
+
         if (disableGravity)
         {
             rb.useGravity = false;
@@ -351,6 +373,21 @@ public class ThirdPersonController : MonoBehaviour
 
         canDash = false;
         StartCoroutine(DashCooldown());
+        StartCoroutine(AnimateDashBar());
+    }
+
+    /// </summary>
+    /// Updates the dash cooldown bar. 0 = just dashed, 1 = ready to dash again.
+    /// </summary>
+    private void SetDashBar(float fill)
+    {
+        if (dashCooldownBar == null)
+        {
+            return;
+        }
+
+        dashCooldownBar.fillAmount = Mathf.Clamp01(fill);
+        dashCooldownBar.color = fill >= 1f ? readyColor : cooldownColor;
     }
 
     /// <summary>
@@ -365,6 +402,12 @@ public class ThirdPersonController : MonoBehaviour
         {
             rb.useGravity = true;
         }
+
+        //turns dash trail back off
+        if (dashTrail != null)
+        {
+            dashTrail.emitting = false;
+        }   
     }
 
     /// <summary>
@@ -380,6 +423,24 @@ public class ThirdPersonController : MonoBehaviour
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    //coroutine that tracks the dash cooldown and applies value to DashbarFill
+    private IEnumerator AnimateDashBar()
+    {
+        float totalTime = dashDuration + dashCooldown;
+        float elapsed = 0f;
+
+        SetDashBar(0f);
+
+        while (elapsed < totalTime)
+        {
+            elapsed += Time.deltaTime;
+            SetDashBar(elapsed / totalTime);
+            yield return null;
+        }
+
+        SetDashBar(1f);
     }
 
     /// <summary>
