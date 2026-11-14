@@ -10,6 +10,9 @@ using UnityEngine.Audio;
 /// </summary>
 public class PlayerShootProjectile : MonoBehaviour
 {
+    [Header("Projectile Settings")]
+    [SerializeField] public float projectileSpeed = 5f;
+    [SerializeField] public float projectileRange = 20f;
     [Header("Projectile Prefab")]
     [SerializeField] private GameObject projectilePrefab;
 
@@ -20,6 +23,11 @@ public class PlayerShootProjectile : MonoBehaviour
     //animation controller
     [SerializeField] private Animator playerAnimator;
     [SerializeField] AudioClip shootSFX;
+
+    /// <summary>
+    /// event that raises when the player fires a projectile.
+    /// </summary>
+    public event Action OnPlayerShoot;
 
     private void Awake()
     {
@@ -61,6 +69,7 @@ public class PlayerShootProjectile : MonoBehaviour
             spawnPos = ray.origin + ray.direction * spawnDistance;
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
+            OnPlayerShoot?.Invoke();
             projectile.SetActive(true);
         }
     }

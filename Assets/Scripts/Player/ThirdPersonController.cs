@@ -1,19 +1,21 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// This class acts as the primary controller for third person POV. 
+/// This class acts as the primary controller for third person POV.
 /// Here we set fields like movement speed, look sensitivity, and check for ground collisions.
 /// </summary>
 public class ThirdPersonController : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private float jumpCooldown = 1f;
-    [SerializeField] private float sprintMultiplier = 5f;
+    [SerializeField] private float moveSpeed = 6f;
+    [SerializeField] private float jumpHeight = 6.2f;
+    [SerializeField] private float jumpCooldown = .1f;
+    [SerializeField] private float sprintMultiplier = 2f;
+    [SerializeField] private float fallGravityMultiplier = 2f;
+    [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
+    [SerializeField] private float dragForce = 3f;
 
     [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
@@ -38,6 +40,19 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float animatorWalkingSpeed = 1.0f;
     public Animator playerAnimator;
 
+    [Header("Dashing")]
+    [SerializeField] private float dashPower = 20;
+    [SerializeField] private float dashUpwardPower = 0;
+    [SerializeField] private float dashDuration = 0.3f;
+    [SerializeField] private float dashCooldown = 0.7f;
+    [SerializeField] private float dashSpeedIncrease = 10; // how much the player move speed should increase by during the dash
+    [SerializeField] private Transform orientation;
+    private bool isDashHeld;
+    private bool canDash = true;
+    public bool allowAllDirections = true;
+    public bool disableGravity = true;
+    public bool resetVel = true;
+
     // Movement and Look Vectors //
     private Vector2 move;
     private Vector2 look;
@@ -51,14 +66,16 @@ public class ThirdPersonController : MonoBehaviour
     private bool isGrounded = true;
     private bool canJump = true;
     private bool isRunning;
+    private bool isJumpHeld;
     private float currentSpeed = 0f;
     private float acceleration = 3f;
+    private bool MovementLocked = false;
 
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////
 
     /// <summary>
     /// Runs on start
-    /// </summary> 
+    /// </summary>
     private void Start()
     {
         if (rb == null)
@@ -96,6 +113,7 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        ApplyJumpGravity();
     }
 
     /// <summary>
@@ -155,11 +173,46 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     /// <summary>
+    /// Adds extra gravity to shape the jump arc so that falls are faster than rises,
+    /// and releasing jump while rising cuts the jump short.
+    /// </summary>
+    private void ApplyJumpGravity()
+    {
+        if (MovementLocked)
+        {
+            return;
+        }
+
+        float verticalSpeed = rb.linearVelocity.y;
+        float multiplier = 1f;
+
+        if (verticalSpeed < 0f)
+        {
+            multiplier = fallGravityMultiplier;
+        }
+        else if (verticalSpeed > 0f && !isJumpHeld)
+        {
+            multiplier = lowJumpGravityMultiplier;
+        }
+
+        // Rigidbody already applies 1x gravity, so only add the difference
+        rb.linearVelocity += Vector3.up * Physics.gravity.y * (multiplier - 1f) * Time.fixedDeltaTime;
+
+        // adds drag to the Y value to make jumping look more natural
+        if (!isGrounded)
+        {
+            Vector3 v = rb.linearVelocity;
+            v.y *= 1f - dragForce * Time.fixedDeltaTime;
+            rb.linearVelocity = v;
+        }
+    }
+
+    /// <summary>
     /// The coroutine that runs the duration of the jump cooldown. Waits 0.25s by default, and until grounded if not grounded by that time.
     /// Once grounded, waits the duration of jumpCooldown before allowing the player to jump again
     /// </summary>
-    /// <returns> 
-    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection. 
+    /// <returns>
+    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
     /// </returns>
     private IEnumerator JumpCooldown()
     {
@@ -206,30 +259,32 @@ public class ThirdPersonController : MonoBehaviour
         right.Normalize();
 
         Vector3 moveDirection = (forward * move.y + right * move.x).normalized;
-        // TODO: currently gets overridden every tick, so having a dash or something 
-        // like that wont work. Look into having some kind of movement-locked state.
         Vector3 currentVelocity = rb.linearVelocity;
 
-        if (moveDirection.sqrMagnitude > 0.01f)
+        // While locked, something else (a dash for now) owns horizontal velocity
+        if (!MovementLocked)
         {
-            Vector3 horizontalVelocity = moveDirection * currentSpeed;
-
-            // Look ahead for a wall so we don't keep pushing into it
-            float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
-
-            if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
-                && hit.normal.y < maxWalkableNormalY)
+            if (moveDirection.sqrMagnitude > 0.01f)
             {
-                // Remove the part of our movement that goes into the wall, keep the part along it
-                Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
-                horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
-            }
+                Vector3 horizontalVelocity = moveDirection * currentSpeed;
 
-            rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
-        }
-        else
-        {
-            rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
+                // Look ahead for a wall so we don't keep pushing into it
+                float checkDistance = wallCheckDistance + horizontalVelocity.magnitude * Time.fixedDeltaTime;
+
+                if (rb.SweepTest(moveDirection, out RaycastHit hit, checkDistance, QueryTriggerInteraction.Ignore)
+                    && hit.normal.y < maxWalkableNormalY)
+                {
+                    // Remove the part of our movement that goes into the wall, keep the part along it
+                    Vector3 wallNormal = new Vector3(hit.normal.x, 0f, hit.normal.z).normalized;
+                    horizontalVelocity = Vector3.ProjectOnPlane(horizontalVelocity, wallNormal);
+                }
+
+                rb.linearVelocity = new Vector3(horizontalVelocity.x, currentVelocity.y, horizontalVelocity.z);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(0f, currentVelocity.y, 0f);
+            }
         }
 
         //USED FOR ANIMATOR, takes flat velocity ignoring acceleration, used for anim triggers
@@ -259,6 +314,99 @@ public class ThirdPersonController : MonoBehaviour
         cameraTarget.transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 
+    //////////////// DASH-RELATED METHODS ////////////////
+
+    /// <summary>
+    /// applies velocity to make player dash
+    /// </summary>
+    private void Dash()
+    {
+        if (!canDash)
+        {
+            return;
+        }
+        rb.linearDamping = 0;
+
+        Transform forwardT;
+        forwardT = orientation;
+
+        Vector3 direction = GetDirection(forwardT);
+
+        moveSpeed += dashSpeedIncrease;
+        MovementLocked = true;
+        Vector3 forceToApply = direction * dashPower + orientation.up * dashUpwardPower;
+
+        if (disableGravity)
+        {
+            rb.useGravity = false;
+        }
+
+        if (resetVel)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+
+        rb.AddForce(forceToApply, ForceMode.Impulse);
+        Invoke(nameof(ResetDash), dashDuration);
+
+        canDash = false;
+        StartCoroutine(DashCooldown());
+    }
+
+    /// <summary>
+    /// Helper method to stop the dash after set time
+    /// </summary>
+    private void ResetDash()
+    {
+        MovementLocked = false;
+        moveSpeed -= dashSpeedIncrease;
+
+        if (disableGravity)
+        {
+            rb.useGravity = true;
+        }
+    }
+
+    /// <summary>
+    /// The coroutine that runs the duration of the dash cooldown. Waits 0.25s by default, then
+    /// waits the duration of dashCooldown before allowing the player to dash again
+    /// </summary>
+    /// <returns>
+    /// An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+    /// </returns>
+    private IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(dashDuration);
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
+    /// <summary>
+    /// helper method to determine the direction of the dash
+    /// </summary>
+    /// <param name="forwardT"> Transform being used to extract the direction </param>
+    /// <returns> A vector of the direction the player should dash </returns>
+    private Vector3 GetDirection(Transform forwardT)
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3();
+        if (allowAllDirections)
+        {
+            direction = forwardT.forward * verticalInput + forwardT.right * horizontalInput;
+        }
+        else
+        {
+            direction = forwardT.forward;
+        }
+        if (verticalInput == 0 && horizontalInput == 0)
+        {
+            direction = forwardT.forward;
+        }
+        return direction.normalized;
+    }
+
     ///////////////////////////////// ON METHODS FOR RECOGNIZING UNITY'S INPUT SYSTEM /////////////////////////////////////
 
     /// <summary>
@@ -273,9 +421,15 @@ public class ThirdPersonController : MonoBehaviour
     /// <summary>
     /// Retrieves the input from the Jump input action in Unity's InputSystem
     /// </summary>
-    private void OnJump()
+    /// <param name="inputValue"></param> the value of the Jump input action (a button press or release)
+    private void OnJump(InputValue inputValue)
     {
-        Jump();
+        isJumpHeld = inputValue.isPressed;
+
+        if (inputValue.isPressed)
+        {
+            Jump();
+        }
     }
 
     /// <summary>
@@ -294,5 +448,19 @@ public class ThirdPersonController : MonoBehaviour
     private void OnLook(InputValue inputValue)
     {
         look = inputValue.Get<Vector2>();
+    }
+
+    /// <summary>
+    /// Retrieves the input from the Dash input action in Unity's InputSystem
+    /// </summary>
+    /// <param name="inputValue"></param> the value of the Dash input action (a button press or release)
+    private void OnDash(InputValue inputValue)
+    {
+        isDashHeld = inputValue.isPressed;
+
+        if (inputValue.isPressed)
+        {
+            Dash();
+        }
     }
 }
