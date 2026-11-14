@@ -9,6 +9,8 @@ TagManager:
   - Environment
   - Enemy
   - Item
+  - Pickup
+  - EnemyHead
   layers:
   - Default
   - TransparentFX

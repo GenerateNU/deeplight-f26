@@ -16,11 +16,13 @@ public class BaseProjectileBehavior : MonoBehaviour
     [SerializeField] private float _baseProjectileSpeed = 5f;
     [SerializeField] private float _baseProjectileLifespan = 3f;
     [SerializeField] private int _baseProjectilePierce = 1;
+    [SerializeField] private int _baseHeadshotMultiplier = 2;
 
     private float _currentProjectileDamage;
     private float _currentProjectileSpeed;
     private float _currentProjectileLifespan;
     private float _currentProjectilePierce;
+    private float _currentHeadshotMultiplier;
 
     [Header("Projectile Settings")]
 
@@ -34,6 +36,7 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     private float _timer;
     private int _currentRemainingPierce;
+    private readonly HashSet<HealthComponent> _alreadyHit = new HashSet<HealthComponent>();
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -60,6 +63,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
         _currentRemainingPierce = _baseProjectilePierce;
+        _alreadyHit.Clear();
         Move();
     }
 
@@ -90,19 +94,39 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
-        if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
+        if (otherCollider.CompareTag("Environment"))
         {
-            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && _type == ProjectileType.Player))
+            DisableProjectile();
+            return;
+        }
+
+        HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
+
+        if (hc != null)
+        {
+            if (!_alreadyHit.Add(hc))
             {
-                // FIX: This truncation error could be an issue if we use weird multipliers.
-                hc.Damage((int)_currentProjectileDamage);
+                return;
             }
 
-            _currentRemainingPierce -= 1;
-
-            if (_currentRemainingPierce <= 0)
+            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || ((objectHit.CompareTag("Enemy") || otherCollider.CompareTag("EnemyHead")) && _type == ProjectileType.Player))
             {
-                DisableProjectile();
+                // FIX: This truncation error could be an issue if we use weird multipliers.
+                if (otherCollider.CompareTag("EnemyHead"))
+                {
+                    hc.Damage((int)(_currentProjectileDamage * _currentHeadshotMultiplier));
+                }
+                else
+                {
+                    hc.Damage((int)_currentProjectileDamage);
+                }
+
+                _currentRemainingPierce -= 1;
+
+                if (_currentRemainingPierce <= 0)
+                {
+                    DisableProjectile();
+                }
             }
         }
     }
@@ -130,6 +154,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         _currentProjectileSpeed = _baseProjectileSpeed;
         _currentProjectileLifespan = _baseProjectileLifespan;
         _currentProjectilePierce = _baseProjectilePierce;
+        _currentHeadshotMultiplier = _baseHeadshotMultiplier;
 
         // TODO: per-enemy stat variance (e.g. stronger enemies sharing this prefab).
         // The SetOnly* setters can't do this yet: they run after OnEnable, so timer and
@@ -146,6 +171,7 @@ public class BaseProjectileBehavior : MonoBehaviour
             _currentProjectileSpeed = (statHandler.GetStat(Stat.ProjectileSpeed) != 0f) ? statHandler.GetStat(Stat.ProjectileSpeed) * _baseProjectileSpeed : _baseProjectileSpeed;
             _currentProjectileLifespan = (statHandler.GetStat(Stat.ProjectileLifespan) != 0f) ? statHandler.GetStat(Stat.ProjectileLifespan) * _baseProjectileLifespan : _baseProjectileLifespan;
             _currentProjectilePierce = (statHandler.GetStat(Stat.ProjectilePierce) != 0f) ? statHandler.GetStat(Stat.ProjectilePierce) * _baseProjectilePierce : _baseProjectilePierce;
+            _currentHeadshotMultiplier = (statHandler.GetStat(Stat.HeadshotMultiplier) != 0f) ? statHandler.GetStat(Stat.HeadshotMultiplier) * _baseHeadshotMultiplier : _baseHeadshotMultiplier;
         }
     }
 

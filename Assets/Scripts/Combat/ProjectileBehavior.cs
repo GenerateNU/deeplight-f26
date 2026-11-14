@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 /// <summary>
 /// This class represents the behavior of a projectile. It deals with collision detection and
@@ -13,6 +11,7 @@ public class ProjectileBehavior : MonoBehaviour
     [SerializeField] private string projectileType;
 
     [SerializeField] private int projectileDamage = 1;
+    [SerializeField] private int headshotMultiplier = 2;
     //[SerializeField] private float projectileSpeed;
 
     [SerializeField] private float duration = 3f;
@@ -50,23 +49,23 @@ public class ProjectileBehavior : MonoBehaviour
     /// <param name="other"></param> Represents a collider object.
     private void OnTriggerEnter(Collider otherCollider)
     {
-        /*
-        Currently, this has no distinction between whether the collision is on a player or an enemy, as well
-        as no distinction for what the projectile was shot from (player or enemy). We don't want enemy projectiles to
-        damage other enemies and the player projectile to damage themselves or other players (if that were to get implemented
-        down the road).
-        */
-        // TODO
-        // Implement a check to see if the player projectile is hitting an enemy, or an enemy projectile is hitting the player.
-
-        if ((projectileType == "playerProjectile" && otherCollider.CompareTag("Enemy")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player"))
-            || otherCollider.CompareTag("Environment"))
+        if (projectileType == "playerProjectile" && (otherCollider.CompareTag("Enemy") || otherCollider.CompareTag("EnemyHead")) || ((projectileType == "enemyProjectile") && otherCollider.CompareTag("Player")) || otherCollider.CompareTag("Environment"))
         {
             //plays collision/fizz out sound effect
             projectileExplodeSFX.Play();
-            if (otherCollider.TryGetComponent<HealthComponent>(out HealthComponent hc))
+
+            HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
+
+            if (hc != null)
             {
-                hc.Damage(projectileDamage);
+                if (otherCollider.CompareTag("EnemyHead"))
+                {
+                    hc.Damage(projectileDamage * headshotMultiplier);
+                }
+                else
+                {
+                    hc.Damage(projectileDamage);
+                }
             }
             DisableProjectile();
         }
