@@ -5761,7 +5761,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 100
   currentHealth: 100
-  healthBar: {fileID: 961603859}
 --- !u!114 &501705137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5776,6 +5775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShootProjectile
   projectileSpeed: 10
   projectileRange: 20
+  projectilePrefab: {fileID: 0}
 --- !u!114 &501705138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5794,6 +5794,7 @@ MonoBehaviour:
   sprintMultiplier: 2
   fallGravityMultiplier: 2
   lowJumpGravityMultiplier: 2.5
+  dragForce: 3
   groundCheckPoint: {fileID: 917406007}
   groundCheckRadius: 0.1
   groundLayer:
@@ -5802,7 +5803,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 2055630122}
   topClampAngle: 60
   bottomClampAngle: -30
-  lookSensitivity: 5
+  lookSensitivity: 0.15
   wallCheckDistance: 0.1
   maxWalkableNormalY: 0.7
   rb: {fileID: 501705140}
@@ -5815,8 +5816,6 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashSpeedIncrease: 10
   orientation: {fileID: 2055630122}
-  dashKey: 99
-  useCameraForward: 1
   allowAllDirections: 1
   disableGravity: 0
   resetVel: 1
@@ -5989,6 +5988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   projectileSpeed: 20
   projectileRange: 20
+  projectilePrefab: {fileID: 0}
   aimCamera: {fileID: 780596569}
   spawnDistance: 2
   playerAnimator: {fileID: 2136781744}
@@ -16121,17 +16121,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!114 &961603859 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3449369726097825148, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
-  m_PrefabInstance: {fileID: 1702738780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!43 &977247551
 Mesh:
   m_ObjectHideFlags: 0
@@ -16341,7 +16330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   startingCapacity: 50
   maxSize: 500
-  objectPrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
+  objectPrefabs: []
 --- !u!4 &1011754120
 Transform:
   m_ObjectHideFlags: 0
