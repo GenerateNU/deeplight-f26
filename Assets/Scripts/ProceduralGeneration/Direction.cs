@@ -41,11 +41,16 @@ public static class Directions
     {
         switch (dir)
         {
-            case Direction.North: return Direction.South;
-            case Direction.East: return Direction.West;
-            case Direction.South: return Direction.North;
-            case Direction.West: return Direction.East;
-            default: throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            case Direction.North:
+                return Direction.South;
+            case Direction.East:
+                return Direction.West;
+            case Direction.South:
+                return Direction.North;
+            case Direction.West:
+                return Direction.East;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
         }
     }
 
@@ -62,11 +67,16 @@ public static class Directions
     {
         switch (dir)
         {
-            case Direction.North: return from + Vector2Int.up;
-            case Direction.East: return from + Vector2Int.right;
-            case Direction.South: return from + Vector2Int.down;
-            case Direction.West: return from + Vector2Int.left;
-            default: throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            case Direction.North:
+                return from + Vector2Int.up;
+            case Direction.East:
+                return from + Vector2Int.right;
+            case Direction.South:
+                return from + Vector2Int.down;
+            case Direction.West:
+                return from + Vector2Int.left;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
         }
     }
 }

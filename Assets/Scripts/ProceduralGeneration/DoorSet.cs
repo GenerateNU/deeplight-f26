@@ -49,11 +49,16 @@ public struct DoorSet
     {
         switch (dir)
         {
-            case Direction.North: return !northClosed;
-            case Direction.East: return !eastClosed;
-            case Direction.South: return !southClosed;
-            case Direction.West: return !westClosed;
-            default: throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            case Direction.North:
+                return !northClosed;
+            case Direction.East:
+                return !eastClosed;
+            case Direction.South:
+                return !southClosed;
+            case Direction.West:
+                return !westClosed;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
         }
     }
 
@@ -67,11 +72,20 @@ public struct DoorSet
     {
         switch (dir)
         {
-            case Direction.North: northClosed = !open; break;
-            case Direction.East: eastClosed = !open; break;
-            case Direction.South: southClosed = !open; break;
-            case Direction.West: westClosed = !open; break;
-            default: throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
+            case Direction.North:
+                northClosed = !open;
+                break;
+            case Direction.East:
+                eastClosed = !open;
+                break;
+            case Direction.South:
+                southClosed = !open;
+                break;
+            case Direction.West:
+                westClosed = !open;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(dir), dir, null);
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class FloorLayout
 {
-    
+
     public LayoutNode startNode;
     public LayoutNode bossNode;
 
