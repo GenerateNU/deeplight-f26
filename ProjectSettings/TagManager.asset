@@ -9,6 +9,7 @@ TagManager:
   - Environment
   - Enemy
   - Item
+  - Pickup
   layers:
   - Default
   - TransparentFX
