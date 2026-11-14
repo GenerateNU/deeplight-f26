@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 /// <summary>
 /// Stat handler class, which handles stat changes and keeping track of your acquired potions
@@ -12,6 +13,10 @@ public class StatHandler : MonoBehaviour
 
     [Header("PotionsAcquired")]
     [SerializeField] private List<Potion> potionsAcquired = new List<Potion>();
+
+    // Connect the text game object from the Potion UI on the canvas
+    // It will update the text when a potion is picked up
+    [SerializeField] private TMP_Text potionCountUI;
 
     private Dictionary<Stat, StatEntry> statLookup = new Dictionary<Stat, StatEntry>();
 
@@ -74,6 +79,16 @@ public class StatHandler : MonoBehaviour
         }
         potionsAcquired.Add(potion);
         SetStat(potion.GetStat());
+
+        // Update the text next to the potion icon on the HUD UI based on potionsAcquired list count
+        if (potionCountUI)
+        {
+            potionCountUI.text = potionsAcquired.Count.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("No potion count UI connected to StatHandler.cs on " + this.gameObject);
+        }
     }
 
     /// <summary>
