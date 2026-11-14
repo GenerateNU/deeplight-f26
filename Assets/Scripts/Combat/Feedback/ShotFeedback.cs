@@ -10,7 +10,7 @@ public abstract class ShotFeedback : MonoBehaviour
     /// <summary>
     /// Subscribes to the shooter's event.
     /// </summary>
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         shooter.OnPlayerShoot += HandleShoot;
     }
@@ -18,7 +18,7 @@ public abstract class ShotFeedback : MonoBehaviour
     /// <summary>
     /// unsubscribes to the shooter's event.
     /// </summary>
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         shooter.OnPlayerShoot -= HandleShoot;
     }
