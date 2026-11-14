@@ -15,6 +15,12 @@ public class FloorLayout
     public readonly Dictionary<Vector2Int, LayoutNode> nodes = new Dictionary<Vector2Int, LayoutNode>();
 
     /// <summary>
+    /// Every placed unit in the order it was placed, with the start first. A Dictionary has no
+    /// guaranteed order, so use this when something has to visit the units in a fixed order
+    /// </summary>
+    public readonly List<LayoutNode> placementOrder = new List<LayoutNode>();
+
+    /// <summary>
     /// Checks whether a unit is already placed at a grid position
     /// </summary>
     /// <param name="gridPosition">The position to check</param>
@@ -57,6 +63,7 @@ public class FloorLayout
 
         LayoutNode node = new LayoutNode(gridPosition, type);
         nodes.Add(gridPosition, node);
+        placementOrder.Add(node);
 
         if (type == RoomType.Start)
         {

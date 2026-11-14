@@ -27,13 +27,12 @@ public static class FloorGenerator
         int[] shuffledPool = ShufflePool(poolSize, rng);
 
         FloorLayout layout = new FloorLayout();
-        List<LayoutNode> placementOrder = new List<LayoutNode>();
         List<OpenSlot> openSlots = new List<OpenSlot>();
 
-        PlaceStart(layout, placementOrder, openSlots);
-        ExpandAll(layout, layoutParams.roomCount, rng, placementOrder, openSlots);
+        PlaceStart(layout, openSlots);
+        ExpandAll(layout, layoutParams.roomCount, rng, openSlots);
         ComputeDistances(layout);
-        AssignRooms(placementOrder, shuffledPool);
+        AssignRooms(layout, shuffledPool);
 
         return layout;
     }
@@ -100,12 +99,10 @@ public static class FloorGenerator
     /// spawns here, so there is no entry door and all four directions are open to grow into
     /// </summary>
     /// <param name="layout">The map being built</param>
-    /// <param name="placementOrder">The list of units in the order they were placed</param>
     /// <param name="openSlots">The list of open slots to add to</param>
-    private static void PlaceStart(FloorLayout layout, List<LayoutNode> placementOrder, List<OpenSlot> openSlots)
+    private static void PlaceStart(FloorLayout layout, List<OpenSlot> openSlots)
     {
         LayoutNode start = layout.PlaceNode(new Vector2Int(0, 0), RoomType.Start);
-        placementOrder.Add(start);
         AddOpenSlots(layout, start, openSlots);
     }
 
@@ -117,9 +114,8 @@ public static class FloorGenerator
     /// <param name="layout">The map being built</param>
     /// <param name="roomCount">How many units the finished map should have, counting the start</param>
     /// <param name="rng">The stream used to pick open slots</param>
-    /// <param name="placementOrder">The list of units in the order they were placed</param>
     /// <param name="openSlots">The list of open slots, which this changes as units are placed</param>
-    private static void ExpandAll(FloorLayout layout, int roomCount, RngStream rng, List<LayoutNode> placementOrder, List<OpenSlot> openSlots)
+    private static void ExpandAll(FloorLayout layout, int roomCount, RngStream rng, List<OpenSlot> openSlots)
     {
         while (layout.nodes.Count < roomCount)
         {
@@ -132,7 +128,6 @@ public static class FloorGenerator
             OpenSlot slot = openSlots[pick];
 
             LayoutNode node = layout.PlaceNode(slot.gridPosition, RoomType.Normal);
-            placementOrder.Add(node);
 
             RemoveSlotsAt(openSlots, slot.gridPosition);
             AddOpenSlots(layout, node, openSlots);
@@ -211,13 +206,13 @@ public static class FloorGenerator
     /// Deals room numbers from the shuffled pool to the units in the order they were placed. If
     /// there are more units than rooms, the pool is reused from the start
     /// </summary>
-    /// <param name="placementOrder">The units in the order they were placed</param>
+    /// <param name="layout">The finished map</param>
     /// <param name="shuffledPool">The room numbers in a random order</param>
-    private static void AssignRooms(List<LayoutNode> placementOrder, int[] shuffledPool)
+    private static void AssignRooms(FloorLayout layout, int[] shuffledPool)
     {
-        for (int i = 0; i < placementOrder.Count; i++)
+        for (int i = 0; i < layout.placementOrder.Count; i++)
         {
-            placementOrder[i].roomNum = shuffledPool[i % shuffledPool.Length];
+            layout.placementOrder[i].roomNum = shuffledPool[i % shuffledPool.Length];
         }
     }
 }
