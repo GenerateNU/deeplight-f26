@@ -132,18 +132,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac3acd2851f5440e95cf47f858603d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestEnemy
-  speed: 10
   attackDamage: 15
+  playerLocation: {fileID: 0}
+  distanceFromPlayer: 0
   currentState: 1
+  speed: 10
   detectionRange: 10
   attackRange: 5
   exitChaseRangeMultiplier: 1.1
   exitAttackRangeMultiplier: 1.1
   pathUpdateInterval: 0.2
-  playerLocation: {fileID: 0}
-  distanceFromPlayer: 0
-  attackWindupTime: 0.5
-  attackCooldownTime: 1
+  chaseMode: 0
+  roamRadius: 12
+  roamOrbitRadius: 0
+  roamRadiusJitter: 2
+  minRoamAngle: 40
+  maxRoamAngle: 140
+  roamTimeout: 6
+  coreAttackPattern: {fileID: 0}
+  firePoint: {fileID: 0}
+  windupMultiplier: 1
+  attackRepeatDelay: 0.5
+  turnSpeed: 540
 --- !u!195 &4120059617980619467
 NavMeshAgent:
   m_ObjectHideFlags: 0

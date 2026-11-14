@@ -22,6 +22,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     private float _currentProjectileSpeed;
     private float _currentProjectileLifespan;
     private float _currentProjectilePierce;
+    private float _currentHeadshotMultiplier;
 
     [Header("Projectile Settings")]
 
@@ -35,6 +36,7 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     private float _timer;
     private int _currentRemainingPierce;
+    private readonly HashSet<HealthComponent> _alreadyHit = new HashSet<HealthComponent>();
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -61,6 +63,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
         _currentRemainingPierce = _baseProjectilePierce;
+        _alreadyHit.Clear();
         Move();
     }
 
@@ -91,16 +94,27 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
+        if (otherCollider.CompareTag("Environment"))
+        {
+            DisableProjectile();
+            return;
+        }
+
         HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
 
         if (hc != null)
         {
+            if (!_alreadyHit.Add(hc))
+            {
+                return;
+            }
+
             if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || ((objectHit.CompareTag("Enemy") || otherCollider.CompareTag("EnemyHead")) && _type == ProjectileType.Player))
             {
                 // FIX: This truncation error could be an issue if we use weird multipliers.
                 if (otherCollider.CompareTag("EnemyHead"))
                 {
-                    hc.Damage((int)_currentProjectileDamage * _baseHeadshotMultiplier);
+                    hc.Damage((int)(_currentProjectileDamage * _currentHeadshotMultiplier));
                 }
                 else
                 {
@@ -140,6 +154,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         _currentProjectileSpeed = _baseProjectileSpeed;
         _currentProjectileLifespan = _baseProjectileLifespan;
         _currentProjectilePierce = _baseProjectilePierce;
+        _currentHeadshotMultiplier = _baseHeadshotMultiplier;
 
         // TODO: per-enemy stat variance (e.g. stronger enemies sharing this prefab).
         // The SetOnly* setters can't do this yet: they run after OnEnable, so timer and
@@ -156,6 +171,7 @@ public class BaseProjectileBehavior : MonoBehaviour
             _currentProjectileSpeed = (statHandler.GetStat(Stat.ProjectileSpeed) != 0f) ? statHandler.GetStat(Stat.ProjectileSpeed) * _baseProjectileSpeed : _baseProjectileSpeed;
             _currentProjectileLifespan = (statHandler.GetStat(Stat.ProjectileLifespan) != 0f) ? statHandler.GetStat(Stat.ProjectileLifespan) * _baseProjectileLifespan : _baseProjectileLifespan;
             _currentProjectilePierce = (statHandler.GetStat(Stat.ProjectilePierce) != 0f) ? statHandler.GetStat(Stat.ProjectilePierce) * _baseProjectilePierce : _baseProjectilePierce;
+            _currentHeadshotMultiplier = (statHandler.GetStat(Stat.HeadshotMultiplier) != 0f) ? statHandler.GetStat(Stat.HeadshotMultiplier) * _baseHeadshotMultiplier : _baseHeadshotMultiplier;
         }
     }
 
