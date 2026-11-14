@@ -5168,7 +5168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
   _baseProjectileDamage: 1
-  _baseProjectileSpeed: 5
+  _baseProjectileSpeed: 10
   _baseProjectileLifespan: 3
   _baseProjectilePierce: 1
   _type: 0

@@ -38,17 +38,26 @@ public class PierceEffectTarotCard : TarotCard
         }
     }
 
+    [SerializeField] private float _pierceCount = 99f;
+    private TarotContext _context;
+
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
     public override void ApplyTarotCard(TarotContext context)
     {
+        _context = context;
+        _context.StatsHandler.AddModifier(Stat.ProjectilePierce, Operation.Add, _pierceCount, this);
         Debug.Log("Tarot Activated!");
-        //ctx.Stats.AddModifier(Stat.ProjectilePierce, Operation.)
     }
 
-        public override void RemoveTarotCard()
+    public override void RemoveTarotCard()
     {
-        throw new System.NotImplementedException();
+        if (_context == null)
+        {
+            return;
+        }
+
+        _context.StatsHandler.RemoveModifier(this);
     }
 }

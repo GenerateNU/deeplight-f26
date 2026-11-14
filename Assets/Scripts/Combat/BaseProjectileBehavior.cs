@@ -59,7 +59,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
-        _currentRemainingPierce = _baseProjectilePierce;
+        _currentRemainingPierce = (int)_currentProjectilePierce;
         Move();
     }
 
@@ -96,14 +96,18 @@ public class BaseProjectileBehavior : MonoBehaviour
             {
                 // FIX: This truncation error could be an issue if we use weird multipliers.
                 hc.Damage((int)_currentProjectileDamage);
-            }
 
-            _currentRemainingPierce -= 1;
+                _currentRemainingPierce -= 1;
 
-            if (_currentRemainingPierce <= 0)
-            {
-                DisableProjectile();
+                if (_currentRemainingPierce <= 0)
+                {
+                    DisableProjectile();
+                }
             }
+        }
+        else if (objectHit.CompareTag("Environment"))
+        {
+            DisableProjectile();
         }
     }
 
