@@ -10,9 +10,6 @@ using UnityEngine.Audio;
 /// </summary>
 public class PlayerShootProjectile : MonoBehaviour
 {
-    [Header("Projectile Settings")]
-    [SerializeField] public float projectileSpeed = 5f;
-    [SerializeField] public float projectileRange = 20f;
     [Header("Projectile Prefab")]
     [SerializeField] private GameObject projectilePrefab;
 

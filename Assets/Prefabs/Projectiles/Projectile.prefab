@@ -195,7 +195,7 @@ TrailRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Time: 1
-  m_PreviewTimeScale: 0.2
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -5177,7 +5177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
   _baseProjectileDamage: 20
-  _baseProjectileSpeed: 30
+  _baseProjectileSpeed: 60
   _baseProjectileLifespan: 3
   _baseProjectilePierce: 1
   _type: 0
