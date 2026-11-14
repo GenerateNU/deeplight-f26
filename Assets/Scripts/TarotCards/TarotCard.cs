@@ -10,7 +10,7 @@ using UnityEngine;
 /// apply the effects of the tarot card's ability should be added as an additional
 /// field that can be set elsewhere.
 /// </summary>
-public abstract class TarotCard : ScriptableObject
+public abstract class TarotCard : ScriptableObject, IEquatable<TarotCard>
 {
     public abstract String CardName { get; }
     public abstract String CardDescription { get; }
@@ -38,4 +38,23 @@ public abstract class TarotCard : ScriptableObject
     /// An abstract method that each tarot card will implement to remove their special abilites when a run ends.
     /// </summary>
     public abstract void RemoveTarotCard();
+
+    // implement inherited methods from IEquatable
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as TarotCard);
+    }
+
+    public bool Equals(TarotCard other)
+    {
+        if (ReferenceEquals(other, null)) return false;
+        if (ReferenceEquals(this, other)) return true;
+
+        return string.Equals(CardName, other.CardName, StringComparison.Ordinal);
+    }
+
+    public override int GetHashCode()
+    {
+        return CardName != null ? CardName.GetHashCode() : 0;
+    }
 }
