@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 /// <summary>
 /// The Decoy Dash Tarot Card which is in the Pentacles (defense) suit under the Dash category.
@@ -23,8 +24,8 @@ public class DecoyDashTarotCard : TarotCard
     {
         get
         {
-            Debug.Log("When the player dashes, a clone of the player will appear, distracting enemies for 3 seconds. Only one decoy can exist at a time.");
-            return "When the player dashes, a clone of the player will appear, distracting enemies for 3 seconds. Only one decoy can exist at a time.";
+            Debug.Log("When the player dashes, a clone of the player will appear, distracting enemies for 2 seconds. Only one decoy can exist at a time.");
+            return "When the player dashes, a clone of the player will appear, distracting enemies for 2 seconds. Only one decoy can exist at a time.";
 
         }
     }
@@ -38,16 +39,48 @@ public class DecoyDashTarotCard : TarotCard
         }
     }
 
+    [SerializeField] private GameObject _decoyPlayerPrefab;
+    [SerializeField] private float _decoyDuration = 2f;
+    public static GameObject ActivePlayerDecoy { get; private set; }
+    private bool _isSubscribed;
+
     /// <summary>
     /// An abstract method that each tarot card will implement for their special abilities
     /// </summary>
     public override void ApplyTarotCard(TarotContext context)
     {
-        Debug.Log("Tarot Activated!");
+        if (!_isSubscribed)
+        {
+            ThirdPersonController.OnDashStarted += HandleDash;
+            _isSubscribed = true;
+        }
     }
 
+    /// <summary>
+    /// An abstract method that each tarot card will implement to remove their special abilites when a run ends.
+    /// </summary>
     public override void RemoveTarotCard()
     {
-        throw new System.NotImplementedException();
+        if (_isSubscribed)
+        {
+            ThirdPersonController.OnDashStarted -= HandleDash;
+            _isSubscribed = false;
+        }
+
+        if (ActivePlayerDecoy != null)
+        {
+            Destroy(ActivePlayerDecoy);
+        }
+    }
+
+    private void HandleDash(Vector3 startPosition, Quaternion rotation)
+    {
+        if (ActivePlayerDecoy != null)
+        {
+            return;
+        }
+
+        ActivePlayerDecoy = Instantiate(_decoyPlayerPrefab, startPosition, rotation);
+        Destroy(ActivePlayerDecoy, _decoyDuration);
     }
 }

@@ -57,6 +57,11 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        if (TryGetComponent<TrailRenderer>(out TrailRenderer trail))
+        {
+            trail.Clear();
+        }
+
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
         _currentRemainingPierce = (int)_currentProjectilePierce;
