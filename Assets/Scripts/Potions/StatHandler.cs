@@ -5,15 +5,18 @@ using System.Collections.Generic;
 /// <summary>
 /// Stat handler class, which handles stat changes and keeping track of your acquired potions
 /// </summary>
+// TODO: Make this a singleton class
 public class StatHandler : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private List<StatEntry> stats = new List<StatEntry>();
+    [SerializeField] private List<StatEntry> _stats = new List<StatEntry>();
 
     [Header("PotionsAcquired")]
-    [SerializeField] private List<Potion> potionsAcquired = new List<Potion>();
+    [SerializeField] private List<Potion> _potionsAcquired = new List<Potion>();
 
-    private Dictionary<Stat, StatEntry> statLookup = new Dictionary<Stat, StatEntry>();
+    private Dictionary<Stat, StatEntry> _statLookup = new Dictionary<Stat, StatEntry>();
+    private List<StatModifier> _modifiers = new List<StatModifier>();
+
 
     /// <summary>
     /// Runs on Awake
@@ -22,10 +25,10 @@ public class StatHandler : MonoBehaviour
     {
         SyncStatEntries();
 
-        statLookup.Clear();
-        foreach (StatEntry entry in stats)
+        _statLookup.Clear();
+        foreach (StatEntry entry in _stats)
         {
-            statLookup[entry.stat] = entry;
+            _statLookup[entry.stat] = entry;
             entry.currentValue = entry.baseValue;
         }
     }
@@ -45,9 +48,9 @@ public class StatHandler : MonoBehaviour
     {
         foreach (Stat stat in Enum.GetValues(typeof(Stat)))
         {
-            if (!stats.Exists(e => e.stat == stat))
+            if (!_stats.Exists(e => e.stat == stat))
             {
-                stats.Add(new StatEntry { stat = stat });
+                _stats.Add(new StatEntry { stat = stat });
             }
         }
     }
@@ -59,7 +62,7 @@ public class StatHandler : MonoBehaviour
     /// <returns></returns> A Stat
     public float GetStat(Stat stat)
     {
-        return statLookup.TryGetValue(stat, out StatEntry entry) ? entry.currentValue : 0f;
+        return _statLookup.TryGetValue(stat, out StatEntry entry) ? entry.currentValue : 0f;
     }
 
     /// <summary>
@@ -72,17 +75,17 @@ public class StatHandler : MonoBehaviour
         {
             return;
         }
-        potionsAcquired.Add(potion);
+        _potionsAcquired.Add(potion);
         SetStat(potion.GetStat());
     }
 
     /// <summary>
-    /// Sets a stat's current value based on the potions of its type in the acquired potions list
+    /// Sets a stat's current value based on the potions/tarot cards of its type in the acquired potions and tarot card lists.
     /// </summary>
     /// <param name="stat"></param> The desired Stat to set
     void SetStat(Stat stat)
     {
-        if (!statLookup.TryGetValue(stat, out StatEntry entry))
+        if (!_statLookup.TryGetValue(stat, out StatEntry entry))
         {
             Debug.LogWarning($"SetStat: no entry for stat {stat}.", this);
             return;
@@ -91,7 +94,7 @@ public class StatHandler : MonoBehaviour
         float additiveSum = 0f;
         float multiplier = 1f;
 
-        foreach (Potion potion in potionsAcquired)
+        foreach (Potion potion in _potionsAcquired)
         {
             if (potion.GetStat() != stat)
             { continue; }
@@ -102,7 +105,49 @@ public class StatHandler : MonoBehaviour
             { multiplier *= 1 + potion.GetFinalModifierValue(); }
         }
 
+        foreach (StatModifier modifier in _modifiers)
+        {
+            if (modifier.Stat != stat)
+            { continue; }
+
+            if (modifier.Operation == Operation.Add)
+            { additiveSum += modifier.Value; }
+            else if (modifier.Operation == Operation.Multiply)
+            { multiplier *= 1 + modifier.Value; }
+        }
+
         // Additive effects apply to the base first, then multiplicative ones
         entry.currentValue = (entry.baseValue + additiveSum) * multiplier;
+    }
+
+    /// <summary>
+    /// A method that adds a modifier from a tarot card to the player's stats. 
+    /// </summary>
+    /// <param name="stat">The stat that will be affected.</param>
+    /// <param name="operation">The operation to apply to the stat.</param>
+    /// <param name="value">The value included in the operation to the stat.</param>
+    /// <param name="tarotCard">The tarot card.</param>
+    public void AddModifier(Stat stat, Operation operation, float value, TarotCard tarotCard)
+    {
+        _modifiers.Add(new StatModifier { Stat = stat, Operation = operation, Value = value, TarotCard = tarotCard });
+        SetStat(stat);
+    }
+
+    /// <summary>
+    /// Removes every modifier added by the given tarot card and recalculates the related stats.
+    /// </summary>
+    /// <param name="tarotCard">The tarot card whose modifiers should be removed.</param>
+    public void RemoveModifier(TarotCard tarotCard)
+    {
+        for (int i = _modifiers.Count - 1; i >= 0; i--)
+        {
+            StatModifier modifier = _modifiers[i];
+
+            if (modifier.TarotCard != tarotCard)
+            { continue; }
+
+            _modifiers.RemoveAt(i);
+            SetStat(modifier.Stat);
+        }
     }
 }

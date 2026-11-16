@@ -5167,8 +5167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efaf3c990361024f983abaf47002db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
-  _baseProjectileDamage: 1
-  _baseProjectileSpeed: 5
+  _baseProjectileDamage: 100
+  _baseProjectileSpeed: 10
   _baseProjectileLifespan: 3
   _baseProjectilePierce: 1
   _type: 0

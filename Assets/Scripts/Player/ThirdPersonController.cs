@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
@@ -70,6 +71,10 @@ public class ThirdPersonController : MonoBehaviour
     private float currentSpeed = 0f;
     private float acceleration = 3f;
     private bool MovementLocked = false;
+
+    // Event-related Variables //
+    // Event for when the dash has just started. The inputs are the position and rotation of the player.
+    public static event Action<Vector3, Quaternion> OnDashStarted;
 
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////
 
@@ -325,6 +330,9 @@ public class ThirdPersonController : MonoBehaviour
         {
             return;
         }
+
+        OnDashStarted?.Invoke(transform.position, transform.rotation);
+
         rb.linearDamping = 0;
 
         Transform forwardT;
