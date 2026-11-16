@@ -73,6 +73,7 @@ public class ThirdPersonController : MonoBehaviour
     private bool MovementLocked = false;
 
     // Event-related Variables //
+    // Event for when the dash has just started. The inputs are the position and rotation of the player.
     public static event Action<Vector3, Quaternion> OnDashStarted;
 
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////

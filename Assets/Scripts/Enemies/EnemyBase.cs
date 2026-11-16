@@ -145,7 +145,7 @@ public abstract class EnemyBase : MonoBehaviour
 
         if (DecoyDashTarotCard.ActivePlayerDecoy != null)
         {
-            _desiredTarget = DecoyDashTarotCard.ActivePlayerDecoy.transform;
+            _desiredTarget = DecoyDashTarotCard.ActivePlayerDecoy.transform; // Target the active decoy if one exists, otherwise the player.
         }
         else
         {

@@ -45,8 +45,10 @@ public class DecoyDashTarotCard : TarotCard
     private bool _isSubscribed;
 
     /// <summary>
-    /// An abstract method that each tarot card will implement for their special abilities
+    /// To apply tarot card, subscribes to the OnDashStarted event.
+    /// It takes in TarotContext which holds objects needed for each tarot card to apply their changes.
     /// </summary>
+    /// <param name="context">A class that holds objects needed for tarot cards.</param>
     public override void ApplyTarotCard(TarotContext context)
     {
         if (!_isSubscribed)
@@ -57,7 +59,7 @@ public class DecoyDashTarotCard : TarotCard
     }
 
     /// <summary>
-    /// An abstract method that each tarot card will implement to remove their special abilites when a run ends.
+    /// To remove tarot card, unsubscribes from the OnDashStarted event and destroys any active decoy.
     /// </summary>
     public override void RemoveTarotCard()
     {
@@ -73,6 +75,12 @@ public class DecoyDashTarotCard : TarotCard
         }
     }
 
+    /// <summary>
+    /// A method that gets called after this class subscribed to 3DPlayerController's OnDashStarted event. 
+    /// Creates a decoy enemy prefab in the scene and destroys it after a set amount of time.
+    /// </summary>
+    /// <param name="startPosition">Position of the player.</param>
+    /// <param name="rotation">Rotation of the player.</param>
     private void HandleDash(Vector3 startPosition, Quaternion rotation)
     {
         if (ActivePlayerDecoy != null)

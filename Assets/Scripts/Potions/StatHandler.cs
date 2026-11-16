@@ -121,12 +121,12 @@ public class StatHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// A method that adds a modifier to an affected game object for tarot card abilities. 
+    /// A method that adds a modifier from a tarot card to the player's stats. 
     /// </summary>
     /// <param name="stat">The stat that will be affected.</param>
     /// <param name="operation">The operation to apply to the stat.</param>
     /// <param name="value">The value included in the operation to the stat.</param>
-    /// <param name="affectedObject">The tarot card.</param>
+    /// <param name="tarotCard">The tarot card.</param>
     public void AddModifier(Stat stat, Operation operation, float value, TarotCard tarotCard)
     {
         _modifiers.Add(new StatModifier {Stat = stat, Operation = operation, Value = value, TarotCard = tarotCard});
