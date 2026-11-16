@@ -83,6 +83,12 @@ public class DecoyDashTarotCard : TarotCard
     /// <param name="rotation">Rotation of the player.</param>
     private void HandleDash(Vector3 startPosition, Quaternion rotation)
     {
+        if (_decoyPlayerPrefab == null)
+        {
+            Debug.LogWarning("DecoyDashTarotCard: no decoy prefab assigned.", this);
+            return;
+        }
+
         if (ActivePlayerDecoy != null)
         {
             return;
@@ -90,5 +96,15 @@ public class DecoyDashTarotCard : TarotCard
 
         ActivePlayerDecoy = Instantiate(_decoyPlayerPrefab, startPosition, rotation);
         Destroy(ActivePlayerDecoy, _decoyDuration);
+    }
+
+    /// <summary>
+    /// A method that resets the _isSubscribed field and the decoy player upon start.
+    /// Since TarotCard's are scriptable objects, this field will be carried over.
+    /// </summary>
+    private void OnEnable()
+    {
+        _isSubscribed = false;
+        ActivePlayerDecoy = null;
     }
 }

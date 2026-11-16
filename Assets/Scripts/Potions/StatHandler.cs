@@ -129,7 +129,7 @@ public class StatHandler : MonoBehaviour
     /// <param name="tarotCard">The tarot card.</param>
     public void AddModifier(Stat stat, Operation operation, float value, TarotCard tarotCard)
     {
-        _modifiers.Add(new StatModifier {Stat = stat, Operation = operation, Value = value, TarotCard = tarotCard});
+        _modifiers.Add(new StatModifier { Stat = stat, Operation = operation, Value = value, TarotCard = tarotCard });
         SetStat(stat);
     }
 

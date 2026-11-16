@@ -49,6 +49,7 @@ public class PierceEffectTarotCard : TarotCard
     public override void ApplyTarotCard(TarotContext context)
     {
         _context = context;
+        _context.StatsHandler.RemoveModifier(this); // in case the pierce modifier was already added. 
         _context.StatsHandler.AddModifier(Stat.ProjectilePierce, Operation.Add, _pierceCount, this);
         Debug.Log("Tarot Activated!");
     }

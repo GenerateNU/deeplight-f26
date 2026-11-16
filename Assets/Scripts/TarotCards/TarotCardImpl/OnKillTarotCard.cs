@@ -126,13 +126,4 @@ public class OnKillTarotCard : TarotCard
         _cooldownEndTime = Time.time + _cooldownDuration;
         Debug.Log("On Kill Tarot Card not applied (cooling down)");
     }
-
-    /// <summary>
-    /// A method that resets the _isSubscribed field to false upon start.
-    /// Since TarotCard's are scriptable objects, this field will be carried over.
-    /// </summary>
-    private void OnEnable()
-    {
-        _isSubscribed = false;
-    }
 }
