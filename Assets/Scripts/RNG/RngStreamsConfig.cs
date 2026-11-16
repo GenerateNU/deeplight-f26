@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Creates independent rng streams for combat, tarot cards, levelgen and cosmetic
+/// Creates independent rng streams for combat, loot, tarot cards, levelgen and cosmetic
 /// </summary>
 [CreateAssetMenu(fileName = "RngStreams", menuName = "Config/RngStreams")]
 public class RngStreamsConfig : ScriptableObject
@@ -19,6 +19,7 @@ public class RngStreamsConfig : ScriptableObject
     public enum RngStreamType
     {
         Combat,
+        Loot,
         TarotCards,
         LevelGen,
         Cosmetic

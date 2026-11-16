@@ -10,6 +10,6 @@ public class RngTestScript : MonoBehaviour
 
         for (int i = 0; i < 1000; i++)
             rngConfig.Get(RngStreamsConfig.RngStreamType.Combat).Value();
-        Debug.Log("Loot value: " + rngConfig.Get(RngStreamsConfig.RngStreamType.Loot).Value());
+        Debug.Log("Tarot cards value: " + rngConfig.Get(RngStreamsConfig.RngStreamType.Loot).Value());
     }
 }
