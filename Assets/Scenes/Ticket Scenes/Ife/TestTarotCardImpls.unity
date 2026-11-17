@@ -698,6 +698,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1472213906204136523, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 509304572}
     - target: {fileID: 2897013554971285199, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: m_Name
       value: TestEnemyForDashTarotCard
@@ -717,6 +721,10 @@ PrefabInstance:
     - target: {fileID: 4994269082438985916, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7501008382540480107, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8188763245972921801, guid: 2c4d99c0cb8d94a5fa74b0b896dab9b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16634,6 +16642,36 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1001125356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7241851720128709895, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
+  m_PrefabInstance: {fileID: 1702738780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1001125358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3449369726097825148, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
+  m_PrefabInstance: {fileID: 1702738780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001125356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+--- !u!114 &1001125359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001125356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f689b2c3b32f494aa2cd6caddf60b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarUI
+  health: {fileID: 501705136}
+  slider: {fileID: 1001125358}
 --- !u!1 &1011754118
 GameObject:
   m_ObjectHideFlags: 0
@@ -19137,7 +19175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TarotCardTester
   _onKillCard: {fileID: 0}
   _pierceCard: {fileID: 0}
-  _decoyDashCard: {fileID: 11400000, guid: 7b83fa52e99ea4b8b84eb2cb30f1eee6, type: 2}
+  _decoyDashCard: {fileID: 0}
+  _lifestealShotTarotCard: {fileID: 11400000, guid: 01dc7fb0f6f9146a1bb29227f553d487, type: 2}
   _statHandler: {fileID: 2121935942}
   _player: {fileID: 501705135}
 --- !u!4 &1261973624
@@ -27851,6 +27890,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4952335525967746889, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5601060778366888780, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -27951,6 +27994,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7241851720128709895, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8053946334190624875, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -27958,7 +28005,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7241851720128709895, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1001125359}
   m_SourcePrefab: {fileID: 100100000, guid: 5e9ac8634f4e36649bae0c94c110d67c, type: 3}
 --- !u!43 &1718101104
 Mesh:

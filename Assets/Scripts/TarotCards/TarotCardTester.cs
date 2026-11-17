@@ -11,6 +11,7 @@ public class TarotCardTester : MonoBehaviour
     [SerializeField] private OnKillTarotCard _onKillCard;
     [SerializeField] private PierceEffectTarotCard _pierceCard;
     [SerializeField] private DecoyDashTarotCard _decoyDashCard;
+    [SerializeField] private LifestealShotTarotCard _lifestealShotTarotCard;
 
     [Header("References")]
     [SerializeField] private StatHandler _statHandler;  // drag the Stat Handler object here
@@ -39,6 +40,12 @@ public class TarotCardTester : MonoBehaviour
             _decoyDashCard.ApplyTarotCard(_context);
             Debug.Log("Applied " + _decoyDashCard.CardName);
         }
+
+        if (_lifestealShotTarotCard != null)
+        {
+            _lifestealShotTarotCard.ApplyTarotCard(_context);
+            Debug.Log("Applied " + _lifestealShotTarotCard.CardName);
+        }
     }
 
     void Update()
@@ -60,6 +67,10 @@ public class TarotCardTester : MonoBehaviour
         {
             Debug.Log($"AttackDamage = {_statHandler.GetStat(Stat.AttackDamage)}, " +
                       $"ProjectilePierce = {_statHandler.GetStat(Stat.ProjectilePierce)} at {Time.time:F1}s");
+
+            Debug.Log($"AttackDamage = {_statHandler.GetStat(Stat.AttackDamage)}, " +
+                      $"ProjectilePierce = {_statHandler.GetStat(Stat.ProjectilePierce)} at {Time.time:F1}s " +
+                      $"PlayerHealth = {_player.GetComponent<HealthComponent>().GetCurrentHealth()}");
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -83,6 +94,11 @@ public class TarotCardTester : MonoBehaviour
         if (_decoyDashCard != null)
         {
             _decoyDashCard.RemoveTarotCard();
+        }
+
+        if(_lifestealShotTarotCard != null)
+        {
+            _lifestealShotTarotCard.RemoveTarotCard();
         }
     }
 }

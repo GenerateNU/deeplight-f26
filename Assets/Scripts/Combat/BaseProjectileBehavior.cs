@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,6 +11,9 @@ public enum ProjectileType
 
 public class BaseProjectileBehavior : MonoBehaviour
 {
+    // Fires when a player projectile damages an enemy.
+    public static event Action OnPlayerProjectileHitEnemy;
+
     [Header("Projectile Stats")]
 
     [SerializeField] private int _baseProjectileDamage = 1;
@@ -101,6 +105,11 @@ public class BaseProjectileBehavior : MonoBehaviour
             {
                 // FIX: This truncation error could be an issue if we use weird multipliers.
                 hc.Damage((int)_currentProjectileDamage);
+
+                if (_type == ProjectileType.Player)
+                {
+                    OnPlayerProjectileHitEnemy?.Invoke();
+                }
 
                 _currentRemainingPierce -= 1;
 
