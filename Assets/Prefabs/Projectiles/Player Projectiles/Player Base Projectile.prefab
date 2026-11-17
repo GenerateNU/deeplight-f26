@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 181059596584907789}
   - component: {fileID: 892566804567360037}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Player Base Projectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ TrailRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Time: 1
-  m_PreviewTimeScale: 0.2
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -5176,9 +5176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efaf3c990361024f983abaf47002db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
-  _baseProjectileDamage: 20
+  _baseProjectileDamage: 10
   _baseProjectileSpeed: 30
-  _baseProjectileLifespan: 3
+  _baseProjectileLifespan: 5
   _baseProjectilePierce: 1
   _type: 0
   _projectileExplosionSFX: {fileID: 181059596584907789}
