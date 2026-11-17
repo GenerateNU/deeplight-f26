@@ -145,6 +145,7 @@ public class StateManager : MonoBehaviour
     /// </summary>
     private void RestartState()
     {
+        if (state == GameState.loading) return;
         OnRunReset?.Invoke();
         SetState(GameState.loading);
     }

@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartRun()
     {
+        if (stateManager.GetCurrentState() != GameState.mainMenu) return;
         Debug.Log("Starting new run");
         stateManager.SetState(GameState.loading);
     }
@@ -90,6 +91,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartTutorial()
     {
+        if (stateManager.GetCurrentState() != GameState.mainMenu) return;
         Debug.Log("Starting tutorial");
         stateManager.SetState(GameState.tutorial);
     }
