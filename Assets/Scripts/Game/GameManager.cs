@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        if (Instance != this) {
+            return;
+        }
         stateManager.SetState(GameState.mainMenu);
     }
 
@@ -61,6 +64,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (Instance != this) {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
@@ -117,8 +124,11 @@ public class GameManager : MonoBehaviour
         if (s != GameState.inPlay && s != GameState.tutorial) {
             return;
         }
-        OnRunEnded?.Invoke(false);
+        bool countsTowardMeta = s == GameState.inPlay;
         stateManager.SetState(GameState.death);
+        if (countsTowardMeta) {
+            OnRunEnded?.Invoke(false);
+        }
     }
 
     /// <summary>
@@ -127,12 +137,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerWonGame()
     {
-        GameState s = stateManager.GetCurrentState();
-        if (s != GameState.inPlay) {
+        if (stateManager.GetCurrentState() != GameState.inPlay) {
             return;
         }
-        OnRunEnded?.Invoke(true);
         stateManager.SetState(GameState.win);
+        OnRunEnded?.Invoke(true);
     }
 
     /// <summary>
@@ -156,6 +165,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EnemyKilled()
     {
+        if (stateManager.GetCurrentState() != GameState.inPlay) {
+            return;
+        }
         OnEnemyKilled?.Invoke();
     }
 

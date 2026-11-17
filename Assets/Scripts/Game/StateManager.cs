@@ -54,7 +54,7 @@ public class StateManager : MonoBehaviour
         LoadSceneSingle(mainMenuSceneName);
     }
 
-    /// <summary>   
+    /// <summary>
     /// Sets the game to the pause state.
     /// </summary>
     private void PauseState()
@@ -67,11 +67,14 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Sets the game to the tutorial state.
     /// </summary>
-    private void TutorialState()
+    private void TutorialState(bool resuming)
     {
         Time.timeScale = 1f;
         AudioListener.pause = false;
-        LoadSceneSingle(tutorialSceneName);
+
+        if (!resuming) {
+            LoadSceneSingle(tutorialSceneName);
+        }
     }
 
     /// <summary>
@@ -147,7 +150,7 @@ public class StateManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets the current state of the game.     
+    /// Gets the current state of the game.
     /// </summary>
     public GameState GetCurrentState()
     {
@@ -178,6 +181,7 @@ public class StateManager : MonoBehaviour
         }
 
         hasEnteredAState = true;
+        GameState from = state;
         state = newState;
 
         // Add HandleStateChange(state) funtions to scripts that need reduced functionality in specific cases and
@@ -202,7 +206,7 @@ public class StateManager : MonoBehaviour
                 PauseState();
                 break;
             case GameState.tutorial:
-                TutorialState();
+                TutorialState(from == GameState.pause);
                 break;
             case GameState.loading:
                 LoadingState();
