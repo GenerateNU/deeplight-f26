@@ -50,6 +50,9 @@ TagManager:
   - name: HealthBars
     uniqueID: 17130779
     locked: 0
+  - name: Menus
+    uniqueID: 172002873
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
