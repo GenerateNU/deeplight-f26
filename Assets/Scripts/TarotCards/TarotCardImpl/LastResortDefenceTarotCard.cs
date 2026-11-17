@@ -5,7 +5,7 @@ using UnityEngine;
 /// When equipped, this Tarot Card does the following behavior: 
 /// - On reaching critical health (below 10 HP), take 50% less damage for 8 seconds.
 /// - Only applies once per room.
-/// The goal of this tarot card is to heal the player on every 3rd projectile that hits an enemy.
+/// The goal of this tarot card is to help keep the player alive when they are in critical health.
 /// </summary>
 [CreateAssetMenu(fileName = "TheLastResortDefence", menuName = "Tarot/The Last Resort Defence")]
 public class LastResortDefenceTarotCard : TarotCard
@@ -38,7 +38,6 @@ public class LastResortDefenceTarotCard : TarotCard
         }
     }
 
-    [SerializeField] private float _cooldownDuration = 5f;
     [SerializeField] private float _damageDecreasePercent = 0.5f;
     [SerializeField] private float _duration = 8f;
     private bool _isSubscribed; // TODO decide whether to make it a listener or for it to constantly check the players HP

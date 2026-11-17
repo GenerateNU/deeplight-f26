@@ -8,7 +8,7 @@ using UnityEngine;
 /// The goal of this tarot card is to heal the player on every 3rd projectile that hits an enemy.
 /// </summary>
 [CreateAssetMenu(fileName = "TheLifestealShot", menuName = "Tarot/The Lifesteal Shot")]
-public class LifestealTarotCard : TarotCard
+public class LifestealShotTarotCard : TarotCard
 {
     public override string CardName
     {
