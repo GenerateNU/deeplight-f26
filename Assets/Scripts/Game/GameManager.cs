@@ -53,7 +53,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        if (Instance != this) {
+        if (Instance != this)
+        {
             return;
         }
         stateManager.SetState(GameState.mainMenu);
@@ -64,7 +65,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Instance != this) {
+        if (Instance != this)
+        {
             return;
         }
 
@@ -81,7 +83,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartRun()
     {
-        if (stateManager.GetCurrentState() != GameState.mainMenu) return;
+        if (stateManager.GetCurrentState() != GameState.mainMenu)
+            return;
         Debug.Log("Starting new run");
         stateManager.SetState(GameState.loading);
     }
@@ -91,7 +94,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartTutorial()
     {
-        if (stateManager.GetCurrentState() != GameState.mainMenu) return;
+        if (stateManager.GetCurrentState() != GameState.mainMenu)
+            return;
         Debug.Log("Starting tutorial");
         stateManager.SetState(GameState.tutorial);
     }
@@ -123,12 +127,14 @@ public class GameManager : MonoBehaviour
     public void PlayerDied()
     {
         GameState s = stateManager.GetCurrentState();
-        if (s != GameState.inPlay && s != GameState.tutorial) {
+        if (s != GameState.inPlay && s != GameState.tutorial)
+        {
             return;
         }
         bool countsTowardMeta = s == GameState.inPlay;
         stateManager.SetState(GameState.death);
-        if (countsTowardMeta) {
+        if (countsTowardMeta)
+        {
             OnRunEnded?.Invoke(false);
         }
     }
@@ -139,7 +145,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerWonGame()
     {
-        if (stateManager.GetCurrentState() != GameState.inPlay) {
+        if (stateManager.GetCurrentState() != GameState.inPlay)
+        {
             return;
         }
         stateManager.SetState(GameState.win);
@@ -167,7 +174,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EnemyKilled()
     {
-        if (stateManager.GetCurrentState() != GameState.inPlay) {
+        if (stateManager.GetCurrentState() != GameState.inPlay)
+        {
             return;
         }
         OnEnemyKilled?.Invoke();

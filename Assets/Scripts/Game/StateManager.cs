@@ -72,7 +72,8 @@ public class StateManager : MonoBehaviour
         Time.timeScale = 1f;
         AudioListener.pause = false;
 
-        if (!resuming) {
+        if (!resuming)
+        {
             LoadSceneSingle(tutorialSceneName);
         }
     }
@@ -145,7 +146,8 @@ public class StateManager : MonoBehaviour
     /// </summary>
     private void RestartState()
     {
-        if (state == GameState.loading) return;
+        if (state == GameState.loading)
+            return;
         OnRunReset?.Invoke();
         SetState(GameState.loading);
     }
