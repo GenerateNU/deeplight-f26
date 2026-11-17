@@ -30,7 +30,6 @@ public class PlayerShootProjectile : MonoBehaviour
     /// </summary>
     public event Action OnPlayerShoot;
 
-    // Reused buffer for the crosshair raycast so shooting does not allocate every click.
     private readonly RaycastHit[] aimHits = new RaycastHit[16];
 
     private void Awake()
@@ -67,7 +66,6 @@ public class PlayerShootProjectile : MonoBehaviour
 
             AudioSource.PlayClipAtPoint(shootSFX, transform.position);
 
-            // Ray through the center of the screen, i.e. through the crosshair
             Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             direction = ray.direction;
 
@@ -76,22 +74,18 @@ public class PlayerShootProjectile : MonoBehaviour
             {
                 spawnPos = firePoint.position;
 
-                // Find what the crosshair is on. If nothing is hit, aim at a far point along the ray.
                 Vector3 targetPoint = ray.origin + ray.direction * maxAimDistance;
 
-                // Get every solid hit along the ray (triggers like projectiles/pickups are ignored).
                 int hitCount = Physics.RaycastNonAlloc(ray, aimHits, maxAimDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
                 float closestDistance = float.MaxValue;
 
                 for (int i = 0; i < hitCount; i++)
                 {
-                    // Skip the player's own colliders so we never aim at our own shoulder/body.
                     if (aimHits[i].collider.transform.IsChildOf(transform))
                     {
                         continue;
                     }
 
-                    // Hits are not sorted, so keep the nearest one.
                     if (aimHits[i].distance < closestDistance)
                     {
                         closestDistance = aimHits[i].distance;
@@ -99,11 +93,9 @@ public class PlayerShootProjectile : MonoBehaviour
                     }
                 }
 
-                // Aim from the hand toward the crosshair target so the shot lands where the crosshair is.
                 Vector3 toTarget = targetPoint - spawnPos;
 
-                // If the target is on top of or behind the hand (e.g. hugging a wall, enemy right beside us),
-                // aiming at it would fire sideways/backwards. Shoot straight along the camera's view instead.
+
                 if (toTarget.sqrMagnitude < 0.01f || Vector3.Dot(toTarget, ray.direction) <= 0f)
                 {
                     direction = ray.direction;
