@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public static event Action<bool> OnRunEnded;
     public static event Action OnEnemyKilled;
 
+    // May need to adjust this for pausing on window close / alt-tab
     private GameState stateBeforePause;
 
     private void Awake()
@@ -112,6 +113,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerDied()
     {
+        GameState s = stateManager.GetCurrentState();
+        if (s != GameState.inPlay && s != GameState.tutorial) {
+            return;
+        }
         OnRunEnded?.Invoke(false);
         stateManager.SetState(GameState.death);
     }
@@ -122,6 +127,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerWonGame()
     {
+        GameState s = stateManager.GetCurrentState();
+        if (s != GameState.inPlay) {
+            return;
+        }
         OnRunEnded?.Invoke(true);
         stateManager.SetState(GameState.win);
     }
@@ -178,5 +187,5 @@ public class GameManager : MonoBehaviour
         OnRunEnded = null;
         OnEnemyKilled = null;
     }
-#endif  
+#endif
 }
