@@ -49,6 +49,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float dashSpeedIncrease = 10; // how much the player move speed should increase by during the dash
     [SerializeField] private Transform orientation;
     [SerializeField] private TrailRenderer dashTrail;
+    private float originalDamping;
     private bool isDashHeld;
     private bool canDash = true;
     public bool allowAllDirections = true;
@@ -91,6 +92,7 @@ public class ThirdPersonController : MonoBehaviour
             enabled = false;
             return;
         }
+        originalDamping = rb.linearDamping;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -376,7 +378,7 @@ public class ThirdPersonController : MonoBehaviour
         StartCoroutine(AnimateDashBar());
     }
 
-    /// </summary>
+    /// <summary>
     /// Updates the dash cooldown bar. 0 = just dashed, 1 = ready to dash again.
     /// </summary>
     private void SetDashBar(float fill)
@@ -397,6 +399,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         MovementLocked = false;
         moveSpeed -= dashSpeedIncrease;
+        rb.linearDamping = originalDamping;
 
         if (disableGravity)
         {
@@ -407,7 +410,7 @@ public class ThirdPersonController : MonoBehaviour
         if (dashTrail != null)
         {
             dashTrail.emitting = false;
-        }   
+        }
     }
 
     /// <summary>
