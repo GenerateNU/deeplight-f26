@@ -1,46 +1,91 @@
+using System;
 using UnityEngine;
 
 /// <summary>
-/// A class that manages and delegates state behavior to StateManeger and updates MetaProgression fields.
+/// A class that manages and delegates state behavior to StateManager and updates MetaProgression
+/// fields. Lives on a persistent bootstrap object alongside StateManager and MetaProgression, in
+/// a small boot scene at build index 0 - if it sat in the main menu scene instead, the
+/// SetState(mainMenu) call below would reload that scene and destroy this object on a loop.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public StateManager stateManager; // Reference to the StateManager component
-    [SerializeField] private GameObject currentRoom; // TODO: Change to scripted object later
+    public static GameManager Instance { get; private set; }
+
+    public StateManager stateManager;
+
+    [SerializeField] private GameObject currentRoom;
     [SerializeField] private GameObject nextRoom;
-    [SerializeField] private MetaProgression metaProgression;
-    private GameState currentState;
 
+    public static event Action<bool> OnRunEnded;
+    public static event Action OnEnemyKilled;
 
-    /// <summary>
-    /// Start is called before the first frame update, sets the run state to start.
-    /// </summary>
-    void Start()
+    // May need to adjust this for pausing on window close / alt-tab
+    private GameState stateBeforePause;
+
+    private void Awake()
     {
-        stateManager.SetState(GameState.mainMenu);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
-        // TODO, how will we set the current and next room for this class...we get it from StateManager ?
+        if (stateManager == null)
+        { stateManager = GetComponent<StateManager>(); }
+        if (stateManager == null)
+        { Debug.LogError("[GameManager] StateManager must be on the same GameObject.", this); }
+    }
+
+    private void OnEnable()
+    {
+        StateManager.OnLoadingFinished += FinishedLoading;
+    }
+
+    private void OnDisable()
+    {
+        StateManager.OnLoadingFinished -= FinishedLoading;
     }
 
     /// <summary>
-    /// Update is called once per frame, checks the current state and calls the appropriate method in RunState.
+    /// Start is called before the first frame update, sets the run state to the main menu.
+    /// </summary>
+    void Start()
+    {
+        if (Instance != this)
+        {
+            return;
+        }
+        stateManager.SetState(GameState.mainMenu);
+    }
+
+    /// <summary>
+    /// Update is called once per frame.
     /// </summary>
     void Update()
     {
-        //TODO: connect this functionality to a void onPuase function, put it into a different class called InputSystem with the other types of inputs in player input. 
+        if (Instance != this)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
     }
 
-    // Methods called by other scripts:
+    // ---------------------------------------- Methods called by other scripts ------------------------------------------ //
 
     /// <summary>
     /// Starts the run after pressing the Main menu play button.
     /// </summary>
     public void StartRun()
     {
+        if (stateManager.GetCurrentState() != GameState.mainMenu)
+            return;
+        Debug.Log("Starting new run");
         stateManager.SetState(GameState.loading);
     }
 
@@ -49,6 +94,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartTutorial()
     {
+        if (stateManager.GetCurrentState() != GameState.mainMenu)
+            return;
+        Debug.Log("Starting tutorial");
         stateManager.SetState(GameState.tutorial);
     }
 
@@ -61,14 +109,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// A method that sets the next room for the game.
+    /// Records which room the player is leaving and which one they are entering.
     /// Is called by a door between rooms.
     /// </summary>
-    /// <param name="room"></param>
-    public void SetUpRoomTransition(GameObject currentRoom, GameObject nextRoom)
+    /// <param name="from">The room the player is leaving.</param>
+    /// <param name="to">The room the player is entering.</param>
+    public void SetUpRoomTransition(GameObject from, GameObject to)
     {
-        this.currentRoom = currentRoom;
-        this.nextRoom = nextRoom;
+        currentRoom = from;
+        nextRoom = to;
     }
 
     /// <summary>
@@ -77,8 +126,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerDied()
     {
+        GameState s = stateManager.GetCurrentState();
+        if (s != GameState.inPlay && s != GameState.tutorial)
+        {
+            return;
+        }
+        bool countsTowardMeta = s == GameState.inPlay;
         stateManager.SetState(GameState.death);
-        metaProgression.RecordLoss();
+        if (countsTowardMeta)
+        {
+            OnRunEnded?.Invoke(false);
+        }
     }
 
     /// <summary>
@@ -87,8 +145,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PlayerWonGame()
     {
+        if (stateManager.GetCurrentState() != GameState.inPlay)
+        {
+            return;
+        }
         stateManager.SetState(GameState.win);
-        metaProgression.RecordWin();
+        OnRunEnded?.Invoke(true);
     }
 
     /// <summary>
@@ -100,23 +162,52 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Clears run data and restarts a brand new run.
+    /// </summary>
+    public void RestartRun()
+    {
+        stateManager.SetState(GameState.restart);
+    }
+
+    /// <summary>
     /// A method that is called when an enemy dies.
     /// </summary>
     public void EnemyKilled()
     {
-        metaProgression.RecordEnemyKill();
+        if (stateManager.GetCurrentState() != GameState.inPlay)
+        {
+            return;
+        }
+        OnEnemyKilled?.Invoke();
     }
 
     /// <summary>
     /// A method that either pauses or unpauses the game depending on the current state.
+    /// Remembers which state the pause was entered from, so unpausing returns to the tutorial
+    /// rather than dropping into inPlay.
     /// </summary>
-    private void TogglePause()
+    public void TogglePause()
     {
         GameState current = stateManager.GetCurrentState();
 
-        if (current == GameState.inPlay)
+        if (current == GameState.inPlay || current == GameState.tutorial)
+        {
+            stateBeforePause = current;
             stateManager.SetState(GameState.pause);
+        }
         else if (current == GameState.pause)
-            stateManager.SetState(GameState.inPlay);
+        {
+            stateManager.SetState(stateBeforePause);
+        }
     }
+
+#if UNITY_EDITOR
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        Instance = null;
+        OnRunEnded = null;
+        OnEnemyKilled = null;
+    }
+#endif
 }
