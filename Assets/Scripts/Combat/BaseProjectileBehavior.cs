@@ -90,13 +90,26 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
+        // Ignore our own team: player shots pass through the player,
+        // enemy shots pass through enemies. Nothing is used up.
+        if ((_type == ProjectileType.Player && objectHit.CompareTag("Player")) ||
+            (_type == ProjectileType.Enemy && objectHit.CompareTag("Enemy")))
+        {
+            return;
+        }
+
+        // Hit something solid with no health (wall, floor, prop): stop here.
+        if (!otherCollider.isTrigger &&
+            !objectHit.TryGetComponent<HealthComponent>(out _))
+        {
+            DisableProjectile();
+            return;
+        }
+
         if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
         {
-            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || (objectHit.CompareTag("Enemy") && _type == ProjectileType.Player))
-            {
-                // FIX: This truncation error could be an issue if we use weird multipliers.
-                hc.Damage((int)_currentProjectileDamage);
-            }
+            // Same-team hits were filtered out above, so anything left is a valid target.
+            hc.Damage((int)_currentProjectileDamage);
 
             _currentRemainingPierce -= 1;
 

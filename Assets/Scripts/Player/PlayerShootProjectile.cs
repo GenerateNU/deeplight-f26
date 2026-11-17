@@ -24,6 +24,11 @@ public class PlayerShootProjectile : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] AudioClip shootSFX;
 
+    /// <summary>
+    /// event that raises when the player fires a projectile.
+    /// </summary>
+    public event Action OnPlayerShoot;
+
     private void Awake()
     {
         if (aimCamera == null)
@@ -64,6 +69,7 @@ public class PlayerShootProjectile : MonoBehaviour
             spawnPos = ray.origin + ray.direction * spawnDistance;
 
             projectile.transform.SetPositionAndRotation(spawnPos, Quaternion.LookRotation(direction));
+            OnPlayerShoot?.Invoke();
             projectile.SetActive(true);
         }
     }

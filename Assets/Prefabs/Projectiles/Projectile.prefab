@@ -195,7 +195,7 @@ TrailRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Time: 1
-  m_PreviewTimeScale: 1
+  m_PreviewTimeScale: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -204,13 +204,22 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.2988758
+        value: 0.14630318
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7963874
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -5167,8 +5176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6efaf3c990361024f983abaf47002db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectileBehavior
-  _baseProjectileDamage: 1
-  _baseProjectileSpeed: 5
+  _baseProjectileDamage: 20
+  _baseProjectileSpeed: 30
   _baseProjectileLifespan: 3
   _baseProjectilePierce: 1
   _type: 0
