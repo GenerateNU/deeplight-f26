@@ -23,4 +23,14 @@ public class LayoutNode
         this.gridPosition = gridPosition;
         this.type = type;
     }
+
+    /// <summary>
+    /// Unlocks doors for this node in the directions where there is a connection
+    /// </summary>
+    /// <param name="gridPosition">Where the unit sits on the map</param>
+    /// <param name="type">The role of the unit</param>
+    public void GetConnectedDirections(Vector2Int gridPosition)
+    {
+        //TODO: figure out list of directions with connections 
+    }
 }
