@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public StateManager stateManager;
 
+    public PauseMenu pauseMenu;
+
     [SerializeField] private GameObject currentRoom;
     [SerializeField] private GameObject nextRoom;
 
@@ -36,6 +38,11 @@ public class GameManager : MonoBehaviour
         { stateManager = GetComponent<StateManager>(); }
         if (stateManager == null)
         { Debug.LogError("[GameManager] StateManager must be on the same GameObject.", this); }
+
+        if (pauseMenu == null)
+        { pauseMenu = GetComponentInChildren<PauseMenu>(true); }
+        if (pauseMenu == null)
+        { Debug.LogError("[GameManager] PauseMenu must be on a child object of the GameManager.", this); }
     }
 
     private void OnEnable()
