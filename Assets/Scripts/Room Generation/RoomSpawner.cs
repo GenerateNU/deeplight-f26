@@ -22,13 +22,14 @@ public class RoomSpawner : MonoBehaviour
 
     // ----------------------------------- UNITY DEFAULTS ---------------------------------------//
 
-    /// <summary>
-    /// Runs at the start of the scene.
-    /// </summary>
-    void Start()
-    {
-        Spawn();
-    }
+    // /// <summary>
+    // /// Runs at the start of the scene.
+    // /// </summary>
+    // void Start()
+    // {
+    //     Spawn();
+    // }
+
 
     /// <summary>
     /// Runs once per frame.
