@@ -17,5 +17,5 @@ public class LayoutParams
     /// read this, it is applied when the layout is placed in the scene. Set it to the width of
     /// the room prefabs
     /// </summary>
-    [Min(0.01f)] public float unitSize = 50f;
+    [Min(0.01f)] public float unitSize = 60f;
 }
