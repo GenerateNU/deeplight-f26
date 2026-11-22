@@ -14,7 +14,8 @@ public enum Stat
     MovementSpeed,
     DashDistance,
     DashCooldown,
-    DashInvincibilityTime
+    DashInvincibilityTime,
+    HeadshotMultiplier
 }
 
 /// <summary>
