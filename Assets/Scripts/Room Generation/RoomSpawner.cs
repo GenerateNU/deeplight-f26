@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Functionality for spawning entities in rooms using a roomData file
@@ -19,6 +20,13 @@ public class RoomSpawner : MonoBehaviour
     private List<GameObject> spawnedObjects = new List<GameObject>();
 
     private RngStream Rng => rngConfig.Get(RngStreamsConfig.RngStreamType.LevelGen);
+
+    private int enemyCount = 0;
+
+    /// <summary>
+    /// Called when all enemies in the room die
+    /// </summary>
+    public event Action OnRoomCleared;
 
     // ----------------------------------- UNITY DEFAULTS ---------------------------------------//
 
@@ -69,6 +77,11 @@ public class RoomSpawner : MonoBehaviour
 
         SpawnCategory(points, SpawnType.Enemy, roomData.RollEnemyCount(rng), roomData.PickEnemyPrefab, rng);
         SpawnCategory(points, SpawnType.Item, roomData.RollItemCount(rng), roomData.PickItemPrefab, rng);
+
+        if (enemyCount == 0)
+        {
+            OnRoomCleared?.Invoke();
+        }
     }
 
     /// <summary>
@@ -84,6 +97,7 @@ public class RoomSpawner : MonoBehaviour
             }
         }
         spawnedObjects.Clear();
+        enemyCount = 0;
     }
 
     /// <summary>
@@ -132,7 +146,31 @@ public class RoomSpawner : MonoBehaviour
 
             Transform point = candidates[i].transform;
             GameObject instance = Instantiate(prefab, point.position, point.rotation, transform);
+            HealthComponent hp = instance.GetComponent<HealthComponent>();
+            if (hp != null)
+            {
+                if (type == SpawnType.Enemy)
+                {
+                    enemyCount++;
+                    hp.OnDeath += HandleEnemyDeath;
+                }
+            }
             spawnedObjects.Add(instance);
         }
     }
+
+    /// <summary>
+    /// When an enemy dies, subtracts from the enemy count and triggers OnRoomCleared
+    /// when there are no more enemies.
+    /// </summary>
+    private void HandleEnemyDeath()
+    {
+        enemyCount--;
+        if (enemyCount <= 0)
+        {
+            OnRoomCleared?.Invoke();
+            Debug.Log("Room cleared");
+        }
+    }
+
 }

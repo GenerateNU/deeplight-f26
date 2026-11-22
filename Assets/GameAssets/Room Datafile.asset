@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec9480d37ea6754f91d7ed43d206926, type: 3}
+  m_Name: Room Datafile
+  m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  minEnemyCount: 1
+  maxEnemyCount: 1
+  enemySpawnTable:
+  - prefab: {fileID: 2508764386082145481, guid: fc3b5bb67faa6d19b877e64ea827ad05, type: 3}
+    weight: 1
+  minItemCount: 0
+  maxItemCount: 0
+  itemSpawnTable: []
