@@ -86,7 +86,7 @@ public class FloorLayout
     }
 
     /// <summary>
-    /// Closes the matching sides on two touching units, so each one is connected to the other
+    /// Marks the matching sides on two touching units as connected to each other
     /// </summary>
     /// <param name="a">One of the two units</param>
     /// <param name="b">The unit next to it. Must touch a on one side</param>
@@ -96,8 +96,8 @@ public class FloorLayout
         {
             if (dir.GetNeighbor(a.gridPosition) == b.gridPosition)
             {
-                a.doors.SetOpen(dir, false);
-                b.doors.SetOpen(dir.Opposite(), false);
+                a.doors.SetConnected(dir, true);
+                b.doors.SetConnected(dir.Opposite(), true);
                 return;
             }
         }

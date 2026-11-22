@@ -14,7 +14,7 @@ public class LayoutNode
     public int roomNum = -1;
 
     /// <summary>
-    /// Creates a node with every side open and no distance or room number assigned yet
+    /// Creates a node with no sides connected and no distance or room number assigned yet
     /// </summary>
     /// <param name="gridPosition">Where the unit sits on the map</param>
     /// <param name="type">The role of the unit</param>
