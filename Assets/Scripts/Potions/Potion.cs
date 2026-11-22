@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Enum for the Rarity of a potion
@@ -111,6 +112,12 @@ public class Potion
     /// </summary>
     /// <Returns></Returns> The Stat of the potion
     public Stat GetStat() => stat;
+
+    //Sets the stat of the current potion based on what it was supplied
+    public void SetStat(Stat newStat)
+    {
+        stat = newStat;
+    }
 
     /// <summary>
     /// Gets the list of FloatRanges of the potion
