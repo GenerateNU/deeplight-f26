@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class ThirdPersonController : MonoBehaviour
 {
     [Header("Stats")]
+    [SerializeField] private StatHandler stathandler;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float jumpHeight = 6.2f;
     [SerializeField] private float jumpCooldown = .1f;
@@ -243,7 +244,7 @@ public class ThirdPersonController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        float targetSpeed = moveSpeed * move.magnitude;
+        float targetSpeed = moveSpeed * move.magnitude * stathandler.GetStat(Stat.MovementSpeed);
 
         playerAnimator.speed = animatorSpeed;
 
