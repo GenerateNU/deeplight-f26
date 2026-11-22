@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 /// <summary>
 /// The record for one placed unit in the layout: its grid position, doors, room type, distance
@@ -29,8 +30,17 @@ public class LayoutNode
     /// </summary>
     /// <param name="gridPosition">Where the unit sits on the map</param>
     /// <param name="type">The role of the unit</param>
-    public void GetConnectedDirections()
+    public List<Direction> GetConnectedDirections()
     {
+        List<Direction> connectedDirections = new List<Direction>();
+        foreach (Direction dir in Directions.All)
+        {
+            if (doors.IsConnected(dir))
+            {
+                connectedDirections.Add(dir);
+            }
+        }
         //TODO: figure out list of directions with connections 
+        return connectedDirections;
     } 
 }
