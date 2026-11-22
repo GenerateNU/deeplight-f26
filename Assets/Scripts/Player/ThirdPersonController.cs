@@ -448,8 +448,8 @@ public class ThirdPersonController : MonoBehaviour
     /// <returns> A vector of the direction the player should dash </returns>
     private Vector3 GetDirection(Transform forwardT)
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float horizontalInput = move.x;
+        float verticalInput = move.y;
         // flatten the axes first so camera pitch doesn't change the weighting between forward and right
         Vector3 flatForward = Vector3.ProjectOnPlane(forwardT.forward, Vector3.up);
         if (flatForward.sqrMagnitude < 0.0001f)
@@ -469,7 +469,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             direction = flatForward;
         }
-        if (verticalInput == 0 && horizontalInput == 0)
+        if (move.sqrMagnitude < 0.01f)
         {
             direction = flatForward;
         }
