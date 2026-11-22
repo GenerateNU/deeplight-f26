@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: AllPotions
   m_EditorClassIdentifier: Assembly-CSharp::AllPotions
   allPotions:
-  - stat: 0
+  - stat: 5
     ranges:
-    - min: 0
-      max: 0
-    - min: 0
-      max: 0
-    - min: 0
-      max: 0
-    - min: 0
-      max: 0
-    rarity: 0
-    operation: 0
-    rngStreamsConfig: {fileID: 0}
+    - min: 1
+      max: 1
+    - min: 1
+      max: 1
+    - min: 1
+      max: 1
+    - min: 1
+      max: 1
+    operation: 1
+    rngStreamsConfig: {fileID: 11400000, guid: e1e8d3b28ceb04550ab30b6cfed98d58, type: 2}
