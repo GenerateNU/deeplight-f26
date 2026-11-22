@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// This class acts as the primary controller for third person POV.
@@ -10,10 +11,9 @@ using UnityEngine.InputSystem;
 public class ThirdPersonController : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private float moveSpeed = 6f;
+    [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float jumpHeight = 6.2f;
     [SerializeField] private float jumpCooldown = .1f;
-    [SerializeField] private float sprintMultiplier = 2f;
     [SerializeField] private float fallGravityMultiplier = 2f;
     [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
     [SerializeField] private float dragForce = 3f;
@@ -37,8 +37,7 @@ public class ThirdPersonController : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private float animatorRunningSpeed = 2.0f;
-    [SerializeField] private float animatorWalkingSpeed = 1.0f;
+    [SerializeField] private float animatorSpeed = 1.0f;
     public Animator playerAnimator;
 
     [Header("Dashing")]
@@ -48,11 +47,18 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float dashCooldown = 0.7f;
     [SerializeField] private float dashSpeedIncrease = 10; // how much the player move speed should increase by during the dash
     [SerializeField] private Transform orientation;
+    [SerializeField] private TrailRenderer dashTrail;
+    private float originalDamping;
     private bool isDashHeld;
     private bool canDash = true;
     public bool allowAllDirections = true;
     public bool disableGravity = true;
     public bool resetVel = true;
+
+    [Header("Dash UI")]
+    [SerializeField] private Image dashCooldownBar;
+    [SerializeField] private Color cooldownColor = new Color(0.6f, 0.6f, 0.6f);
+    [SerializeField] private Color readyColor = Color.cyan;
 
     // Movement and Look Vectors //
     private Vector2 move;
@@ -66,7 +72,6 @@ public class ThirdPersonController : MonoBehaviour
     // Movement-Related Variables //
     private bool isGrounded = true;
     private bool canJump = true;
-    private bool isRunning;
     private bool isJumpHeld;
     private float currentSpeed = 0f;
     private float acceleration = 3f;
@@ -89,8 +94,15 @@ public class ThirdPersonController : MonoBehaviour
             enabled = false;
             return;
         }
+        originalDamping = rb.linearDamping;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        //ensures dash trail isn't on at scene start
+        if (dashTrail != null)
+            dashTrail.emitting = false;
+
+        SetDashBar(1f);
     }
 
     /// <summary>
@@ -231,14 +243,14 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the target at an accelerating speed (for smoothness) up to a default maximum, multiplied by a sprint multiplier if the player is currently sprinting.
+    /// Moves the target at an accelerating speed (for smoothness) up to a default maximum.
     /// Movement is by default in the direction of WASD with W always pointing in the direction the player is looking, and ASD relative to that.
     /// </summary>
     private void Move()
     {
-        float targetSpeed = (isRunning ? moveSpeed * sprintMultiplier : moveSpeed) * move.magnitude;
+        float targetSpeed = moveSpeed * move.magnitude;
 
-        playerAnimator.speed = (isRunning ? animatorRunningSpeed : animatorWalkingSpeed);
+        playerAnimator.speed = animatorSpeed;
 
         // Snap to zero when there's no input, otherwise ease toward the target speed. NECESSARY FOR ANIMATOR TO WORK
         if (move.sqrMagnitude < 0.01f)
@@ -249,8 +261,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
         }
-
-        //ORIGINALcurrentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
 
         // Rotate the player body to match the camera's horizontal rotation (mouse X)
         rb.MoveRotation(Quaternion.Euler(0f, yaw, 0f));
@@ -344,6 +354,15 @@ public class ThirdPersonController : MonoBehaviour
         MovementLocked = true;
         Vector3 forceToApply = direction * dashPower + orientation.up * dashUpwardPower;
 
+        //triggers oneshot dash animation & dash trail renderer
+        playerAnimator.SetTrigger("dash");
+
+        if (dashTrail != null)
+        {
+            dashTrail.Clear();        // removes leftover trail from a previous dash
+            dashTrail.emitting = true;
+        }
+
         if (disableGravity)
         {
             rb.useGravity = false;
@@ -359,6 +378,21 @@ public class ThirdPersonController : MonoBehaviour
 
         canDash = false;
         StartCoroutine(DashCooldown());
+        StartCoroutine(AnimateDashBar());
+    }
+
+    /// <summary>
+    /// Updates the dash cooldown bar. 0 = just dashed, 1 = ready to dash again.
+    /// </summary>
+    private void SetDashBar(float fill)
+    {
+        if (dashCooldownBar == null)
+        {
+            return;
+        }
+
+        dashCooldownBar.fillAmount = Mathf.Clamp01(fill);
+        dashCooldownBar.color = fill >= 1f ? readyColor : cooldownColor;
     }
 
     /// <summary>
@@ -368,10 +402,17 @@ public class ThirdPersonController : MonoBehaviour
     {
         MovementLocked = false;
         moveSpeed -= dashSpeedIncrease;
+        rb.linearDamping = originalDamping;
 
         if (disableGravity)
         {
             rb.useGravity = true;
+        }
+
+        //turns dash trail back off
+        if (dashTrail != null)
+        {
+            dashTrail.emitting = false;
         }
     }
 
@@ -388,6 +429,24 @@ public class ThirdPersonController : MonoBehaviour
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
+    }
+
+    //coroutine that tracks the dash cooldown and applies value to DashbarFill
+    private IEnumerator AnimateDashBar()
+    {
+        float totalTime = dashDuration + dashCooldown;
+        float elapsed = 0f;
+
+        SetDashBar(0f);
+
+        while (elapsed < totalTime)
+        {
+            elapsed += Time.deltaTime;
+            SetDashBar(elapsed / totalTime);
+            yield return null;
+        }
+
+        SetDashBar(1f);
     }
 
     /// <summary>
@@ -438,15 +497,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             Jump();
         }
-    }
-
-    /// <summary>
-    /// Retrieves the input from the Sprint input action in Unity's InputSystem
-    /// </summary>
-    /// <param name="inputValue"></param> the value of the Sprint input action (a button press or release)
-    private void OnSprint(InputValue inputValue)
-    {
-        isRunning = inputValue.isPressed;
     }
 
     /// <summary>

@@ -11,6 +11,7 @@ TagManager:
   - Item
   - Pickup
   - Decoy Player
+  - EnemyHead
   layers:
   - Default
   - TransparentFX
