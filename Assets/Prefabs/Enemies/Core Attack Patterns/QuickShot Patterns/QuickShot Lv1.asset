@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72f4c7c06dca5a4093d731c0171f62a, type: 3}
+  m_Name: QuickShot Lv1
+  m_EditorClassIdentifier: Assembly-CSharp::CorePattern
+  _projectilePrefab: {fileID: 272288898988071556, guid: ba901c705c44a7d4dadf2db4fb2036a6, type: 3}
+  _predictiveProjectileSpeed: 5
+  _windUpTime: 0.25
+  _coolDown: 0.2
+  _aimMode: 0
+  _trackingSensitivity: 10
+  _trackingWindupFraction: 1
+  _trackWhileFiring: 1
+  _rotationSpeed: 90
+  _firingAngles: 00000000
+  _simultaneousShooting: 0
+  _burstCount: 3

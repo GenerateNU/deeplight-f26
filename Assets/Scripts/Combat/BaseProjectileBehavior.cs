@@ -60,6 +60,12 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        // Pooled projectiles keep their old trail points; clear them so the trail doesn't streak from the last impact.
+        if (TryGetComponent(out TrailRenderer trail))
+        {
+            trail.Clear();
+        }
+
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
         _currentRemainingPierce = _baseProjectilePierce;
@@ -100,33 +106,50 @@ public class BaseProjectileBehavior : MonoBehaviour
             return;
         }
 
+        bool isHead = otherCollider.CompareTag("EnemyHead");
+        bool isPlayer = objectHit.CompareTag("Player");
+        bool isEnemy = objectHit.CompareTag("Enemy") || isHead;
+
+        // Ignore our own team: player shots pass through the player,
+        // enemy shots pass through enemies. Nothing is used up.
+        if ((_type == ProjectileType.Player && isPlayer) ||
+            (_type == ProjectileType.Enemy && isEnemy))
+        {
+            return;
+        }
+
         HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
+
+        // Hit something solid with no health (wall, floor, prop): stop here.
+        if (!otherCollider.isTrigger && hc == null)
+        {
+            DisableProjectile();
+            return;
+        }
 
         if (hc != null)
         {
+            // Don't hit the same target twice through multiple colliders.
             if (!_alreadyHit.Add(hc))
             {
                 return;
             }
 
-            if ((objectHit.CompareTag("Player") && _type == ProjectileType.Enemy) || ((objectHit.CompareTag("Enemy") || otherCollider.CompareTag("EnemyHead")) && _type == ProjectileType.Player))
+            // FIX: This truncation error could be an issue if we use weird multipliers.
+            if (isHead)
             {
-                // FIX: This truncation error could be an issue if we use weird multipliers.
-                if (otherCollider.CompareTag("EnemyHead"))
-                {
-                    hc.Damage((int)(_currentProjectileDamage * _currentHeadshotMultiplier));
-                }
-                else
-                {
-                    hc.Damage((int)_currentProjectileDamage);
-                }
+                hc.Damage((int)(_currentProjectileDamage * _currentHeadshotMultiplier));
+            }
+            else
+            {
+                hc.Damage((int)_currentProjectileDamage);
+            }
 
-                _currentRemainingPierce -= 1;
+            _currentRemainingPierce -= 1;
 
-                if (_currentRemainingPierce <= 0)
-                {
-                    DisableProjectile();
-                }
+            if (_currentRemainingPierce <= 0)
+            {
+                DisableProjectile();
             }
         }
     }
