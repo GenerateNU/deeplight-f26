@@ -12,7 +12,9 @@ using System;
 /// </remarks>
 public struct DoorSet
 {
-    // Stored as "closed" so that a default (all false) DoorSet has every side open
+    // true = a neighbor is placed and connected on that side.
+    // Stored as "closed" instead of "connected" so a default DoorSet (every flag false)
+    // starts with every side open, meaning nothing next to it yet
     private bool northClosed;
     private bool eastClosed;
     private bool southClosed;

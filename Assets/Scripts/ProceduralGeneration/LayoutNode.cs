@@ -29,8 +29,8 @@ public class LayoutNode
     /// </summary>
     /// <param name="gridPosition">Where the unit sits on the map</param>
     /// <param name="type">The role of the unit</param>
-    public void GetConnectedDirections(Vector2Int gridPosition)
+    public void GetConnectedDirections()
     {
         //TODO: figure out list of directions with connections 
-    }
+    } 
 }
