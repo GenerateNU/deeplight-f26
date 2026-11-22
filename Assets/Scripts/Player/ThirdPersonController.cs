@@ -16,6 +16,8 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float fallGravityMultiplier = 2f;
     [SerializeField] private float lowJumpGravityMultiplier = 2.5f;
     [SerializeField] private float dragForce = 3f;
+    [SerializeField] private int parryInvincibilityFrames = 15;
+    [SerializeField] private float parryCooldown = 3f;
 
     [Header("Grounded")]
     [SerializeField] private Transform groundCheckPoint;
@@ -76,6 +78,11 @@ public class ThirdPersonController : MonoBehaviour
     private float acceleration = 3f;
     private bool MovementLocked = false;
 
+    // Parry Internal Variables //
+    private bool parrying = false;
+    private int invincibilityFramesRemaining = 0;
+    private bool canParry = true;
+
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////
 
     /// <summary>
@@ -126,6 +133,15 @@ public class ThirdPersonController : MonoBehaviour
     {
         Move();
         ApplyJumpGravity();
+
+        if (invincibilityFramesRemaining > 0)
+        {
+            invincibilityFramesRemaining--;
+        }
+        else
+        {
+            parrying = false;
+        }
     }
 
     /// <summary>
@@ -466,6 +482,19 @@ public class ThirdPersonController : MonoBehaviour
         return direction.normalized;
     }
 
+    ///////////////////////// PARRY-RELATED METHODS /////////////////////////
+
+    private IEnumerator ParryCooldown()
+    {
+        yield return new WaitForSeconds(parryCooldown);
+        canParry = true;
+    }
+
+    public bool ParryActive()
+    {
+        return parrying;
+    }
+
     ///////////////////////////////// ON METHODS FOR RECOGNIZING UNITY'S INPUT SYSTEM /////////////////////////////////////
 
     /// <summary>
@@ -512,5 +541,22 @@ public class ThirdPersonController : MonoBehaviour
         {
             Dash();
         }
+    }
+
+    /// <summary>
+    /// Retrieves the input from the Parry input action in Unity's InputSystem
+    /// </summary>
+    /// <param name="inputValue"></param> the value of the Parry input action (a button press or release)
+    private void OnParry(InputValue inputValue)
+    {
+        if (inputValue.isPressed && canParry)
+        {
+            Debug.Log("Player Parried!");
+            invincibilityFramesRemaining = parryInvincibilityFrames;
+            parrying = true;
+            canParry = false;
+            StartCoroutine(ParryCooldown());
+        }
+        else { Debug.Log("Parry still on cooldown!"); }
     }
 }

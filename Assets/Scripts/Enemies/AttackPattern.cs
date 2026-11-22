@@ -318,7 +318,6 @@ public abstract class AttackPattern : ScriptableObject
         }
 
         OnProjectileSpawned(projectile, direction, runtime);
-        Debug.Log("Enemy Shot Projectile");
         return projectile;
     }
 
@@ -328,6 +327,10 @@ public abstract class AttackPattern : ScriptableObject
     /// </summary>
     protected virtual void OnProjectileSpawned(GameObject projectile, Vector3 direction, AttackPatternRuntime runtime)
     {
+        if (projectile.TryGetComponent<BaseProjectileBehavior>(out BaseProjectileBehavior pb))
+        {
+            pb.SetEnemyWhoShotThisProjectile(runtime.Owner.gameObject);
+        }
     }
 
     /// <summary>

@@ -5172,4 +5172,9 @@ MonoBehaviour:
   _baseProjectileLifespan: 15
   _baseProjectilePierce: 1
   _type: 1
+  enemyWhoShotThisProjectile: {fileID: 0}
   _projectileExplosionSFX: {fileID: 3063920687369825595}
+  _reflectedMesh: {fileID: 0}
+  _reflectedMaterial: {fileID: 0}
+  _reflectedMeshResourcePath: ProjectileMeshes/ST_Baseball
+  _reflectedMaterialResourcePath: ProjectileMaterials/ReflectedProjectile
