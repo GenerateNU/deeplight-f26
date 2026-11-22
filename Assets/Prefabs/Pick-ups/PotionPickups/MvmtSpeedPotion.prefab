@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5965251438601800447}
   - component: {fileID: -5158929974827965286}
   m_Layer: 0
-  m_Name: SpeedPotion
+  m_Name: MvmtSpeedPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
