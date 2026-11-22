@@ -187,7 +187,7 @@ public static class FloorGenerator
 
             foreach (Direction dir in Directions.All)
             {
-                if (node.doors.IsOpen(dir))
+                if (!node.doors.IsConnected(dir))
                 {
                     continue;
                 }

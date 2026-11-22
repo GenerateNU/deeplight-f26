@@ -14,8 +14,9 @@ public class LayoutParams
 
     /// <summary>
     /// The width of one whole node (room plus corridors) in world units. The generator doesn't
-    /// read this, it is applied when the layout is placed in the scene. Set it to the width of
-    /// the room prefabs
+    /// read this, it is applied when the layout is placed in the scene. Must match the width of
+    /// the room prefabs, so it is fixed in code instead of set in the Inspector
     /// </summary>
-    [Min(0.01f)] public float unitSize = 60f;
+    public const float UnitSize = 60f;
+
 }

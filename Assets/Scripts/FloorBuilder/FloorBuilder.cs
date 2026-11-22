@@ -88,7 +88,7 @@ public class FloorBuilder : MonoBehaviour
     /// </returns>
     private Vector3 GridToWorld(Vector2Int gridPosition)
     {
-        float size = layoutParams.unitSize;
+        float size = LayoutParams.UnitSize;
         return transform.position + new Vector3(gridPosition.x * size, 0f, gridPosition.y * size);
     }
 }
