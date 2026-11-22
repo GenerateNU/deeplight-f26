@@ -36,7 +36,10 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     private float _timer;
     private int _currentRemainingPierce;
-    private readonly HashSet<HealthComponent> _alreadyHit = new HashSet<HealthComponent>();
+    private readonly Dictionary<HealthComponent, bool> _alreadyHit = new Dictionary<HealthComponent, bool>();
+
+    private int BodyDamage() => Mathf.Max(1, Mathf.RoundToInt(_currentProjectileDamage));
+    private int HeadDamage() => Mathf.Max(1, Mathf.RoundToInt(_currentProjectileDamage * _currentHeadshotMultiplier));
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -129,24 +132,20 @@ public class BaseProjectileBehavior : MonoBehaviour
 
         if (hc != null)
         {
-            // Don't hit the same target twice through multiple colliders.
-            if (!_alreadyHit.Add(hc))
+            if (_alreadyHit.TryGetValue(hc, out bool wasHead))
             {
+                // Already hit this target. Only upgrade body -> head, never double-dip.
+                if (wasHead || !isHead) return;
+
+                hc.Damage(HeadDamage() - BodyDamage());
+                _alreadyHit[hc] = true;
                 return;
             }
 
-            // FIX: This truncation error could be an issue if we use weird multipliers.
-            if (isHead)
-            {
-                hc.Damage((int)(_currentProjectileDamage * _currentHeadshotMultiplier));
-            }
-            else
-            {
-                hc.Damage((int)_currentProjectileDamage);
-            }
+            _alreadyHit[hc] = isHead;
+            hc.Damage(isHead ? HeadDamage() : BodyDamage());
 
             _currentRemainingPierce -= 1;
-
             if (_currentRemainingPierce <= 0)
             {
                 DisableProjectile();
