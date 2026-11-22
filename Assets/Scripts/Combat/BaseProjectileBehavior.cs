@@ -135,7 +135,8 @@ public class BaseProjectileBehavior : MonoBehaviour
             if (_alreadyHit.TryGetValue(hc, out bool wasHead))
             {
                 // Already hit this target. Only upgrade body -> head, never double-dip.
-                if (wasHead || !isHead) return;
+                if (wasHead || !isHead)
+                    return;
 
                 hc.Damage(HeadDamage() - BodyDamage());
                 _alreadyHit[hc] = true;
