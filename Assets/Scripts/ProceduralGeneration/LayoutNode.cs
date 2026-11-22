@@ -40,7 +40,6 @@ public class LayoutNode
                 connectedDirections.Add(dir);
             }
         }
-        //TODO: figure out list of directions with connections 
         return connectedDirections;
     } 
 }
