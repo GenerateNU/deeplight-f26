@@ -34,6 +34,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected Transform playerLocation;
     [SerializeField] protected float distanceFromPlayer;
     [SerializeField] protected EnemyState currentState = EnemyState.Idle;
+    [SerializeField] protected Transform _desiredTarget;
 
     [Header("Enemy Movement Specifics")]
     [Tooltip("Enemy movement speed during chase phase.")]
@@ -141,6 +142,26 @@ public abstract class EnemyBase : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+
+        if (DecoyDashTarotCard.ActivePlayerDecoy != null)
+        {
+            _desiredTarget = DecoyDashTarotCard.ActivePlayerDecoy.transform; // Target the active decoy if one exists, otherwise the player.
+        }
+        else
+        {
+            _desiredTarget = playerLocation;
+        }
+
+        if (attackRuntime.Target != _desiredTarget)
+        {
+            attackRuntime.SetContext(transform, firePoint, _desiredTarget);
+
+            if (_desiredTarget != null)
+            {
+                attackRuntime.AimDirection = AttackPatternRuntime.Flatten(_desiredTarget.position - attackRuntime.SpawnPosition);
+            }
+        }
+
         if (playerLocation == null)
             return;
         distanceFromPlayer = Vector3.Distance(transform.position, playerLocation.position);

@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a136f51ae214e4fbea726991408307e3, type: 3}
   m_Name: TheDecoyDash
   m_EditorClassIdentifier: Assembly-CSharp::DecoyDashTarotCard
+  _decoyPlayerPrefab: {fileID: 1234140133045768165, guid: 020dcb39a371f4d558973af2dd94db77, type: 3}
+  _decoyDuration: 2
