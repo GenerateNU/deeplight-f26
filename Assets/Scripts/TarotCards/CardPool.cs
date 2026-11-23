@@ -6,7 +6,7 @@ using UnityEngine;
 /// reached from anywhere, and persists across scenes because it's an asset.
 /// </summary>
 [CreateAssetMenu(fileName = "CardPool", menuName = "Tarot/Card Pool")]
-public class CardPool: ScriptableObject
+public class CardPool : ScriptableObject
 {
     public bool excludeFromPlayerDeck = true;
     public int cardSelectionSize = 3;

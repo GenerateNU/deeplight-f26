@@ -47,8 +47,10 @@ public abstract class TarotCard : ScriptableObject, IEquatable<TarotCard>
 
     public bool Equals(TarotCard other)
     {
-        if (ReferenceEquals(other, null)) return false;
-        if (ReferenceEquals(this, other)) return true;
+        if (ReferenceEquals(other, null))
+            return false;
+        if (ReferenceEquals(this, other))
+            return true;
 
         return string.Equals(CardName, other.CardName, StringComparison.Ordinal);
     }

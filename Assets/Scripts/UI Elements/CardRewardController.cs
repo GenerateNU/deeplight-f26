@@ -17,14 +17,11 @@ public class CardRewardController : MonoBehaviour
         currentSelection = new List<TarotCard>();
         cardRewardScreen = GetComponent<Canvas>();
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         Deactivate();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
@@ -40,24 +37,37 @@ public class CardRewardController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Activate the card reward screen and select tarot cards at random
+    /// for the player to choose from
+    /// </summary>  
     public void Activate()
     {
         cardRewardScreen.enabled = true;
         isEnabled = true;
 
         // select cards
-        currentSelection = CardPool.Instance.DrawSelection(playerDeck);
         PopulateCards();
     }
 
+    /// <summary>
+    /// Deactivate the card reward screen and clear the current selection of tarot cards
+    /// </summary>  
     public void Deactivate()
     {
         cardRewardScreen.enabled = false;
         isEnabled = false;
+
+        currentSelection.Clear();
     }
 
+    /// <summary>
+    /// Use CardPool to randomly select tarot cards and display them acccordingly
+    /// </summary>  
     private void PopulateCards()
     {
+        currentSelection = CardPool.Instance.DrawSelection(playerDeck);
+
         if (currentSelection.Count < 3)
         {
             return; // we want 3 cards for now
