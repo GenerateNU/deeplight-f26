@@ -10,7 +10,6 @@ public class CardPool: ScriptableObject
 {
     public bool excludeFromPlayerDeck = true;
     public int cardSelectionSize = 3;
-    public GameObject player = GameObject.FindGameObjectWithTag("Player");
 
     [Header("RNG")]
     [SerializeField] private RngStreamsConfig rngConfig;
@@ -49,25 +48,26 @@ public class CardPool: ScriptableObject
     /// Returns one selection of cards from the pool based on the selection size 
     /// and exclusion setting
     /// </summary>    
-    public List<TarotCard> DrawSelection()
+    public List<TarotCard> DrawSelection(PlayerDeck playerDeck)
     {
-        List<TarotCard> selection = new List<TarotCard>();
-        // lower bound for cards selected is tied to the size of the card pool
-        int numCards = Mathf.Min(cardSelectionSize, cards.Count);
-        PlayerDeck playerDeck = player.GetComponent<PlayerDeck>();
+        List<TarotCard> eligible = new List<TarotCard>();
 
-        while (selection.Count < cardSelectionSize)
+        foreach (TarotCard card in cards)
         {
-            int index = LootRng.Range(0, cards.Count);
-            TarotCard selectedCard = cards[index];
-            if (excludeFromPlayerDeck && playerDeck.Owns(selectedCard)) // and player already has this card
+            if (!excludeFromPlayerDeck || !playerDeck.Owns(card))
             {
-                continue; // try again
+                eligible.Add(card);
             }
-            else
-            {
-                selection.Add(selectedCard);
-            }
+        }
+
+        int numCards = Mathf.Min(cardSelectionSize, eligible.Count);
+        List<TarotCard> selection = new List<TarotCard>(numCards);
+
+        for (int i = 0; i < numCards; i++)
+        {
+            int index = LootRng.Range(0, eligible.Count);
+            selection.Add(eligible[index]);
+            eligible.RemoveAt(index); // no duplicates
         }
 
         return selection;
