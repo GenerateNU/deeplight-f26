@@ -49,7 +49,7 @@ public class OnKillTarotCard : TarotCard
     private bool _isSubscribed;
 
     /// <summary>
-    /// An abstract method that each tarot card will implement for their special abilities.
+    /// To apply tarot card, subscribes to the OnEnemyKilled event and sets needed variables.
     /// It takes in TarotContext which holds objects needed for each tarot card to apply their changes.
     /// </summary>
     /// <param name="context">A class that holds objects needed for tarot cards.</param>
@@ -67,7 +67,7 @@ public class OnKillTarotCard : TarotCard
     }
 
     /// <summary>
-    /// An abstract method that each tarot card will implement to remove their special abilites when a run ends.
+    /// To remove tarot card, unsubscribes from the OnEnemyKilled event, removes the modifier from the player and stops the coroutine.
     /// </summary>
     public override void RemoveTarotCard()
     {
@@ -125,14 +125,5 @@ public class OnKillTarotCard : TarotCard
         _buffActive = false;
         _cooldownEndTime = Time.time + _cooldownDuration;
         Debug.Log("On Kill Tarot Card not applied (cooling down)");
-    }
-
-    /// <summary>
-    /// A method that resets the _isSubscribed field to false upon start.
-    /// Since TarotCard's are scriptable objects, this field will be carried over.
-    /// </summary>
-    private void OnEnable()
-    {
-        _isSubscribed = false;
     }
 }

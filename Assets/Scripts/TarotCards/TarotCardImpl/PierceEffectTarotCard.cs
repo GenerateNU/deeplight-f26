@@ -42,15 +42,21 @@ public class PierceEffectTarotCard : TarotCard
     private TarotContext _context;
 
     /// <summary>
-    /// An abstract method that each tarot card will implement for their special abilities
+    /// To apply tarot card, adds the new pierce modifier to the player's stats.
+    /// It takes in TarotContext which holds objects needed for each tarot card to apply their changes.
     /// </summary>
+    /// <param name="context">A class that holds objects needed for tarot cards.</param>
     public override void ApplyTarotCard(TarotContext context)
     {
         _context = context;
+        _context.StatsHandler.RemoveModifier(this); // in case the pierce modifier was already added. 
         _context.StatsHandler.AddModifier(Stat.ProjectilePierce, Operation.Add, _pierceCount, this);
         Debug.Log("Tarot Activated!");
     }
 
+    /// <summary>
+    /// To remove tarot card, removes the new pierce modifier from the player's stats.
+    /// </summary>
     public override void RemoveTarotCard()
     {
         if (_context == null)

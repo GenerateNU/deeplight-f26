@@ -10,6 +10,7 @@ public class TarotCardTester : MonoBehaviour
     [Header("Cards to test (leave empty to skip)")]
     [SerializeField] private OnKillTarotCard _onKillCard;
     [SerializeField] private PierceEffectTarotCard _pierceCard;
+    [SerializeField] private DecoyDashTarotCard _decoyDashCard;
 
     [Header("References")]
     [SerializeField] private StatHandler _statHandler;  // drag the Stat Handler object here
@@ -31,6 +32,12 @@ public class TarotCardTester : MonoBehaviour
         {
             _pierceCard.ApplyTarotCard(_context);
             Debug.Log("Applied " + _pierceCard.CardName);
+        }
+
+        if (_decoyDashCard != null)
+        {
+            _decoyDashCard.ApplyTarotCard(_context);
+            Debug.Log("Applied " + _decoyDashCard.CardName);
         }
     }
 
@@ -54,6 +61,11 @@ public class TarotCardTester : MonoBehaviour
             Debug.Log($"AttackDamage = {_statHandler.GetStat(Stat.AttackDamage)}, " +
                       $"ProjectilePierce = {_statHandler.GetStat(Stat.ProjectilePierce)} at {Time.time:F1}s");
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Player Dashed. Decoy should spawn.");
+        }
     }
 
     void OnDestroy()
@@ -66,6 +78,11 @@ public class TarotCardTester : MonoBehaviour
         if (_pierceCard != null)
         {
             _pierceCard.RemoveTarotCard();
+        }
+
+        if (_decoyDashCard != null)
+        {
+            _decoyDashCard.RemoveTarotCard();
         }
     }
 }

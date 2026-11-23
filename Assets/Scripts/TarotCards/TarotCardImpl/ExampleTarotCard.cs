@@ -34,8 +34,10 @@ public class ExampleTarotCard : TarotCard
     }
 
     /// <summary>
-    /// An abstract method that each tarot card will implement for their special abilities
+    /// An abstract method that each tarot card will implement for their special abilities.
+    /// It takes in TarotContext which holds objects needed for each tarot card to apply their changes.
     /// </summary>
+    /// <param name="context">A class that holds objects needed for tarot cards.</param>
     public override void ApplyTarotCard(TarotContext context)
     {
         Debug.Log("Tarot Activated!");
