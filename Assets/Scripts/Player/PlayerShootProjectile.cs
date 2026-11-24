@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// This class deals with the behavior of shooting a projectile, for specifically a player.
@@ -40,10 +41,13 @@ public class PlayerShootProjectile : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// shoots when player clicks
+    /// </summary>
+    /// <param name="inputValue"> input for attacks </param>
+    private void OnAttack(InputValue inputValue)
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (inputValue.isPressed)
         {
             Shoot();
         }
