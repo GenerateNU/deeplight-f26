@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     public static event Action<bool> OnRunEnded;
     public static event Action OnEnemyKilled;
+    public static event Action OnRoomEntered;
 
     private GameState stateBeforePause;
 
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
     {
         currentRoom = from;
         nextRoom = to;
+        OnRoomEntered?.Invoke();
     }
 
     /// <summary>

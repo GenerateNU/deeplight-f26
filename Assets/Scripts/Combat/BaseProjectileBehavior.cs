@@ -14,6 +14,9 @@ public class BaseProjectileBehavior : MonoBehaviour
     // Fires when a player projectile damages an enemy.
     public static event Action OnPlayerProjectileHitEnemy;
 
+    // Fires when an enemy projectile hits the player; 
+    public static event Action OnEnemyProjectileHitPlayer;
+
     [Header("Projectile Stats")]
 
     [SerializeField] private int _baseProjectileDamage = 1;
@@ -109,6 +112,10 @@ public class BaseProjectileBehavior : MonoBehaviour
                 if (_type == ProjectileType.Player)
                 {
                     OnPlayerProjectileHitEnemy?.Invoke();
+                }
+                else
+                {
+                    OnEnemyProjectileHitPlayer?.Invoke();
                 }
 
                 _currentRemainingPierce -= 1;

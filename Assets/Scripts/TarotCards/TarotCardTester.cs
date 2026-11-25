@@ -12,6 +12,8 @@ public class TarotCardTester : MonoBehaviour
     [SerializeField] private PierceEffectTarotCard _pierceCard;
     [SerializeField] private DecoyDashTarotCard _decoyDashCard;
     [SerializeField] private LifestealShotTarotCard _lifestealShotTarotCard;
+    [SerializeField] private HealOnDashTarotCard _healOnDashTarotCard;
+    [SerializeField] private LastResortDefenceTarotCard _lastResortDefenceTarotCard;
 
     [Header("References")]
     [SerializeField] private StatHandler _statHandler;  // drag the Stat Handler object here
@@ -45,6 +47,18 @@ public class TarotCardTester : MonoBehaviour
         {
             _lifestealShotTarotCard.ApplyTarotCard(_context);
             Debug.Log("Applied " + _lifestealShotTarotCard.CardName);
+        }
+
+        if (_healOnDashTarotCard != null)
+        {
+            _healOnDashTarotCard.ApplyTarotCard(_context);
+            Debug.Log("Applied " + _healOnDashTarotCard.CardName);
+        }
+
+        if (_lastResortDefenceTarotCard != null)
+        {
+            _lastResortDefenceTarotCard.ApplyTarotCard(_context);
+            Debug.Log("Applied " + _lastResortDefenceTarotCard);
         }
     }
 
@@ -96,9 +110,19 @@ public class TarotCardTester : MonoBehaviour
             _decoyDashCard.RemoveTarotCard();
         }
 
-        if(_lifestealShotTarotCard != null)
+        if (_lifestealShotTarotCard != null)
         {
             _lifestealShotTarotCard.RemoveTarotCard();
+        }
+
+        if (_healOnDashTarotCard != null)
+        {
+            _healOnDashTarotCard.RemoveTarotCard();
+        }
+
+        if (_lastResortDefenceTarotCard != null)
+        {
+            _lastResortDefenceTarotCard.RemoveTarotCard();
         }
     }
 }

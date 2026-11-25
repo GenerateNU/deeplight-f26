@@ -19176,7 +19176,8 @@ MonoBehaviour:
   _onKillCard: {fileID: 0}
   _pierceCard: {fileID: 0}
   _decoyDashCard: {fileID: 0}
-  _lifestealShotTarotCard: {fileID: 11400000, guid: 01dc7fb0f6f9146a1bb29227f553d487, type: 2}
+  _lifestealShotTarotCard: {fileID: 0}
+  _healOnDashTarotCard: {fileID: 11400000, guid: d618396ac00bb4dc585bd4edb5c0d5aa, type: 2}
   _statHandler: {fileID: 2121935942}
   _player: {fileID: 501705135}
 --- !u!4 &1261973624
@@ -38164,6 +38165,9 @@ MonoBehaviour:
     baseValue: 1
     currentValue: 0
   - stat: 8
+    baseValue: 1
+    currentValue: 0
+  - stat: 9
     baseValue: 1
     currentValue: 0
   _potionsAcquired: []

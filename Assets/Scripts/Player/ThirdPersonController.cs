@@ -75,6 +75,8 @@ public class ThirdPersonController : MonoBehaviour
     // Event-related Variables //
     // Event for when the dash has just started. The inputs are the position and rotation of the player.
     public static event Action<Vector3, Quaternion> OnDashStarted;
+    // Event for when the dash has just ended.
+    public static event Action OnDashEnded;
 
     ////////////////////////////////// GENERIC METHODS //////////////////////////////////////
 
@@ -373,6 +375,8 @@ public class ThirdPersonController : MonoBehaviour
         {
             rb.useGravity = true;
         }
+
+        OnDashEnded?.Invoke();
     }
 
     /// <summary>

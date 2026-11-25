@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// The Last Resort Defence Tarot Card which is under the Passive category.
@@ -40,38 +41,99 @@ public class LastResortDefenceTarotCard : TarotCard
 
     [SerializeField] private float _damageDecreasePercent = 0.5f;
     [SerializeField] private float _duration = 8f;
-    private bool _isSubscribed; // TODO decide whether to make it a listener or for it to constantly check the players HP
+    [SerializeField] private int _healthThreshold = 10;
+    private bool _isSubscribed;
+    private HealthComponent _playerHealth;
+    private bool _usedThisRoom;
+    private Coroutine _coroutine;
+    private TarotContext _context;
+
 
     /// <summary>
-    /// To apply tarot card, ...
+    /// To apply tarot card, subscribes to the OnHealthChanged and OnRoomEntered events. 
     /// It takes in TarotContext which holds objects needed for each tarot card to apply their changes.
     /// </summary>
     /// <param name="context">A class that holds objects needed for tarot cards.</param>
     public override void ApplyTarotCard(TarotContext context)
     {
+        if (context.Player == null || !context.Player.TryGetComponent(out _playerHealth))
+        {
+            Debug.LogWarning("From LastResortDefenceTarotCard: player has no HealthComponent!");
+            return;
+        }
+
         if (!_isSubscribed)
         {
+            _playerHealth.OnHealthChanged += HandleHealthChanged;
+            GameManager.OnRoomEntered += HandleRoomEntered;
             _isSubscribed = true;
         }
+
+        _context = context;
+        _usedThisRoom = false;
     }
 
     /// <summary>
-    /// To remove tarot card, ....
+    /// To remove tarot card, unsubscribes from the OnHealthChanged and OnRoomEntered, stops the 
+    /// couroutine, and removes the modifier from the stats handler. 
     /// </summary>
     public override void RemoveTarotCard()
     {
         if (_isSubscribed)
         {
+            _playerHealth.OnHealthChanged -= HandleHealthChanged;
+            GameManager.OnRoomEntered -= HandleRoomEntered;
             _isSubscribed = false;
         }
+
+        if (_context == null)
+        {
+            return;
+        }
+
+        if (_coroutine != null)
+        {
+            _context.StatsHandler.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+
+        _context.StatsHandler.RemoveModifier(this);
     }
 
     /// <summary>
-    /// A method that ....
+    /// A method that is called when the OnHealthChanged event occurs. 
+    /// Decides whether the player should recieve reduced damage intake and starts the coroutine when needed.
     /// </summary>
-    private void HandleBlank()
+    private void HandleHealthChanged(int currentHealth, int maxHealth)
     {
+        if (_usedThisRoom || currentHealth <= 0 || currentHealth >= _healthThreshold)
+        {
+            return;
+        }
 
+        _usedThisRoom = true;
+        _coroutine = _context.StatsHandler.StartCoroutine(DamageReduction());
+    }
+
+    /// <summary>
+    /// A coroutine that gives the player reduced damage intake for a limited time. 
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator DamageReduction()
+    {
+        _context.StatsHandler.AddModifier(Stat.DamageTaken, Operation.Multiply, -_damageDecreasePercent, this);
+        yield return new WaitForSeconds(_duration);
+        _context.StatsHandler.RemoveModifier(this);
+
+        _coroutine = null;
+    }
+
+    /// <summary>
+    /// A method that is called when the OnRoomEntered event happens. 
+    /// </summary>
+    private void HandleRoomEntered()
+    {
+        _usedThisRoom = false;
     }
 
     /// <summary>
@@ -81,5 +143,6 @@ public class LastResortDefenceTarotCard : TarotCard
     private void OnEnable()
     {
         _isSubscribed = false;
+        _usedThisRoom = false;
     }
 }

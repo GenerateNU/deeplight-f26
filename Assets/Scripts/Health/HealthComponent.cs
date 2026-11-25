@@ -18,6 +18,14 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth = 100;
 
+    private StatHandler _statHandler;
+    /* needed for the last resort defence card which deals with reducing damage percentage wise
+     When the damage is reduced or increased by 50%, the old version of Damage() always adds 
+     0 damage because Mathf.RoundToInt() rounds to the nearest even int 
+     ex: 1 x 0.5 = 0.5 which rounds to 0. 
+     */
+    private float _damageRemainder;
+
     /// <summary>
     /// Event that fires when theres any changes to currentHealth or maxHealth.
     /// </summary>
@@ -33,6 +41,11 @@ public class HealthComponent : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        if (CompareTag("Player"))
+        {
+            _statHandler = FindAnyObjectByType<StatHandler>();
+        }
+
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
@@ -77,6 +90,13 @@ public class HealthComponent : MonoBehaviour
     /// </param>
     public void Damage(int damageVal)
     {
+        if (_statHandler != null)
+        {
+            float scaled = damageVal * _statHandler.GetStat(Stat.DamageTaken) + _damageRemainder;
+            damageVal = Mathf.FloorToInt(scaled);
+            _damageRemainder = scaled - damageVal;
+        }
+
         if (currentHealth > 0 && damageVal > 0)
         {
             int newHealth = currentHealth - damageVal;
