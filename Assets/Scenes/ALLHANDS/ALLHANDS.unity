@@ -6032,7 +6032,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501705135}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0848f7fd99cd4580944132aaf20f11d, type: 3}
   m_Name: 
@@ -6056,9 +6056,6 @@ MonoBehaviour:
   jumpHeight: 5
   jumpCooldown: 0.1
   sprintMultiplier: 2
-  fallGravityMultiplier: 2
-  lowJumpGravityMultiplier: 2.5
-  dragForce: 3
   groundCheckPoint: {fileID: 917406007}
   groundCheckRadius: 0.1
   groundLayer:
@@ -6074,15 +6071,6 @@ MonoBehaviour:
   animatorRunningSpeed: 2
   animatorWalkingSpeed: 1
   playerAnimator: {fileID: 2136781744}
-  dashPower: 20
-  dashUpwardPower: 0
-  dashDuration: 0.3
-  dashCooldown: 0.7
-  dashSpeedIncrease: 10
-  orientation: {fileID: 0}
-  allowAllDirections: 1
-  disableGravity: 1
-  resetVel: 1
 --- !u!114 &501705139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6250,9 +6238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796b2e13b9f631649bd766d8519cd603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  projectileSpeed: 20
-  projectileRange: 20
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
   aimCamera: {fileID: 780596569}
   spawnDistance: 2
   playerAnimator: {fileID: 2136781744}
@@ -16745,7 +16731,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPool
   startingCapacity: 50
   maxSize: 500
-  objectPrefabs: []
+  objectPrefabs:
+  - {fileID: 2279860737726650598, guid: 64908677f16344255b6c02467a0d44fa, type: 3}
 --- !u!4 &1011754120
 Transform:
   m_ObjectHideFlags: 0

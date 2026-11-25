@@ -16,11 +16,13 @@ public class BaseProjectileBehavior : MonoBehaviour
     [SerializeField] private float _baseProjectileSpeed = 5f;
     [SerializeField] private float _baseProjectileLifespan = 3f;
     [SerializeField] private int _baseProjectilePierce = 1;
+    [SerializeField] private int _baseHeadshotMultiplier = 2;
 
     private float _currentProjectileDamage;
     private float _currentProjectileSpeed;
     private float _currentProjectileLifespan;
     private float _currentProjectilePierce;
+    private float _currentHeadshotMultiplier;
 
     [Header("Projectile Settings")]
 
@@ -34,6 +36,10 @@ public class BaseProjectileBehavior : MonoBehaviour
 
     private float _timer;
     private int _currentRemainingPierce;
+    private readonly Dictionary<HealthComponent, bool> _alreadyHit = new Dictionary<HealthComponent, bool>();
+
+    private int BodyDamage() => Mathf.Max(1, Mathf.RoundToInt(_currentProjectileDamage));
+    private int HeadDamage() => Mathf.Max(1, Mathf.RoundToInt(_currentProjectileDamage * _currentHeadshotMultiplier));
 
     // ----------------------------------------- Unity Defaults -------------------------------------------- //
 
@@ -57,15 +63,15 @@ public class BaseProjectileBehavior : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        // Pooled projectiles keep their old trail points; clear them so the trail doesn't streak from the last impact.
-        if (TryGetComponent(out TrailRenderer trail))
+        if (TryGetComponent<TrailRenderer>(out TrailRenderer trail))
         {
             trail.Clear();
         }
 
         SetProjectileStats();
         _timer = _currentProjectileLifespan;
-        _currentRemainingPierce = _baseProjectilePierce;
+        _currentRemainingPierce = (int)_currentProjectilePierce;
+        _alreadyHit.Clear();
         Move();
     }
 
@@ -96,29 +102,50 @@ public class BaseProjectileBehavior : MonoBehaviour
     {
         GameObject objectHit = otherCollider.gameObject;
 
-        // Ignore our own team: player shots pass through the player,
-        // enemy shots pass through enemies. Nothing is used up.
-        if ((_type == ProjectileType.Player && objectHit.CompareTag("Player")) ||
-            (_type == ProjectileType.Enemy && objectHit.CompareTag("Enemy")))
-        {
-            return;
-        }
-
-        // Hit something solid with no health (wall, floor, prop): stop here.
-        if (!otherCollider.isTrigger &&
-            !objectHit.TryGetComponent<HealthComponent>(out _))
+        if (otherCollider.CompareTag("Environment"))
         {
             DisableProjectile();
             return;
         }
 
-        if (objectHit.TryGetComponent<HealthComponent>(out HealthComponent hc))
+        bool isHead = otherCollider.CompareTag("EnemyHead");
+        bool isPlayer = objectHit.CompareTag("Player");
+        bool isEnemy = objectHit.CompareTag("Enemy") || isHead;
+
+        // Ignore our own team: player shots pass through the player,
+        // enemy shots pass through enemies. Nothing is used up.
+        if ((_type == ProjectileType.Player && isPlayer) ||
+            (_type == ProjectileType.Enemy && isEnemy))
         {
-            // Same-team hits were filtered out above, so anything left is a valid target.
-            hc.Damage((int)_currentProjectileDamage);
+            return;
+        }
+
+        HealthComponent hc = otherCollider.GetComponentInParent<HealthComponent>();
+
+        // Hit something solid with no health (wall, floor, prop): stop here.
+        if (!otherCollider.isTrigger && hc == null)
+        {
+            DisableProjectile();
+            return;
+        }
+
+        if (hc != null)
+        {
+            if (_alreadyHit.TryGetValue(hc, out bool wasHead))
+            {
+                // Already hit this target. Only upgrade body -> head, never double-dip.
+                if (wasHead || !isHead)
+                    return;
+
+                hc.Damage(HeadDamage() - BodyDamage());
+                _alreadyHit[hc] = true;
+                return;
+            }
+
+            _alreadyHit[hc] = isHead;
+            hc.Damage(isHead ? HeadDamage() : BodyDamage());
 
             _currentRemainingPierce -= 1;
-
             if (_currentRemainingPierce <= 0)
             {
                 DisableProjectile();
@@ -149,6 +176,7 @@ public class BaseProjectileBehavior : MonoBehaviour
         _currentProjectileSpeed = _baseProjectileSpeed;
         _currentProjectileLifespan = _baseProjectileLifespan;
         _currentProjectilePierce = _baseProjectilePierce;
+        _currentHeadshotMultiplier = _baseHeadshotMultiplier;
 
         // TODO: per-enemy stat variance (e.g. stronger enemies sharing this prefab).
         // The SetOnly* setters can't do this yet: they run after OnEnable, so timer and
@@ -165,6 +193,7 @@ public class BaseProjectileBehavior : MonoBehaviour
             _currentProjectileSpeed = (statHandler.GetStat(Stat.ProjectileSpeed) != 0f) ? statHandler.GetStat(Stat.ProjectileSpeed) * _baseProjectileSpeed : _baseProjectileSpeed;
             _currentProjectileLifespan = (statHandler.GetStat(Stat.ProjectileLifespan) != 0f) ? statHandler.GetStat(Stat.ProjectileLifespan) * _baseProjectileLifespan : _baseProjectileLifespan;
             _currentProjectilePierce = (statHandler.GetStat(Stat.ProjectilePierce) != 0f) ? statHandler.GetStat(Stat.ProjectilePierce) * _baseProjectilePierce : _baseProjectilePierce;
+            _currentHeadshotMultiplier = (statHandler.GetStat(Stat.HeadshotMultiplier) != 0f) ? statHandler.GetStat(Stat.HeadshotMultiplier) * _baseHeadshotMultiplier : _baseHeadshotMultiplier;
         }
     }
 
