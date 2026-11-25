@@ -56,7 +56,7 @@ public class HealOnDashTarotCard : TarotCard
     {
         if (context.Player == null || !context.Player.TryGetComponent(out _playerHealth))
         {
-            Debug.LogWarning("From LifestealShotTarotCard: player has no HealthComponent!");
+            Debug.LogWarning("From HealOnDashTarotCard: player has no HealthComponent!");
             return;
         }
 

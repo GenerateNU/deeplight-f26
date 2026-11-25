@@ -58,7 +58,7 @@ public class TarotCardTester : MonoBehaviour
         if (_lastResortDefenceTarotCard != null)
         {
             _lastResortDefenceTarotCard.ApplyTarotCard(_context);
-            Debug.Log("Applied " + _lastResortDefenceTarotCard);
+            Debug.Log("Applied " + _lastResortDefenceTarotCard.CardName);
         }
     }
 

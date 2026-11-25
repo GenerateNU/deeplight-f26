@@ -106,7 +106,7 @@ public class LastResortDefenceTarotCard : TarotCard
     /// </summary>
     private void HandleHealthChanged(int currentHealth, int maxHealth)
     {
-        if (_usedThisRoom || currentHealth <= 0 || currentHealth >= _healthThreshold)
+        if (_usedThisRoom || _coroutine != null || currentHealth <= 0 || currentHealth >= _healthThreshold)
         {
             return;
         }

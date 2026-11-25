@@ -14,7 +14,7 @@ public class BaseProjectileBehavior : MonoBehaviour
     // Fires when a player projectile damages an enemy.
     public static event Action OnPlayerProjectileHitEnemy;
 
-    // Fires when an enemy projectile hits the player; 
+    // Fires when an enemy projectile hits the player. 
     public static event Action OnEnemyProjectileHitPlayer;
 
     [Header("Projectile Stats")]
